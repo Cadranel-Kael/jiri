@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.drop-shadow {
+    box-shadow: 0 0 0.625rem theme('colors.primary-10');
+}
+
+.bg-gradient {
+    background: radial-gradient(theme('colors.primary-10'), theme('colors.white'));
+}

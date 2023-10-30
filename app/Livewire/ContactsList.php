@@ -9,12 +9,23 @@ use Livewire\Component;
 
 class ContactsList extends Component
 {
-    public string $username = '';
+    public string $contact = '';
     public string $sort = 'name';
+    public $per_page = 18;
+    public $contact_form_shown = false;
 
     #[Computed]
     public function contacts()
     {
-        return Contact::where('name', 'like', '%' . $this->username . '%')->orderBy($this->sort)->get();
+        return auth()->user()->load('contacts')->contacts()->where('name', 'like', '%' . $this->contact . '%')
+            ->orderBy($this->sort)
+            ->paginate($this->per_page);
     }
+
+    public function load_more()
+    {
+        $this->per_page += 18;
+    }
+
+
 }

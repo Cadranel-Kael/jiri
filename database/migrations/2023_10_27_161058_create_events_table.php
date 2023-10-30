@@ -11,7 +11,6 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->date('date');
-            $table->time('time');
             $table->softDeletes();
             $table->timestamps();
         });

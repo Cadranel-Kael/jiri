@@ -14,7 +14,7 @@
 </head>
 <body class="min-h-screen bg-gradient">
     <h1 class="text-3xl font-bold underline">Mes utilisateurs</h1>
-    <livewire:contacts-list/>
+
 {{--    <x-button-white/>--}}
 {{--    <x-button-primary value="Button"/>--}}
 {{--    <x-link-primary link="#" value="Button"/>--}}

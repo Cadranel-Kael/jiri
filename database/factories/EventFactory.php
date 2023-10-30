@@ -14,9 +14,8 @@ class EventFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'date' => Carbon::now(),
-            'user_id' => $this->faker->word(),
-            'time' => Carbon::now(),
+            'date' => Carbon::createFromDate(rand(2020, 2025), rand(1, 12), rand(1, 30), 0),
+            'user_id' => rand(1,2),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
