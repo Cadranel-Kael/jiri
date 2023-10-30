@@ -1,8 +1,7 @@
-<div>
-{{--    <button type="button" livewire:click="$set('contact_form_shown', true)">Create</button>--}}
-    <div x-data="{ open: false }">
-        <button @click="open = true">Create new</button>
-        <div x-show="open" @click.away="open = false">
+<div x-data="{ createContact: false }">
+    <div>
+        <x-button-primary @click="createContact = true"  type="button" value="{{ __('contacts.add_new') }}"/>
+        <div x-show="createContact" @click.away="createContact = false">
             <div>
                 @livewire('create-contact')
             </div>
@@ -17,8 +16,8 @@
     </div>
     @if($this->contacts->isEmpty())
         <div>
-            <span>Pas de resultat</span>
-            <button type="button" livewire:click="$set('contact_form_shown', true)">Crée un nouveau utilisateur</button>
+            <span>{{ __('form.no_results') }}</span>
+            <x-button-primary @click="createContact = true"  type="button" value="{{ __('contacts.add_new') }}"/>
         </div>
     @else
         <button wire:click="load_more">Load more</button>
