@@ -5,8 +5,7 @@
         </x-slot:title>
         <x-slot:body>
             <x-input label="{{ __('form.full_name') }}" name="name" placeholder="Jenny Wilson"></x-input>
-            <label for="email">{{ __('form.email') }}</label>
-            <input type="text" name="email" id="email">
+            <x-input label="{{ __('form.email') }}" name="email" placeholder="jenny.wilson@mail.com"></x-input>
         </x-slot:body>
         <x-slot:footer>
             <x-button-primary type="submit">{{ __('contacts.add_new') }}</x-button-primary>
