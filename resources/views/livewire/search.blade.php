@@ -5,7 +5,7 @@
             <use xlink:href="{{ asset('icons/icons.svg#icon-search') }}"/>
         </svg>
     </div>
-    <input name="contact" class="p-2.5 pl-10 block drop-shadow rounded block w-full placeholder:text-black-50" type="text"
+    <input name="contact" class="p-2.5 pl-10 block outline-none drop-shadow rounded block w-full placeholder:text-black-50" type="text"
            id="search" parent.wire:model.live="{{ $search }}" placeholder="Rechercher">
     <button type="submit" class="sr-only">Search</button>
 </form>

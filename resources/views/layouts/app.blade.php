@@ -31,7 +31,7 @@
 
     <!-- Page Heading -->
     @if (isset($heading))
-        <h1 class="text-h1 text-primary font-bold">{{ $heading }}</h1>
+        <h1 class="text-h1 text-center text-primary font-bold">{{ $heading }}</h1>
     @endif
 
     <!-- Page Content -->
