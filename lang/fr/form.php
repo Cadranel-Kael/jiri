@@ -9,6 +9,7 @@ return [
     // Fields
     'name' => 'Nom',
     'names' => 'Noms',
+    'full_name' => 'Nom et prénom',
     'email' => 'Email',
     'emails' => 'Emails',
     'event' => 'Épreuve',

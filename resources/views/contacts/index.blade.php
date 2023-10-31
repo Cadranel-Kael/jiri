@@ -1,4 +1,7 @@
 <x-app-layout>
+    <x-slot name="heading">
+        {{ __('contacts.title') }}
+    </x-slot>
     <label for="sort"></label>
     <select name="sort" id="sort" wire:model.live="sort">
         <option id="name" value="name">Nom</option>
