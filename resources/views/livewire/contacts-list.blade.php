@@ -1,5 +1,5 @@
 <div>
-    <x-modal-form name="create">
+    <x-modal-form submit="save" name="create">
         <x-slot:title>
             <h3>{{ __('contacts.add_new') }}</h3>
         </x-slot:title>
