@@ -11,6 +11,9 @@ export default {
 
     theme: {
         extend: {
+            borderWidth: {
+                '2': '2px',
+            },
             colors: {
                 'primary': '#5754EA',
                 'primary-25': '#D5D4FA',
@@ -33,6 +36,7 @@ export default {
                 'col-2-sm': '9.1rem',
             },
             fontSize: {
+                'logo': '40',
                 'h1': '2.36875rem',
                 'h2': '1.775rem',
                 'h2-sm': '1rem',
