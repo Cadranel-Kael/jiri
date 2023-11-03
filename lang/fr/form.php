@@ -5,6 +5,7 @@ return [
     'sort' => 'Trier par',
     'search' => 'Rechercher',
     'no_results' => 'Pas de résultat',
+    'obligatory' => 'obligatoire',
 
     // Fields
     'name' => 'Nom',
