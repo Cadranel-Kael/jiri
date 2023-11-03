@@ -13,7 +13,7 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => $this->faker->randomNumber(),
+            'user_id' => rand(1,2),
             'title' => $this->faker->word(),
             'description' => $this->faker->text(),
             'created_at' => Carbon::now(),
