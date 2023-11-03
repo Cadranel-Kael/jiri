@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\Contact;
 use App\Models\Event;
+use App\Models\Project;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -27,5 +28,7 @@ class DatabaseSeeder extends Seeder
         Contact::factory()->count(100)->create();
 
         Event::factory()->count(30)->create();
+
+        Project::factory()->count(10)->create();
     }
 }
