@@ -15,6 +15,7 @@
             font-family: Nunito;
             src: url('{{ asset('fonts/Nunito-Regular.ttf') }}');
         }
+
         @font-face {
             font-family: Nunito;
             font-weight: bold;
@@ -26,18 +27,16 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased">
-<div class="min-h-screen bg-gradient">
+<div class="min-h-screen flex bg-gradient">
     @include('layouts.navigation')
-
-    <!-- Page Heading -->
-    @if (isset($heading))
-        <h1 class="text-h1 text-center text-primary font-bold">{{ $heading }}</h1>
-    @endif
-
-    <!-- Page Content -->
-    <main>
-        {{ $slot }}
-    </main>
+    <div>
+        @if (isset($heading))
+            <h1 class="text-h1 text-center text-primary font-bold">{{ $heading }}</h1>
+        @endif
+        <main>
+            {{ $slot }}
+        </main>
+    </div>
 </div>
 </body>
 </html>
