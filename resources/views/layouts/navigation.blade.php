@@ -1,5 +1,6 @@
 <nav x-data="{ expanded:false }"
      class="sticky top-0 z-40 mr-10 p-4 h-screen rounded-r-lg drop-shadow bg-primary flex flex-col text-white block">
+    <h2 class="sr-only">{{ __('general.nav_title') }}</h2>
     <div class="h-full flex flex-col justify-between">
         <a href="{{ route('dashboard') }}" class="text-logo">Jiri</a>
         <ul class="flex">
