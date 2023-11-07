@@ -28,12 +28,13 @@
 </head>
 <body class="font-sans antialiased">
 <div class="min-h-screen flex bg-gradient">
+    <h1 class="sr-only">{{ $heading }}</h1>
     @include('layouts.navigation')
-    <div>
+    <div class="flex-1">
         @if (isset($heading))
-            <h1 class="text-h1 text-center text-primary font-bold">{{ $heading }}</h1>
+            <span aria-hidden="true" class="text-h1 text-center text-primary font-bold">{{ $heading }}</span>
         @endif
-        <main>
+        <main class="w-full">
             {{ $slot }}
         </main>
     </div>
