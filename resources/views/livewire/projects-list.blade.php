@@ -6,7 +6,7 @@
         <x-slot:body>
             <x-input required label="{{ __('form.title') }}" name="title" placeholder="Projet"></x-input>
             <x-text-area label="{{ __('form.description') }}" name="description" placeholder="Description"></x-text-area>
-            <x-input label="{{ __('form.link_github') }}" name="github" placeholder="https://github.com/tecg-dw/projet-cv"></x-input>
+            <x-input label="{{ __('form.link', ['link'=>'Github']) }}" name="github" placeholder="https://github.com/tecg-dw/projet-cv"></x-input>
         </x-slot:body>
         <x-slot:footer>
             <x-button-primary type="submit">{{ __('projects.add_new') }}</x-button-primary>
