@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'load_more' => 'Charger plus'
+    'load_more' => 'Charger plus',
+    'nav_title' => 'Menu de navigation principale'
 ];

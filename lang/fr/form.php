@@ -19,4 +19,8 @@ return [
     'projects' => 'Projets',
     'action' => 'Action',
     'actions' => 'Actions',
+    'title' => 'Titre',
+    'description' => 'Description',
+    'link' => 'Lien :link',
+
 ];
