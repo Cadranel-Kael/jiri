@@ -21,6 +21,7 @@ export default {
                 'black': '#19191D',
                 'black-50': '#8C8C8E',
                 'black-5': '#F3F4F4',
+                'warning': '#C5283D',
             },
             borderRadius: {
                 'DEFAULT': '0.625rem',
