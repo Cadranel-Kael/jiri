@@ -2,7 +2,7 @@
     <label for="{{ $name }}" class="font-bold">
         {{ $label }}
         @isset($required)
-            <span class='text-red'>*</span>
+            <span class='text-warning'>*</span>
             <span class="sr-only">{{ __('form.obligatory') }}</span>
         @endisset
     </label>
