@@ -22,5 +22,6 @@ return [
     'title' => 'Titre',
     'description' => 'Description',
     'link' => 'Lien :link',
+    'created_at' => 'Date de création',
 
 ];
