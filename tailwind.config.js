@@ -16,6 +16,7 @@ export default {
             },
             colors: {
                 'primary': '#5754EA',
+                'primary-75': '#817FEF',
                 'primary-25': '#D5D4FA',
                 'primary-10': '#EEEEFD',
                 'black': '#19191D',
@@ -40,6 +41,7 @@ export default {
                 'logo': '40',
                 'h1': '2.36875rem',
                 'h2': '1.775rem',
+                'h3': '1.33125rem',
                 'h2-sm': '1rem',
             },
             fontFamily: {
