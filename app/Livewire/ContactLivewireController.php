@@ -9,13 +9,15 @@ use Illuminate\Support\Facades\URL;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
-class ContactsList extends Component
+class ContactLivewireController extends Component
 {
     public $name = '';
     public $email = '';
 
     public string $contact = '';
     public string $sort = 'name';
+    public array $sortable_by = ['name', 'email', 'created_at'];
+
     public $per_page = 18;
     public $contact_form_shown = false;
 
@@ -60,5 +62,8 @@ class ContactsList extends Component
         return Redirect::to(URL::route('contacts.index'));
     }
 
-
+    public function render()
+    {
+        return view('livewire.contacts');
+    }
 }
