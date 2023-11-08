@@ -16,6 +16,7 @@ class ContactLivewireController extends Component
 
     public string $contact = '';
     public string $sort = 'name';
+    public string $order = 'ASC';
     public array $sortable_by = ['name', 'email', 'created_at'];
 
     public $per_page = 18;
@@ -41,8 +42,18 @@ class ContactLivewireController extends Component
     public function contacts()
     {
         return auth()->user()->load('contacts')->contacts()->where('name', 'like', '%' . $this->contact . '%')
-            ->orderBy($this->sort)
+            ->orderBy($this->sort, $this->order)
             ->paginate($this->per_page);
+    }
+
+    public function change_order()
+    {
+        if ($this->order === 'ASC')
+        {
+            $this->order = 'DESC';
+        } else {
+            $this->order = 'ASC';
+        }
     }
 
     public function load_more()

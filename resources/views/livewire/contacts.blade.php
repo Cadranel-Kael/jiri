@@ -6,7 +6,8 @@
         <x-slot:body>
             <x-input-image class="mb-10 align-center"></x-input-image>
             <x-input class="mb-10" label="{{ __('form.full_name') }}" name="name" placeholder="Wilson Jenny"></x-input>
-            <x-input class="mb-10" label="{{ __('form.email') }}" name="email" placeholder="jenny.wilson@mail.com"></x-input>
+            <x-input class="mb-10" label="{{ __('form.email') }}" name="email"
+                     placeholder="jenny.wilson@mail.com"></x-input>
         </x-slot:body>
         <x-slot:footer>
             <div class="flex justify-center">
@@ -20,7 +21,7 @@
             <x-link-white class="w-full lg:w-fit" href="#import">{{ __('contacts.import') }}</x-link-white>
         </div>
         <div class="flex flex-col gap-4 mr-4 mb-5 lg:flex-row">
-            <x-sort sort="sort" :options="$this->sortable_by"/>
+            <x-sort sort="sort" :order="$this->order" :options="$this->sortable_by"/>
             <x-search class="w-full lg:w-fit" search="contact"/>
         </div>
     </div>
@@ -36,7 +37,9 @@
             <x-link-primary href="#create">{{ __('contacts.add_new') }}</x-link-primary>
         </div>
     @else
-        <button wire:click="load_more">Load more</button>
+        <div class="flex justify-center p-10">
+            <x-primary-button type="button" wire:click="load_more">Load more</x-primary-button>
+        </div>
     @endif
 
 </div>
