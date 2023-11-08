@@ -1,4 +1,4 @@
-<div class="flex flex-col">
+<div {{ $attributes(['class'=>'flex flex-col']) }}>
     <label for="{{ $name }}" class="font-bold">
         {{ $label }}
         @isset($required)
