@@ -30,9 +30,9 @@
 <div class="min-h-screen flex bg-gradient">
     <h1 class="sr-only">{{ $heading }}</h1>
     @include('layouts.navigation')
-    <div class="flex-1">
+    <div class="flex-1 mt-16">
         @if (isset($heading))
-            <span aria-hidden="true" class="text-h1 text-center text-primary font-bold">{{ $heading }}</span>
+            <span aria-hidden="true" class="block text-h1 text-center lg:text-left text-primary font-bold mb-10">{{ $heading }}</span>
         @endif
         <main class="w-full">
             {{ $slot }}
