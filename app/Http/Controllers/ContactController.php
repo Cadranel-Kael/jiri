@@ -21,4 +21,11 @@ class ContactController extends Controller
     {
         return Redirect::to(URL::route('contacts.index', ['#edit']));
     }
+
+    public function show($id)
+    {
+        $heading = auth()->user()->load('contacts')->contacts()->where('id', '=', $id)->first()->name;
+
+        return view('contacts.show', compact('heading'));
+    }
 }
