@@ -26,6 +26,6 @@ class ContactController extends Controller
     {
         $heading = auth()->user()->load('contacts')->contacts()->where('id', '=', $id)->first()->name;
 
-        return view('contacts.show', compact('heading'));
+        return view('contacts.show', compact('heading', 'id'));
     }
 }
