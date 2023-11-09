@@ -12,20 +12,57 @@ use Livewire\Component;
 
 class ContactLivewireController extends Component
 {
-    public $name, $email, $current_name, $current_email;
+    public $name, $email, $currentName, $currentEmail;
 
     #[Url(as: 's')]
     public $search = '';
 
     public string $sort = 'name';
     public string $order = 'ASC';
-    public array $sortable_by = ['name', 'email', 'created_at'];
+    public array $sortableBy = ['name', 'email', 'created_at'];
 
-    public $per_page = 12;
-    public $contact_form_shown = false;
+    public $perPage = 12;
+    public $contactFormShown = false;
 
     #[Url]
     public $id = '1';
+
+    #[Computed]
+    public function contacts()
+    {
+        return auth()->user()->load('contacts')->contacts()->where('name', 'like', '%' . $this->search . '%')
+            ->orderBy($this->sort, $this->order)
+            ->paginate($this->perPage);
+    }
+
+    #[Computed]
+    public function currentName()
+    {
+        $this->currentName = auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first()->name;
+        return auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first()->name;
+    }
+
+    #[Computed]
+    public function currentEmail()
+    {
+        $this->currentEmail = auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first()->email;
+        return auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first()->email;
+    }
+
+    public function changeOrder()
+    {
+        if ($this->order === 'ASC')
+        {
+            $this->order = 'DESC';
+        } else {
+            $this->order = 'ASC';
+        }
+    }
+
+    public function loadMore()
+    {
+        $this->per_page += 12;
+    }
 
     public function rules()
     {
@@ -43,43 +80,6 @@ class ContactLivewireController extends Component
         ];
     }
 
-    #[Computed]
-    public function contacts()
-    {
-        return auth()->user()->load('contacts')->contacts()->where('name', 'like', '%' . $this->search . '%')
-            ->orderBy($this->sort, $this->order)
-            ->paginate($this->per_page);
-    }
-
-    #[Computed]
-    public function currentName()
-    {
-        $this->current_name = auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first()->name;
-        return auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first()->name;
-    }
-
-    #[Computed]
-    public function currentEmail()
-    {
-        $this->current_email = auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first()->email;
-        return auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first()->email;
-    }
-
-    public function change_order()
-    {
-        if ($this->order === 'ASC')
-        {
-            $this->order = 'DESC';
-        } else {
-            $this->order = 'ASC';
-        }
-    }
-
-    public function load_more()
-    {
-        $this->per_page += 12;
-    }
-
     public function save()
     {
         $this->validate();
@@ -94,8 +94,8 @@ class ContactLivewireController extends Component
 
     public function update()
     {
-        $this->name = $this->current_name;
-        $this->email = $this->current_email;
+        $this->name = $this->currentName;
+        $this->email = $this->currentEmail;
 
         $this->validate();
 

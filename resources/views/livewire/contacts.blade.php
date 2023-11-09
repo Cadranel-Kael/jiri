@@ -40,7 +40,7 @@
                 class="mb-10"
                 :label="__('form.full_name')"
                 name="name"
-                model="current_name"
+                model="currentName"
                 :placeholder="$this->currentName()"
                 :value="$this->currentName()"
             />
@@ -48,7 +48,7 @@
                 class="mb-10"
                 :label="__('form.email')"
                 name="email"
-                model="current_email"
+                model="currentEmail"
                 :placeholder="$this->currentEmail()"
                 :value="$this->currentEmail()"/>
         </x-slot:body>
@@ -64,7 +64,7 @@
             <x-link-white class="w-full lg:w-fit" href="#import">{{ __('contacts.import') }}</x-link-white>
         </div>
         <div class="flex flex-col gap-4 mr-4 mb-5 lg:flex-row">
-            <x-sort sort="sort" :order="$this->order" :options="$this->sortable_by"/>
+            <x-sort sort="sort" :order="$this->order" :options="$this->sortableBy"/>
             <x-search class="w-full lg:w-fit" search="search"/>
         </div>
     </div>
@@ -81,7 +81,7 @@
         </div>
     @else
         <div class="flex justify-center p-10">
-            <x-primary-button type="button" wire:click="load_more">Load more</x-primary-button>
+            <x-primary-button type="button" wire:click="loadMore">Load more</x-primary-button>
         </div>
     @endif
 
