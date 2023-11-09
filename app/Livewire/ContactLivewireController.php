@@ -21,7 +21,7 @@ class ContactLivewireController extends Component
     public string $order = 'ASC';
     public array $sortable_by = ['name', 'email', 'created_at'];
 
-    public $per_page = 18;
+    public $per_page = 12;
     public $contact_form_shown = false;
 
     #[Url]
@@ -75,7 +75,7 @@ class ContactLivewireController extends Component
 
     public function load_more()
     {
-        $this->per_page += 18;
+        $this->per_page += 12;
     }
 
     public function save()
