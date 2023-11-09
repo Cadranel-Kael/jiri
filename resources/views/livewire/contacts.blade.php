@@ -28,7 +28,7 @@
         </x-slot:footer>
     </x-modal-form>
     <x-modal-form
-        submit="edit"
+        submit="update"
         name="edit"
     >
         <x-slot:title>

@@ -92,7 +92,7 @@ class ContactLivewireController extends Component
         return Redirect::to(route('contacts.index'));
     }
 
-    public function edit()
+    public function update()
     {
         $this->name = $this->current_name;
         $this->email = $this->current_email;
