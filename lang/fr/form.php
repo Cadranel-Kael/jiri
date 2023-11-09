@@ -6,6 +6,8 @@ return [
     'search' => 'Rechercher',
     'no_results' => 'Pas de résultat',
     'obligatory' => 'obligatoire',
+    'edit'=>'Modifier',
+    'delete'=>'Supprimer',
 
     // Fields
     'name' => 'Nom',
@@ -23,5 +25,4 @@ return [
     'description' => 'Description',
     'link' => 'Lien :link',
     'created_at' => 'Date de création',
-
 ];
