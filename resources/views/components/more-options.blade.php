@@ -29,7 +29,13 @@
         :aria-expanded="expanded"
         :aria-controls="$id('more-options')"
         type="button"
-    >More
+        class="py-2"
+    >
+        <svg aria-hidden="true" role="img" width="22"
+             height="6">
+            <use xlink:href="{{ asset('icons/icons.svg#dots') }}"/>
+        </svg>
+        <span class="sr-only">More</span>
     </button>
     <ul
         x-ref="options"
