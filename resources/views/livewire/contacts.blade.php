@@ -23,9 +23,9 @@
         </x-slot:title>
         <x-slot:body>
             <x-input-image class="mb-10 align-center"/>
-            <x-input class="mb-10" label="{{ __('form.full_name') }}" name="name" model="name" :placeholder="$this->name()" :value="$this->name"/>
-            <x-input class="mb-10" label="{{ __('form.email') }}" name="email" model="email"
-                     :placeholder="$this->email()" :value="$this->email"/>
+            <x-input class="mb-10" label="{{ __('form.full_name') }}" name="name" model="current_name" :placeholder="$this->currentName()" :value="$this->currentName()"/>
+            <x-input class="mb-10" label="{{ __('form.email') }}" name="email" model="current_email"
+                     :placeholder="$this->currentEmail()" :value="$this->currentEmail()"/>
         </x-slot:body>
         <x-slot:footer>
             <div class="flex justify-center">
@@ -33,7 +33,6 @@
             </div>
         </x-slot:footer>
     </x-modal-form>
-    <span>{{ $this->name }}</span>
     <div class="flex flex-col lg:flex-row justify-between mb-8">
         <div class="flex flex-col gap-4 mr-4 mb-5 lg:flex-row">
             <x-link-primary class="w-full lg:w-fit" href="#create">{{ __('contacts.add_new') }}</x-link-primary>

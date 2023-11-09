@@ -1,4 +1,4 @@
-<div class="bg-white drop-shadow p-4 flex flex-col items-center box-border rounded">
+<div class="bg-white justify-between drop-shadow p-4 flex flex-col items-center box-border rounded">
     <div class="self-end relative"
          x-data="{ expanded: false,
             toggle() {
@@ -35,7 +35,7 @@
             style="display: none"
             class="absolute left-0 bg-white rounded drop-shadow overflow-hidden"
         >
-            <li><a wire:navigate href="?id={{ $id }}#edit" @click="$dispatch('note-editing')" class="text-center block cursor-pointer hover:bg-black-5 p-1 w-full">Edit</a></li>
+            <li><a href="?id={{ $id }}#edit" @click="$dispatch('note-editing')" class="text-center block cursor-pointer hover:bg-black-5 p-1 w-full">Edit</a></li>
             <li><button class="hover:bg-black-5 p-1 w-full text-warning">Delete</button></li>
         </ul>
     </div>

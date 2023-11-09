@@ -12,7 +12,7 @@ use Livewire\Component;
 
 class ContactLivewireController extends Component
 {
-    public $name, $email;
+    public $name, $email, $current_name, $current_email;
 
     #[Url(as: 's')]
     public $search = '';
@@ -52,14 +52,16 @@ class ContactLivewireController extends Component
     }
 
     #[Computed]
-    public function name()
+    public function currentName()
     {
+        $this->current_name = auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first()->name;
         return auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first()->name;
     }
 
     #[Computed]
-    public function email()
+    public function currentEmail()
     {
+        $this->current_email = auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first()->email;
         return auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first()->email;
     }
 
@@ -92,6 +94,9 @@ class ContactLivewireController extends Component
 
     public function edit()
     {
+        $this->name = $this->current_name;
+        $this->email = $this->current_email;
+
         $this->validate();
 
         Auth::user()->contacts()->where('id', $this->id)->update([
