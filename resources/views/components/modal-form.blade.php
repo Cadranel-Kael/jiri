@@ -1,8 +1,7 @@
-<div
-    x-data="{ show:false }"
-    x-show="show"
-    x-init="show = (location.hash === '#{{ $name }}')"
-    @hashchange.window = "show = (location.hash === '#{{ $name }}')"
+<div x-data="{ show:false }"
+     x-show="show"
+     x-init="show = (location.hash === '#{{ $name }}')"
+     @hashchange.window = "show = (location.hash === '#{{ $name }}')"
     style="display: none"
 >
     <a class="fixed block h-screen cursor-default w-screen bg-black opacity-75 top-0 left-0 z-50" aria-hidden="true" href="#"></a>

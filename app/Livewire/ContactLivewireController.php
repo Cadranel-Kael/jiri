@@ -5,22 +5,27 @@ namespace App\Livewire;
 use App\Models\Contact;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\URL;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 
 class ContactLivewireController extends Component
 {
-    public $name = '';
-    public $email = '';
+    public $name, $email;
 
-    public string $contact = '';
+    #[Url(as: 's')]
+    public $search = '';
+
     public string $sort = 'name';
     public string $order = 'ASC';
     public array $sortable_by = ['name', 'email', 'created_at'];
 
     public $per_page = 18;
     public $contact_form_shown = false;
+
+    #[Url]
+    public $id = '1';
 
     public function rules()
     {
@@ -41,9 +46,21 @@ class ContactLivewireController extends Component
     #[Computed]
     public function contacts()
     {
-        return auth()->user()->load('contacts')->contacts()->where('name', 'like', '%' . $this->contact . '%')
+        return auth()->user()->load('contacts')->contacts()->where('name', 'like', '%' . $this->search . '%')
             ->orderBy($this->sort, $this->order)
             ->paginate($this->per_page);
+    }
+
+    #[Computed]
+    public function name()
+    {
+        return auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first()->name;
+    }
+
+    #[Computed]
+    public function email()
+    {
+        return auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first()->email;
     }
 
     public function change_order()
@@ -70,7 +87,19 @@ class ContactLivewireController extends Component
             'email' => $this->email,
         ]));
 
-        return Redirect::to(URL::route('contacts.index'));
+        return Redirect::to(route('contacts.index'));
+    }
+
+    public function edit()
+    {
+        $this->validate();
+
+        Auth::user()->contacts()->where('id', $this->id)->update([
+            'name' => $this->name,
+            'email' => $this->email,
+        ]);
+
+        return Redirect::to(route('contacts.index'));
     }
 
     public function render()
