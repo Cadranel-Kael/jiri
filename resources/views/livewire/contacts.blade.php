@@ -1,15 +1,25 @@
 <div>
     <x-modal-form
         submit="save"
-        name="create">
+        name="create"
+    >
         <x-slot:title>
             <h2 class="text-h3 mb-12 font-bold">{{ __('contacts.add_new') }}</h2>
         </x-slot:title>
         <x-slot:body>
             <x-input-image class="mb-10 align-center"></x-input-image>
-            <x-input class="mb-10" label="{{ __('form.full_name') }}" name="name" placeholder="Wilson Jenny"></x-input>
-            <x-input class="mb-10" label="{{ __('form.email') }}" name="email"
-                     placeholder="jenny.wilson@mail.com"></x-input>
+            <x-input
+                class="mb-10"
+                :label="__('form.full_name')"
+                name="name"
+                placeholder="Wilson Jenny"
+            ></x-input>
+            <x-input
+                class="mb-10"
+                :label="__('form.email')"
+                name="email"
+                placeholder="jenny.wilson@mail.com"
+            ></x-input>
         </x-slot:body>
         <x-slot:footer>
             <div class="flex justify-center">
@@ -17,15 +27,30 @@
             </div>
         </x-slot:footer>
     </x-modal-form>
-    <x-modal-form submit="edit" name="edit">
+    <x-modal-form
+        submit="edit"
+        name="edit"
+    >
         <x-slot:title>
             <h2 class="text-h3 mb-12 font-bold">{{ __('contacts.add_new') }}</h2>
         </x-slot:title>
         <x-slot:body>
             <x-input-image class="mb-10 align-center"/>
-            <x-input class="mb-10" label="{{ __('form.full_name') }}" name="name" model="current_name" :placeholder="$this->currentName()" :value="$this->currentName()"/>
-            <x-input class="mb-10" label="{{ __('form.email') }}" name="email" model="current_email"
-                     :placeholder="$this->currentEmail()" :value="$this->currentEmail()"/>
+            <x-input
+                class="mb-10"
+                :label="__('form.full_name')"
+                name="name"
+                model="current_name"
+                :placeholder="$this->currentName()"
+                :value="$this->currentName()"
+            />
+            <x-input
+                class="mb-10"
+                :label="__('form.email')"
+                name="email"
+                model="current_email"
+                :placeholder="$this->currentEmail()"
+                :value="$this->currentEmail()"/>
         </x-slot:body>
         <x-slot:footer>
             <div class="flex justify-center">
