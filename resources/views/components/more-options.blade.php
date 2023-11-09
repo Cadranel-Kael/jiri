@@ -2,7 +2,8 @@
     'items',
     'itemsClass'=> 'text-center block cursor-pointer hover:bg-black-5 p-1 w-full'
     ])
-<div {{ $attributes->class(['self-end relative']) }}
+<div
+    {{ $attributes->class(['self-end relative']) }}
      x-data="{ expanded: false,
             toggle() {
                 if (this.expanded) {
