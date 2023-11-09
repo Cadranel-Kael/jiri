@@ -58,16 +58,16 @@
             </div>
         </x-slot:footer>
     </x-modal-form>
-    <div class="flex flex-col lg:flex-row justify-between mb-8">
-        <div class="flex flex-col gap-4 mr-4 mb-5 lg:flex-row">
-            <x-link-primary class="w-full lg:w-fit" href="#create">{{ __('contacts.add_new') }}</x-link-primary>
-            <x-link-white class="w-full lg:w-fit" href="#import">{{ __('contacts.import') }}</x-link-white>
-        </div>
-        <div class="flex flex-col gap-4 mr-4 mb-5 lg:flex-row">
-            <x-sort sort="sort" :order="$this->order" :options="$this->sortableBy"/>
-            <x-search class="w-full lg:w-fit" search="search"/>
-        </div>
-    </div>
+    <x-top-bar
+        createHref="#create"
+        :createLabel="__('contacts.add_new')"
+        importHref="#import"
+        :importLabel="__('contacts.import')"
+        sort="sort"
+        :order="$this->order"
+        :options="$this->sortables"
+        search="search"
+    />
     <div class="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-6 gap-4 mr-4">
         @foreach($this->contacts as $contact)
             <x-profile :id="$contact->id" livewire:revenue lazy="on-load" src="{{ $contact->image_url }}" email="{{ $contact->email }}"

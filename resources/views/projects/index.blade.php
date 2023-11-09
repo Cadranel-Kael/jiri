@@ -2,5 +2,5 @@
     <x-slot name="heading">
         {{ __('projects.title') }}
     </x-slot>
-    <livewire:projects-list/>
+    <livewire:projects-livewire-controller/>
 </x-app-layout>

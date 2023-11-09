@@ -6,7 +6,6 @@ use App\Models\Contact;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Livewire\Attributes\Computed;
-use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 
@@ -19,7 +18,7 @@ class ContactLivewireController extends Component
 
     public string $sort = 'name';
     public string $order = 'ASC';
-    public array $sortableBy = ['name', 'email', 'created_at'];
+    public array $sortables = ['name', 'email', 'created_at'];
 
     public $perPage = 12;
     public $contactFormShown = false;
