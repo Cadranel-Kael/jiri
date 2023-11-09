@@ -23,9 +23,9 @@
         </x-slot:title>
         <x-slot:body>
             <x-input-image class="mb-10 align-center"/>
-            <x-input class="mb-10" label="{{ __('form.full_name') }}" name="name" model="name" :placeholder="$this->name()" :value="$this->name()"/>
+            <x-input class="mb-10" label="{{ __('form.full_name') }}" name="name" model="name" :placeholder="$this->name()" :value="$this->name"/>
             <x-input class="mb-10" label="{{ __('form.email') }}" name="email" model="email"
-                     :placeholder="$this->email()" :value="$this->email()"/>
+                     :placeholder="$this->email()" :value="$this->email"/>
         </x-slot:body>
         <x-slot:footer>
             <div class="flex justify-center">
@@ -46,7 +46,7 @@
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-6 gap-4 mr-4">
         @foreach($this->contacts as $contact)
-            <x-profile-183 :id="$contact->id" livewire:revenue lazy="on-load" src="{{ $contact->image_url }}" email="{{ $contact->email }}"
+            <x-profile :id="$contact->id" livewire:revenue lazy="on-load" src="{{ $contact->image_url }}" email="{{ $contact->email }}"
                            name="{{ $contact->name }}"/>
         @endforeach
     </div>
