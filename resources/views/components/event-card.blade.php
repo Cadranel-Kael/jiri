@@ -3,5 +3,5 @@
     <x-date-pill :date="$date"/>
     <span class="text-center h-12 text-lg text-ellipsis">{{ $name }}</span>
     <x-date class="text-black-50" :date="$date" />
-    <x-link-outline href="" value="Voire l'épreuve"/>
+    <x-link-outline :href="route('events.show', $id)" value="Voire l'épreuve"/>
 </div>
