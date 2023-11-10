@@ -9,10 +9,8 @@ return new class extends Migration {
     {
         Schema::create('participants', function (Blueprint $table) {
             $table->id();
-            $table->string('role');
             $table->string('token');
-//            $table->foreignId('contact_id')->references('id')->on('contact');
-//            $table->foreignId('event_id')->references('id')->on('event');
+            $table->string('role');
             $table->softDeletes();
             $table->timestamps();
         });
