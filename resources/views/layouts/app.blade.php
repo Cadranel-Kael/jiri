@@ -30,9 +30,12 @@
 <div class="min-h-screen flex bg-gradient">
     <h1 class="sr-only">{{ $heading }}</h1>
     @include('layouts.navigation')
-    <div class="flex-1 mt-16">
-        @if (isset($heading))
+    <div class="flex-1 mt-16 overflow-hidden">
+        @if (isset($heading) && !isset($backUrl))
             <span aria-hidden="true" class="block text-h1 text-center lg:text-left text-primary font-bold mb-10">{{ $heading }}</span>
+        @endif
+        @isset($backUrl)
+                <a href="{{ $backUrl }}" class="block text-h2 text-center lg:text-left text-primary font-bold mb-10">Back</a>
         @endif
         <main class="w-full">
             {{ $slot }}
