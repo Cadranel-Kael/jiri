@@ -22,6 +22,28 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained();
         });
 
+        Schema::table('projects_events', function (Blueprint $table) {
+            $table->foreignId('project_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('event_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+        });
+
+        Schema::table('participants', function (Blueprint $table) {
+            $table->foreignId('contact_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('event_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+        });
+
     }
 
     /**
