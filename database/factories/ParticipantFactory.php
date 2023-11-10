@@ -16,7 +16,7 @@ class ParticipantFactory extends Factory
         return [
             'contact_id' => rand(1,100),
             'event_id' => rand(1,10),
-            'role' => random_int(0,1) ? 'evaluated' : 'jury',
+            'role' => random_int(0,1) ? 'evaluators' : 'students',
             'token' => Str::random(10),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
