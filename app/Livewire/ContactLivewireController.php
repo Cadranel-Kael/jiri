@@ -24,7 +24,7 @@ class ContactLivewireController extends Component
     public $contactFormShown = false;
 
     #[Url]
-    public $id = '1';
+    public $id = '';
 
     #[Computed]
     public function contacts()
@@ -37,7 +37,9 @@ class ContactLivewireController extends Component
     #[Computed]
     public function currentContact()
     {
-        return auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first();
+        if ($this->id) {
+            return auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first();
+        }
     }
 
     public function changeOrder()
@@ -94,6 +96,13 @@ class ContactLivewireController extends Component
             'name' => $this->name,
             'email' => $this->email,
         ]);
+
+        return Redirect::to(route('contacts.index'));
+    }
+
+    public function destroy($id)
+    {
+        Auth::user()->contacts()->where('id', $id)->delete();
 
         return Redirect::to(route('contacts.index'));
     }
