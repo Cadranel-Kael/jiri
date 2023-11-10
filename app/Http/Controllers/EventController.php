@@ -22,6 +22,9 @@ class EventController extends Controller
 
     public function show($id)
     {
+        $heading = auth()->user()->events()->where('id', $id)->first()->name;
+
+        return view('events.show', compact('heading', 'id'));
     }
 
     public function edit($id)

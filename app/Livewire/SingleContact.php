@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class SingleContact extends Component
 {
-    public int $id = 1;
+    public int $id;
 
     #[Computed]
     public function contact()

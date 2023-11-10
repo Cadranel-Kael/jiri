@@ -15,7 +15,7 @@ class EventLivewireController extends Component
     #[Computed]
     public function events()
     {
-        return auth()->user()->load('events')->events()->where('name', 'like', '%' . $this->search . '%')
+        return auth()->user()->events()->where('name', 'like', '%' . $this->search . '%')
             ->orderBy($this->sort, 'desc')
             ->paginate($this->perPage);
     }
