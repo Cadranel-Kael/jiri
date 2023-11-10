@@ -40,17 +40,17 @@
                 class="mb-10"
                 :label="__('form.full_name')"
                 name="name"
-                model="currentName"
-                :placeholder="$this->currentName()"
-                :value="$this->currentName()"
+                model="currentContact"
+                :value="$this->currentContact->name"
+                :placeholder="$this->currentContact->name"
             />
             <x-input
                 class="mb-10"
                 :label="__('form.email')"
                 name="email"
-                model="currentEmail"
-                :placeholder="$this->currentEmail()"
-                :value="$this->currentEmail()"/>
+                model="currentContact"
+                :value="$this->currentContact->email"
+                :placeholder="$this->currentContact->email"/>
         </x-slot:body>
         <x-slot:footer>
             <div class="flex justify-center">
