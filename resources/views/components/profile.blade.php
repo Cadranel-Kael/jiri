@@ -5,6 +5,7 @@
             'label'=>__('form.edit')
         ],
         [
+            'action' => 'destroy(' . $id . ')',
             'label'=>__('form.delete'),
             'color'=>'warning',
         ],

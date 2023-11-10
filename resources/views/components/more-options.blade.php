@@ -63,6 +63,7 @@
                     >{{ $item['label'] }}</a>
                 @else
                     <button
+                        wire:click="{{ $item['action'] ?? '' }}"
                         class="{{ $itemClass }}"
                         type="button"
                     >

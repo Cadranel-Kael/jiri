@@ -9,7 +9,14 @@
         @csrf
         <div class="flex relative">
             {{ $title }}
-            <a href="#" class="absolute right-0">close</a>
+            <a href="#" class="absolute right-0">
+                <svg role="img" class="fill-black w-4 h-auto" width="17.4611" height="19.6782">
+                    <use xlink:href="{{ asset('icons/icons.svg#icon-close') }}"/>
+                </svg>
+                <span class="sr-only">
+                    close
+                </span>
+            </a>
         </div>
         <div class="flex flex-col">
             {{ $body }}
