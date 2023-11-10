@@ -58,13 +58,12 @@
             <li>
                 @if(isset($item['href']))
                     <a
-                        wire:click="{{ $action ?? '' }}"
                         class="{{ $itemClass }}"
                         href="{{ $item['href'] }}"
                     >{{ $item['label'] }}</a>
                 @else
                     <button
-                        wire:click="{{ $action ?? '' }}"
+                        wire:click="{{ $item['action'] ?? '' }}"
                         class="{{ $itemClass }}"
                         type="button"
                     >
