@@ -5,22 +5,23 @@ namespace App\Livewire;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
-class EventsList extends Component
+class EventLivewireController extends Component
 {
     public $search = '';
     public $sort = 'date';
-    public $per_page = 18;
+    public $perPage = 18;
+    public array $sortables = ['name', 'email', 'created_at'];
 
     #[Computed]
     public function events()
     {
         return auth()->user()->load('events')->events()->where('name', 'like', '%' . $this->search . '%')
             ->orderBy($this->sort, 'desc')
-            ->paginate($this->per_page);
+            ->paginate($this->perPage);
     }
 
     public function render()
     {
-        return view('livewire.events-list');
+        return view('livewire.events');
     }
 }

@@ -7,10 +7,8 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('participants', function (Blueprint $table) {
+        Schema::create('projects_events', function (Blueprint $table) {
             $table->id();
-            $table->string('token');
-            $table->string('role');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -18,6 +16,8 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('participants');
+        Schema::table('projects_events', function (Blueprint $table) {
+            //
+        });
     }
 };
