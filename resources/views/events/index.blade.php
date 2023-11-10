@@ -2,5 +2,5 @@
     <x-slot name="heading">
         {{ __('events.title') }}
     </x-slot>
-    <livewire:events-list/>
+    <livewire:event-livewire-controller/>
 </x-app-layout>
