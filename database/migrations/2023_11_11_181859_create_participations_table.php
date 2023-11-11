@@ -9,11 +9,9 @@ return new class extends Migration {
     {
         Schema::create('participations', function (Blueprint $table) {
             $table->id();
-            $table->integer('score');
-            $table->string('comment')->nullable();
-            $table->integer('evaluator_id');
-            $table->integer('student_id');
-            $table->integer('project_id');
+            $table->json('scores')->nullable();
+            $table->json('comments')->nullable();
+            $table->json('urls')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
