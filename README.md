@@ -10,17 +10,11 @@
 
 - Name (varchar)
 
-  - admin
-
 - Email (varchar) (unique)
-
-  - admin@mail.com
 
 - Password (varchar)
 
-  - $2y$10$92IXUNpkjO0rO
-
-    
+  
 
 **Contacts**
 
@@ -28,15 +22,9 @@
 
 - Name (varchar)
 
-  - Katlyn Auer
-
 - Email (varchar)
 
-  - kaytlyn.auer@mail.com
-
 - Image_url (varchar)
-
-  - https://via.placeholder.com/640x480.png/00bbff?text=atque
 
 - User_id (fk)
 
@@ -46,20 +34,16 @@
 
 - Name (varchar)
 
-  - Portfolio
-
 - Description (varchar)
-
-  - A project...
 
 - Tags (json)
 
-  - [Implementation, WordPress]
+  - **Format**: [project1, project2...]
 
 - Urls (json) (nullable)
 
   - *The links for the overall project*
-  - [https://github.com/]
+  - **Format**: [link]
 
 - User_id (fk)
 
@@ -69,12 +53,9 @@
 
 - Name (varchar)
 
-  - Bloc 2024-2025
-
 - Date (date)
 
   - *Date programmed, updated when ended to the current date*
-  - 14/06/2025
 
 - Status (varchar)
 
@@ -116,11 +97,9 @@
 - Scores (json)
   - *The points received during an event*
   - **Format:** contact_id (jury) => points (out of 100) 
-  - [[ '2' => '56'], [ '3' => '56']]
 - Comments (json)
   - *The comments received during an event*
   - **Format:** contact_id (jury) => comment 
-  - [[ '2' => 'Very well done...'], [ '3' => 'Overall great project']]
 - Urls (json)
   - *The links for the specific project of the student*
   - [https://github.com/]
@@ -180,14 +159,3 @@
 
 - Has one **project** (projects)
 - Has one **student** (contacts)
-
-
-
-
-
-
-
-
-
-
-
