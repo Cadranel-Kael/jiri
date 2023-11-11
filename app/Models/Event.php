@@ -19,12 +19,26 @@ class Event extends Model
 
     public function owner(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this
+            ->belongsTo(User::class, 'user_id');
+    }
+
+    public function implementations(): HasMany
+    {
+        return $this
+            ->hasMany(Implementations::class);
+    }
+
+    public function projects(): BelongsToMany
+    {
+        return $this
+            ->belongsToMany(Project::class, 'implementations', 'event_id', 'contact_id');
     }
 
     public function participants(): HasMany
     {
-        return $this->hasMany(Participant::class);
+        return $this
+            ->hasMany(Participant::class);
     }
 
     public function contacts(): BelongsToMany
