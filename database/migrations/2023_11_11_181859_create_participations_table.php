@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('evaluations', function (Blueprint $table) {
+        Schema::create('participations', function (Blueprint $table) {
             $table->id();
             $table->integer('score');
             $table->string('comment')->nullable();
@@ -21,6 +21,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('evaluations');
+        Schema::dropIfExists('participations');
     }
 };
