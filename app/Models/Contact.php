@@ -28,10 +28,22 @@ class Contact extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function participations(): BelongsToMany
+    public function events(): BelongsToMany
     {
         return $this
-            ->belongsToMany(Participant::class, 'participants', 'contact_id', 'project_id')
+            ->belongsToMany(Event::class, 'participants', 'contact_id', 'project_id')
             ->withPivot(['role', 'token']);
+    }
+
+    public function projects(): BelongsToMany
+    {
+        return $this
+            ->belongsToMany(Project::class, 'implementations', 'contact_id', 'project_id')
+            ->withPivot(['urls', 'scores']);
+    }
+
+    public function implementations(): HasMany
+    {
+        return $this->hasMany(Implementations::class);
     }
 }
