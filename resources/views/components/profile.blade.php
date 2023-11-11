@@ -1,11 +1,11 @@
 <div class="bg-white justify-between drop-shadow p-4 flex flex-col items-center box-border rounded">
     <x-more-options :items="[
         [
-            'href'=>'?id=' . $id . '#edit',
+            'href'=>'?id=' . $contact->id . '#edit',
             'label'=>__('form.edit')
         ],
         [
-            'action' => 'destroy(' . $id . ')',
+            'action' => 'destroy(' . $contact->id . ')',
             'label'=>__('form.delete'),
             'color'=>'warning',
         ],

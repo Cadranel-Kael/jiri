@@ -72,8 +72,7 @@
     />
     <div class="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-6 gap-4 mr-4">
         @foreach($this->contacts as $contact)
-            <x-profile :id="$contact->id" livewire:revenue lazy="on-load" src="{{ $contact->image_url }}" email="{{ $contact->email }}"
-                           name="{{ $contact->name }}"/>
+            <x-profile :contact="$contact" livewire:revenue lazy="on-load"/>
         @endforeach
     </div>
     @if($this->contacts->isEmpty())

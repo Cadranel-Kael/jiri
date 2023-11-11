@@ -44,6 +44,16 @@ return new class extends Migration {
                 ->onDelete('cascade');
         });
 
+        Schema::table('participations', function (Blueprint $table) {
+            $table->foreignId('contact_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('project_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+        });
     }
 
     /**

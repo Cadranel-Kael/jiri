@@ -7,8 +7,11 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('projects_events', function (Blueprint $table) {
+        Schema::create('participations', function (Blueprint $table) {
             $table->id();
+            $table->json('scores')->nullable();
+            $table->json('comments')->nullable();
+            $table->json('urls')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -16,8 +19,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::table('projects_events', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('participations');
     }
 };

@@ -11,7 +11,7 @@
     />
     <div class="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-6 gap-4 mx-4">
         @foreach($this->events as $event)
-            <x-event-card :id="$event->id" :name="$event->name" :date="$event->date"/>
+            <x-event-card :event="$event"/>
         @endforeach
     </div>
 </div>
