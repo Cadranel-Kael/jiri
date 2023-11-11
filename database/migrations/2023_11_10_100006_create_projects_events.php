@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         Schema::create('projects_events', function (Blueprint $table) {
             $table->id();
+            $table->integer('weight')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -16,8 +17,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::table('projects_events', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('projects_event');
     }
 };
