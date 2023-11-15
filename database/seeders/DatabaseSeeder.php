@@ -34,10 +34,10 @@ class DatabaseSeeder extends Seeder
 
         Project::factory()->count(10)->create();
 
-        Participant::factory()->count(50)->create();
+        Participant::factory()->count(100)->create();
 
-        ProjectsEvents::factory()->count(50)->create();
+        ProjectsEvents::factory()->count(100)->create();
 
-        Participation::factory()->count(50)->create();
+        Participation::factory()->count(100)->create();
     }
 }

@@ -23,10 +23,10 @@ class Event extends Model
             ->belongsTo(User::class, 'user_id');
     }
 
-    public function implementations(): HasMany
+    public function participations(): HasMany
     {
         return $this
-            ->hasMany(Implementations::class);
+            ->hasMany(Participation::class);
     }
 
     public function projects(): BelongsToMany

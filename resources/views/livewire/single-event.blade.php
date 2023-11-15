@@ -17,7 +17,7 @@
     </div>
     <div>
         <h2>Students</h2>
-        <div class="flex">
+        <div class="flex flex-wrap">
             @foreach($this->students as $student)
                 <x-student :student="$student" />
             @endforeach

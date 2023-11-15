@@ -38,12 +38,12 @@ class Contact extends Model
     public function projects(): BelongsToMany
     {
         return $this
-            ->belongsToMany(Project::class, 'implementations', 'contact_id', 'project_id')
+            ->belongsToMany(Project::class, 'participations', 'contact_id', 'project_id')
             ->withPivot(['urls', 'scores']);
     }
 
-    public function implementations(): HasMany
+    public function participations(): HasMany
     {
-        return $this->hasMany(Implementations::class);
+        return $this->hasMany(Participation::class);
     }
 }
