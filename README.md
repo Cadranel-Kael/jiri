@@ -92,22 +92,22 @@
 
   
 
-**Participations**
+**Presentations**
 
-- Scores (json)
-  - *The points received during an event*
-  - **Format:** contact_id (jury) => points (out of 100) 
-- Comments (json)
-  - *The comments received during an event*
-  - **Format:** contact_id (jury) => comment 
 - Urls (json)
   - *The links for the specific project of the student*
   - [https://github.com/]
-- Contact_id (fk)
+- Student_id (fk)
   - *Id of the student*
 - Project_id (fk)
 
 
+**Scores**
+
+- Score (int)
+- Comment (varchar)
+- Jury_id (fk contacts)
+- Presentation_id (fk)
 
 
 
