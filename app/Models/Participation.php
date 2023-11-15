@@ -25,11 +25,16 @@ class Participation extends Model
 
     public function project(): HasOne
     {
-        return $this->hasOne(Project::class);
+        return $this->hasOne(Project::class, 'project_id');
     }
 
     public function student(): HasOne
     {
         return $this->hasOne(Contact::class);
+    }
+
+    public function getTasksAttribute()
+    {
+        return json_decode($this->attributes['tasks'], true);
     }
 }

@@ -27,4 +27,9 @@ class Project extends Model
     {
         return $this->belongsToMany(Contact::class, 'participations', 'project_id', 'contact_id');
     }
+
+    public function getTasksAttribute()
+    {
+        return json_decode($this->attributes['tasks'], true);
+    }
 }

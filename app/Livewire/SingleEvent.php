@@ -29,6 +29,21 @@ class SingleEvent extends Component
         return $this->event->students;
     }
 
+    public function getParticipations($contactId)
+    {
+        return $this->event->participations()->where('contact_id', $contactId)->get();
+    }
+
+    public function matchingTasks($projectTasks, $tasks)
+    {
+        foreach ($tasks as $task)
+        {
+            $matches[] = array_search($task, $projectTasks);
+        }
+
+        return $matches;
+    }
+
     public function render()
     {
         return view('livewire.single-event');
