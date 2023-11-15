@@ -26,7 +26,7 @@ class Event extends Model
     public function participations(): HasMany
     {
         return $this
-            ->hasMany(Participation::class);
+            ->hasMany(Presentation::class);
     }
 
     public function projects(): BelongsToMany

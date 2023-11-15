@@ -20,7 +20,7 @@ class Project extends Model
 
     public function participations(): HasMany
     {
-        return $this->hasMany(Participation::class);
+        return $this->hasMany(Presentation::class);
     }
 
     public function contacts(): BelongsToMany

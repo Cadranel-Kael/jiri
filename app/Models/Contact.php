@@ -44,6 +44,6 @@ class Contact extends Model
 
     public function participations(): HasMany
     {
-        return $this->hasMany(Participation::class);
+        return $this->hasMany(Presentation::class);
     }
 }

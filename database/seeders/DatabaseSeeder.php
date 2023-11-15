@@ -6,7 +6,7 @@ namespace Database\Seeders;
 use App\Models\Contact;
 use App\Models\Event;
 use App\Models\Participant;
-use App\Models\Participation;
+use App\Models\Presentation;
 use App\Models\Project;
 use App\Models\ProjectsEvents;
 use Illuminate\Database\Seeder;
@@ -38,6 +38,6 @@ class DatabaseSeeder extends Seeder
 
         ProjectsEvents::factory()->count(100)->create();
 
-        Participation::factory()->count(100)->create();
+        Presentation::factory()->count(100)->create();
     }
 }

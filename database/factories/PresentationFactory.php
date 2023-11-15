@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Participation;
+use App\Models\Presentation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
-class ParticipationFactory extends Factory
+class PresentationFactory extends Factory
 {
-    protected $model = Participation::class;
+    protected $model = Presentation::class;
 
 
     public function definition(): array
