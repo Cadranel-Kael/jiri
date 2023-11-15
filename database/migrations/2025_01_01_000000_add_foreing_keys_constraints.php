@@ -44,7 +44,7 @@ return new class extends Migration {
                 ->onDelete('cascade');
         });
 
-        Schema::table('participations', function (Blueprint $table) {
+        Schema::table('presentations', function (Blueprint $table) {
             $table->foreignId('contact_id')
                 ->constrained()
                 ->onUpdate('cascade')
@@ -83,7 +83,7 @@ return new class extends Migration {
             $table->dropForeign(['event_id']);
         });
 
-        Schema::table('participations', function (Blueprint $table) {
+        Schema::table('presentations', function (Blueprint $table) {
             $table->dropForeign(['contact_id']);
             $table->dropForeign(['project_id']);
         });
