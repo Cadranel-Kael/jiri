@@ -36,14 +36,13 @@
 
 - Description (varchar)
 
-- Tags (json)
+- Tasks (json)
 
-  - **Format**: [project1, project2...]
+  - *The taks needed to acomplish the project, the order of items are important because that is how they are displayed* 
 
 - Urls (json) (nullable)
 
   - *The links for the overall project*
-  - **Format**: [link]
 
 - User_id (fk)
 
@@ -57,9 +56,9 @@
 
   - *Date programmed, updated when ended to the current date*
 
-- Status (varchar)
+- Status (varchar) (nullable)
 
-  - *Status of the event (toBe, started, ended)*
+  - *Status of the event (started, ended)*
 
 - Duration (Time) (nullable)
 
@@ -92,21 +91,24 @@
 
   
 
-**Presentations**
+**Participations**
 
-- Urls (json)
+- Tasks (json) (nullable)
+  - *The task accomplished for the given projects (compared with the tasks of the project)*
+- Urls (json) (nullable)
   - *The links for the specific project of the student*
-  - [https://github.com/]
-- Student_id (fk)
+- Contact_id (fk)
   - *Id of the student*
 - Project_id (fk)
+
 
 
 **Scores**
 
 - Score (int)
-- Comment (varchar)
-- Jury_id (fk contacts)
+- Comment (varchar) (nullable)
+- contact_id (fk contacts)
+  - *Id of the jury*
 - Presentation_id (fk)
 
 
@@ -134,7 +136,8 @@
 **Projects**
 
 - Belongs to one **user** (users)
-- Belongs to many **contacts** (contacts)
+- Belongs to many **contacts** (contacts with participations)
+- Has many **participations** (participations)
 
 
 
@@ -159,3 +162,14 @@
 
 - Has one **project** (projects)
 - Has one **student** (contacts)
+
+
+
+
+
+
+
+
+
+
+
