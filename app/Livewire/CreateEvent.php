@@ -2,48 +2,95 @@
 
 namespace App\Livewire;
 
+use App\Models\Event;
+use App\Models\EventsProject;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class CreateEvent extends Component
 {
+    public $name;
+    public $date;
+
     public $projectSearch = '';
     public string $projectSort = 'title';
     public string $projectOrder = 'ASC';
     public array $projectSortables = ['title', 'created_at'];
-    public $addedProjectsIds = [];
+    public array $addedProjectsIds = [1, 3];
 
     public $evaluatorSearch = '';
     public string $evaluatorSort = 'name';
     public string $evaluatorOrder = 'ASC';
     public array $evaluatorSortables = ['name', 'email', 'created_at'];
-    public $addedEvaluatorsIds = [];
+    public array $addedEvaluatorsIds = [];
 
     public $studentSearch = '';
     public string $studentOrder = 'ASC';
     public string $studentSort = 'name';
-    public array $studentSortables = ['name', 'email','created_at'];
-    public $addedStudentsIds = [];
+    public array $studentSortables = ['name', 'email', 'created_at'];
+    public array $addedStudentsIds = [3];
 
-    public function changeOrder($order)
+    // [student_id => [project_id => [task_id => [task_id, task_id]]]]
+    public array $tasks = [];
+
+    public function changeOrder(string $collection)
     {
-        $order = $order === 'ASC' ? 'DESC' : 'ASC';
+        switch ($collection) {
+            case 'projects':
+                $this->projectOrder = $this->projectOrder === 'ASC' ? 'DESC' : 'ASC';
+                break;
+            case 'evaluators':
+                $this->evaluatorOrder = $this->evaluatorOrder === 'ASC' ? 'DESC' : 'ASC';
+                break;
+            case 'students':
+                $this->studentOrder = $this->studentOrder === 'ASC' ? 'DESC' : 'ASC';
+                break;
+        }
+
     }
 
-    public function add($array, $id):void
+    public function add(string $collection, int $id): void
     {
-        if (!in_array($id, $this->$array)) {
-            $array[] = $id;
+        switch ($collection) {
+            case 'projects':
+                if (!in_array($id, $this->addedProjectsIds) && auth()->user()->projects()->where('id', $id)->exists()) {
+                    $this->addedProjectsIds[] = $id;
+                }
+                break;
+            case 'evaluators':
+                if (!in_array($id, $this->addedEvaluatorsIds) && !in_array($id, $this->addedStudentsIds) && auth()->user()->contacts()->where('id', $id)->exists()) {
+                    $this->addedEvaluatorsIds[] = $id;
+                }
+                break;
+            case 'students':
+                if (!in_array($id, $this->addedEvaluatorsIds) && !in_array($id, $this->addedStudentsIds) && auth()->user()->contacts()->where('id', $id)->exists()) {
+                    $this->addedStudentsIds[] = $id;
+                }
+                break;
         }
     }
 
-    public function remove($array, $id): void
+    public function remove(string $collection, int $id): void
     {
-        if (in_array($id, $array)) {
-            $array =  array_diff($array, [$id]);
+        switch ($collection) {
+            case 'projects':
+                if (in_array($id, $this->addedProjectsIds)) {
+                    $this->addedProjectsIds = array_diff($this->addedProjectsIds, [$id]);
+                }
+                break;
+            case 'evaluators':
+                if (in_array($id, $this->addedEvaluatorsIds)) {
+                    $this->addedEvaluatorsIds = array_diff($this->addedEvaluatorsIds, [$id]);
+                }
+                break;
+            case 'students':
+                if (!in_array($id, $this->addedEvaluatorsIds)) {
+                    $this->addedStudentsIds = array_diff($this->addedStudentsIds, [$id]);
+                }
+                break;
         }
     }
-
 
     #[Computed]
     public function projects()
@@ -54,7 +101,7 @@ class CreateEvent extends Component
             ->whereNotIn('id', $this->addedProjectsIds)
             ->where('title', 'like', '%' . $this->projectSearch . '%')
             ->orderBy($this->projectSort, $this->projectOrder)
-            ->get();
+            ->paginate(10);
     }
 
     #[Computed]
@@ -78,7 +125,7 @@ class CreateEvent extends Component
             ->whereNotIn('id', $this->addedStudentsIds)
             ->where('name', 'like', '%' . $this->evaluatorSearch . '%')
             ->orderBy($this->evaluatorSort, $this->evaluatorOrder)
-            ->get();
+            ->paginate(10);
     }
 
     #[Computed]
@@ -101,7 +148,7 @@ class CreateEvent extends Component
             ->whereNotIn('id', $this->addedStudentsIds)
             ->where('name', 'like', '%' . $this->studentSearch . '%')
             ->orderBy($this->studentSort, $this->studentOrder)
-            ->get();
+            ->paginate(10);
     }
 
     #[Computed]
@@ -112,6 +159,81 @@ class CreateEvent extends Component
             ->contacts()
             ->whereIn('id', $this->addedStudentsIds)
             ->get();
+    }
+
+    public function toggleTasks($student_id, $project_id, array $tasks)
+    {
+        if (!isset($this->tasks[$student_id][$project_id])) {
+            $this->tasks[$student_id][$project_id] = [];
+        }
+        foreach ($tasks as $task) {
+            if (!in_array($task, $this->tasks[$student_id][$project_id])) {
+
+                $this->tasks[$student_id][$project_id][] = $task;
+
+            } elseif (in_array($task, $this->tasks[$student_id][$project_id])) {
+                $this->tasks[$student_id][$project_id] = array_diff($this->tasks[$student_id][$project_id], [$task]);
+            }
+        }
+    }
+
+    public function matchTask($student_id, $project_id, $task)
+    {
+        if (isset($this->tasks[$student_id][$project_id]) && in_array($task, $this->tasks[$student_id][$project_id])) {
+            return true;
+        }
+        return false;
+    }
+
+    public function rules()
+    {
+        return [
+            'name' => 'required|min:3',
+            'date' => 'required',
+        ];
+    }
+
+    public function save()
+    {
+        $this->validate();
+
+        $event = auth()->user()->events()->save(new Event([
+            'name' => $this->name,
+            'date' => $this->date,
+        ]));
+
+
+        foreach ($this->addedProjectsIds as $project_id) {
+            $event->projects()->attach($project_id);
+        }
+
+        foreach ($this->addedEvaluatorsIds as $evaluator_id) {
+            $event->participants()->create([
+                'contact_id' => $evaluator_id,
+                'event_id' => $event->id,
+                'role' => 'evaluator',
+                'token' => bin2hex(random_bytes(32)),
+            ]);
+        }
+
+        foreach ($this->addedStudentsIds as $student_id) {
+            $event->participants()->create([
+                'contact_id' => $student_id,
+                'event_id' => $event->id,
+                'role' => 'student',
+                'token' => bin2hex(random_bytes(32)),
+            ]);
+        }
+
+        foreach ($this->tasks as $student_id => $projects) {
+            foreach ($projects as $project_id => $tasks) {
+                $event->presentations()->create([
+                    'contact_id' => $student_id,
+                    'project_id' => $project_id,
+                    'tasks' => $tasks,
+                ]);
+            }
+        }
     }
 
     public function render()
