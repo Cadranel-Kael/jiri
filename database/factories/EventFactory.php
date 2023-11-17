@@ -13,7 +13,7 @@ class EventFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->word(),
             'date' => Carbon::createFromDate(rand(2020, 2025), rand(1, 12), rand(1, 30), 0),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
