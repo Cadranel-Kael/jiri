@@ -17,6 +17,16 @@ class Event extends Model
         'date' => 'datetime',
     ];
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'date',
+    ];
+
     public function owner(): BelongsTo
     {
         return $this
@@ -32,13 +42,19 @@ class Event extends Model
     public function projects(): BelongsToMany
     {
         return $this
-            ->belongsToMany(Project::class, 'events_projects', 'event_id', 'project_id');
+            ->belongsToMany(Project::class, 'events_projects', 'event_id', 'project_id')
+            ->withPivot('id');
     }
 
     public function participants(): HasMany
     {
         return $this
             ->hasMany(Participant::class);
+    }
+
+    public function eventsProjects(): HasMany
+    {
+        return $this->hasMany(EventsProject::class);
     }
 
     public function contacts(): BelongsToMany
