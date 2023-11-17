@@ -23,6 +23,7 @@ export default {
                 'black-50': '#8C8C8E',
                 'black-5': '#F3F4F4',
                 'warning': '#C5283D',
+                'success': '#447e4a',
             },
             borderRadius: {
                 'DEFAULT': '0.625rem',
