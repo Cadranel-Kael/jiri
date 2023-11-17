@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -23,9 +25,9 @@ class Presentation extends Model
         'urls' => 'array',
     ];
 
-    public function project(): HasOne
+    public function project(): BelongsTo
     {
-        return $this->hasOne(Project::class, 'project_id');
+        return $this->BelongsTo(Project::class);
     }
 
     public function student(): HasOne
@@ -36,5 +38,10 @@ class Presentation extends Model
     public function getTasksAttribute()
     {
         return json_decode($this->attributes['tasks'], true);
+    }
+
+    public function scores(): HasMany
+    {
+        return $this->hasMany(Score::class);
     }
 }
