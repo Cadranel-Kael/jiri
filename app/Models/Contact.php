@@ -42,7 +42,7 @@ class Contact extends Model
             ->withPivot(['urls', 'scores']);
     }
 
-    public function participations(): HasMany
+    public function presentations(): HasMany
     {
         return $this->hasMany(Presentation::class);
     }
