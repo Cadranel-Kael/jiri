@@ -13,7 +13,6 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => rand(1,2),
             'title' => $this->faker->word(),
             'description' => $this->faker->text(),
             'tasks' => json_encode(['Design', 'Implementation', 'Wordpress']),

@@ -8,7 +8,9 @@ use App\Models\Event;
 use App\Models\Participant;
 use App\Models\Presentation;
 use App\Models\Project;
-use App\Models\ProjectsEvents;
+use App\Models\EventsProject;
+use App\Models\Score;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,26 +20,82 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\User::factory()->create([
+        $user = User::factory()->create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
         ]);
 
-        \App\Models\User::factory()->create([
-            'name' => 'admin2',
-            'email' => 'admin2@gmail.com',
-        ]);
+        $contacts = Contact::factory()->count(100)->create(
+            [
+                'user_id' => $user->id,
+            ]
+        );
 
-        Contact::factory()->count(100)->create();
+        $events = Event::factory()->count(5)->create(
+            [
+                'user_id' => $user->id,
+            ]
+        );
 
-        Event::factory()->count(30)->create();
+        $projects = Project::factory()->count(10)->create(
+            [
+                'user_id' => $user->id,
+            ]
+        );
 
-        Project::factory()->count(10)->create();
+        foreach ($events as $event) {
+            for ($i = 0; $i < 3; $i++) {
+                EventsProject::factory()->create(
+                    [
+                        'event_id' => $event->id,
+                        'project_id' => $projects->random()->id,
+                    ]
+                );
+            }
+        }
 
-        Participant::factory()->count(100)->create();
+        foreach ($events as $event) {
+            $students = $contacts->random(10);
+            $evaluators = $contacts->whereNotIn('id', $students->pluck('id'))->random(10);
 
-        ProjectsEvents::factory()->count(100)->create();
+            foreach ($students as $student) {
+                Participant::factory()->create([
+                    'event_id' => $event->id,
+                    'contact_id' => $student->id,
+                    'role' => 'student',
+                ]);
+            }
 
-        Presentation::factory()->count(100)->create();
+            foreach ($evaluators as $evaluator) {
+                Participant::factory()->create([
+                    'event_id' => $event->id,
+                    'contact_id' => $evaluator->id,
+                    'role' => 'evaluator',
+                ]);
+            }
+        }
+
+        foreach ($events as $event) {
+            $projects = $event->projects;
+
+            foreach ($event->students as $student) {
+                foreach ($projects as $project) {
+                    Presentation::factory()->create([
+                        'event_id' => $event->id,
+                        'project_id' => $project->id,
+                        'contact_id' => $student->id,
+                    ]);
+                }
+            }
+
+            foreach ($event->evaluators as $evaluator) {
+                foreach ($event->presentations as $presentation) {
+                    Score::factory()->create([
+                        'presentation_id' => $presentation->id,
+                        'contact_id' => $evaluator->id,
+                    ]);
+                }
+            }
+        }
     }
 }
