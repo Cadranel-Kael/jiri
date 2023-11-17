@@ -12,6 +12,15 @@ class Participant extends Model
 {
     use SoftDeletes, HasFactory;
 
+    protected $fillable = [
+        'contact_id',
+        'event_id',
+        'tasks',
+        'urls',
+        'token',
+        'role',
+    ];
+
     public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class, 'contact_id');
