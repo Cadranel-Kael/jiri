@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('presentation', function (Blueprint $table) {
+        Schema::create('presentations', function (Blueprint $table) {
             $table->id();
             $table->json('scores')->nullable();
             $table->json('urls')->nullable();
