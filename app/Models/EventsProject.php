@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ProjectsEvents extends Model
+class EventsProject extends Model
 {
     use SoftDeletes, HasFactory;
 }

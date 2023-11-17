@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('projects_events', function (Blueprint $table) {
+        Schema::create('events_projects', function (Blueprint $table) {
             $table->id();
             $table->integer('weight')->default(1);
             $table->softDeletes();
@@ -17,6 +17,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('projects_events');
+        Schema::dropIfExists('events_projects');
     }
 };
