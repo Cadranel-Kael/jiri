@@ -9,14 +9,17 @@
         </div>
     </div>
     <div class="w-full">
-        @foreach($student->projects as $project)
+        @foreach($student->presentations as $presentation)
             <div class="flex items-center bg-black-5 p-2.5 rounded flex-col">
                 <div class="flex justify-between">
-                    <div>{{ $project->title }}</div>
-                    <div>expand</div>
+                    <div>{{ $presentation->project->title }}</div>
+{{--                    <div>expand</div>--}}
                 </div>
                 <div>
-                    {{dd($project->tasks, $this->getParticipations($student->id)->tasks)}}
+                    @foreach($presentation->project->tasks as $task)
+                        @php($isMatchingTask = in_array($task, $presentation->tasks))
+                        <div class="{{ $isMatchingTask ? 'text-success' : 'text-warning' }}">{{ $task }}</div>
+                    @endforeach
 {{--                    {{getParticipations($student->id)->tasks}}--}}
 {{--                        {{ $this->matchingTasks($student->project->tasks, getParticipations($student->id)->tasks) }}--}}
                 </div>

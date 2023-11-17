@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -26,13 +27,18 @@ class SingleEvent extends Component
     #[Computed]
     public function students()
     {
-        return $this->event->students;
+        return $this->event->students()->whereHas('presentations', function (Builder $query) {
+            $query->where('event_id', $this->event->id);
+        })->with(['presentations' => function ($query) {
+            $query->where('event_id', $this->event->id);
+        }])->get();
     }
 
-    public function getParticipations($contactId)
+    public function presentations($contactId)
     {
-        return $this->event->participations()->where('contact_id', $contactId)->get();
+        return $this->event->presentations()->where('contact_id', $contactId)->get();
     }
+
 
     public function matchingTasks($projectTasks, $tasks)
     {
