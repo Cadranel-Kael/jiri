@@ -9,7 +9,6 @@ return new class extends Migration {
     {
         Schema::create('presentations', function (Blueprint $table) {
             $table->id();
-            $table->json('scores')->nullable();
             $table->json('urls')->nullable();
             $table->json('tasks')->nullable();
             $table->softDeletes();
