@@ -23,16 +23,16 @@ class Event extends Model
             ->belongsTo(User::class, 'user_id');
     }
 
-    public function participations(): HasMany
+    public function presentations(): HasMany
     {
         return $this
-            ->hasMany(Participation::class);
+            ->hasMany(Presentation::class, 'event_id');
     }
 
     public function projects(): BelongsToMany
     {
         return $this
-            ->belongsToMany(Project::class, 'implementations', 'event_id', 'contact_id');
+            ->belongsToMany(Project::class, 'events_projects', 'event_id', 'project_id');
     }
 
     public function participants(): HasMany
@@ -52,7 +52,7 @@ class Event extends Model
         return $this
             ->belongsToMany(Contact::class, 'participants', 'event_id', 'contact_id')
             ->withPivot('role')
-            ->wherePivot('role', 'evaluators');
+            ->wherePivot('role', 'evaluator');
     }
 
     public function students(): BelongsToMany
@@ -60,6 +60,6 @@ class Event extends Model
         return $this
             ->belongsToMany(Contact::class, 'participants', 'event_id', 'contact_id')
             ->withPivot('role')
-            ->wherePivot('role', 'students');
+            ->wherePivot('role', 'student');
     }
 }

@@ -2,17 +2,19 @@
 
 namespace Database\Factories;
 
+use App\Models\Score;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
 
-class ProjectsEventsFactory extends Factory
+class ScoreFactory extends Factory
 {
+    protected $model = Score::class;
+
     public function definition(): array
     {
         return [
-            'project_id' => rand(1,10),
-            'event_id' => rand(1,10),
+            'score' => $this->faker->numberBetween(0,100),
+            'comment' => $this->faker->text(100),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

@@ -2,23 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Participation;
+use App\Models\Presentation;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
-class ParticipationFactory extends Factory
+class PresentationFactory extends Factory
 {
-    protected $model = Participation::class;
+    protected $model = Presentation::class;
 
 
     public function definition(): array
     {
-        $scores = [];
-        for ($i = 0; $i < rand(1,5); $i++) {
-            $jury = rand(0,50);
-            $scores[] = [$jury, rand(0,20), $this->faker->text(100)];
-        }
-
         $urls = [];
         for ($j = 0; $j < 4; $j++) {
             $urls[] = $this->faker->url();
@@ -30,9 +24,6 @@ class ParticipationFactory extends Factory
         }
 
         return [
-            'contact_id' => rand(1,100),
-            'project_id' => rand(1,10),
-            'scores' => json_encode($scores),
             'urls' => json_encode($urls),
             'tasks' => json_encode($tasks),
             'created_at' => Carbon::now(),

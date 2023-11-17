@@ -7,11 +7,10 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('participations', function (Blueprint $table) {
+        Schema::create('scores', function (Blueprint $table) {
             $table->id();
-            $table->json('scores')->nullable();
-            $table->json('urls')->nullable();
-            $table->json('tasks')->nullable();
+            $table->integer('score')->nullable();
+            $table->string('comment')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -19,6 +18,6 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::dropIfExists('participations');
+        Schema::dropIfExists('scores');
     }
 };

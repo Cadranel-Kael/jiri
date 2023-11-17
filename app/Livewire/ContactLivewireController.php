@@ -29,7 +29,7 @@ class ContactLivewireController extends Component
     #[Computed]
     public function contacts()
     {
-        return auth()->user()->load('contacts')->contacts()->where('name', 'like', '%' . $this->search . '%')
+        return auth()->user()->contacts()->where('name', 'like', '%' . $this->search . '%')
             ->orderBy($this->sort, $this->order)
             ->paginate($this->perPage);
     }

@@ -18,14 +18,14 @@ class Project extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function participations(): HasMany
+    public function presentation(): HasMany
     {
-        return $this->hasMany(Participation::class);
+        return $this->hasMany(Presentation::class, 'project_id');
     }
 
     public function contacts(): BelongsToMany
     {
-        return $this->belongsToMany(Contact::class, 'participations', 'project_id', 'contact_id');
+        return $this->belongsToMany(Contact::class, 'presentation', 'project_id', 'contact_id');
     }
 
     public function getTasksAttribute()

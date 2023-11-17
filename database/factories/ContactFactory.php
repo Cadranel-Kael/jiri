@@ -16,7 +16,6 @@ class ContactFactory extends Factory
             'name' => $this->faker->name(),
             'image_url' => $this->faker->imageUrl(),
             'email' => $this->faker->unique()->safeEmail(),
-            'user_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

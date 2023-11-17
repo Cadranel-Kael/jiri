@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->foreignId('user_id')->constrained();
         });
 
-        Schema::table('projects_events', function (Blueprint $table) {
+        Schema::table('events_projects', function (Blueprint $table) {
             $table->foreignId('project_id')
                 ->constrained()
                 ->onUpdate('cascade')
@@ -44,12 +44,27 @@ return new class extends Migration {
                 ->onDelete('cascade');
         });
 
-        Schema::table('participations', function (Blueprint $table) {
+        Schema::table('presentations', function (Blueprint $table) {
             $table->foreignId('contact_id')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->foreignId('project_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('event_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+        });
+
+        Schema::table('scores', function (Blueprint $table) {
+            $table->foreignId('contact_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('presentation_id')
                 ->constrained()
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
@@ -73,7 +88,7 @@ return new class extends Migration {
             $table->dropForeign(['user_id']);
         });
 
-        Schema::table('projects_events', function (Blueprint $table) {
+        Schema::table('events_projects', function (Blueprint $table) {
             $table->dropForeign(['project_id']);
             $table->dropForeign(['event_id']);
         });
@@ -83,9 +98,15 @@ return new class extends Migration {
             $table->dropForeign(['event_id']);
         });
 
-        Schema::table('participations', function (Blueprint $table) {
+        Schema::table('presentations', function (Blueprint $table) {
             $table->dropForeign(['contact_id']);
             $table->dropForeign(['project_id']);
+            $table->dropForeign(['event_id']);
+        });
+
+        Schema::table('scores', function (Blueprint $table) {
+            $table->dropForeign(['contact_id']);
+            $table->dropForeign(['presentation_id']);
         });
     }
 };
