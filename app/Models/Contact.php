@@ -31,7 +31,7 @@ class Contact extends Model
     public function events(): BelongsToMany
     {
         return $this
-            ->belongsToMany(Event::class, 'participants', 'contact_id', 'project_id')
+            ->belongsToMany(Event::class, 'participants', 'contact_id', 'event_id')
             ->withPivot(['role', 'token']);
     }
 
