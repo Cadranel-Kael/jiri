@@ -24,10 +24,37 @@
                 @foreach($this->events as $event)
                     <tr>
                         <td class="p-2.5">Expand</td>
-                        <td class="p-2.5"><x-date-pill :date="$event->date"/></td>
+                        <td class="p-2.5">
+                            <x-date-pill :date="$event->date"/>
+                        </td>
                         <td class="p-2.5">{{ $event->name }}</td>
-                        <td class="p-2.5"><x-date :date="$event->date"/></td>
-                        <td class="p-2.5"></td>
+                        <td class="p-2.5">
+                            <x-date :date="$event->date"/>
+                        </td>
+                        <td class="p-2.5">{{ $this->getAverage($event->id, 20) }} / 20</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td colspan="4">
+                            <table class="bg-black-5 w-full rounded-bl-lg">
+                                <thead>
+                                <tr class="text-primary">
+                                    <td>form.projects</td>
+                                    <td>form.points</td>
+                                    <td>form.weight</td>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($event->projects as $project)
+                                    <tr>
+                                        <td>{{ $project->title }}</td>
+                                        <td>{{  $this->getProjectAverage($event->id, $project->id, 20) }} / 20</td>
+                                        <td>{{ $project->pivot->weight }}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
