@@ -43,7 +43,7 @@ class Event extends Model
     {
         return $this
             ->belongsToMany(Project::class, 'events_projects', 'event_id', 'project_id')
-            ->withPivot('id');
+            ->withPivot('id', 'weight');
     }
 
     public function participants(): HasMany
