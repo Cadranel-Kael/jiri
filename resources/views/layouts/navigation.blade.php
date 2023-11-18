@@ -7,7 +7,7 @@
             <li>
                 <button class="rounded flex items-center group hover:bg-white" type="button"
                         @click="expanded = ! expanded">
-                    <div class="group rounded p-2 group-hover:bg-white h-10 w-10 flex">
+                    <span class="group rounded p-2 group-hover:bg-white h-10 w-10 flex">
                         <template x-if="!expanded">
                             <svg role="img" class="w-6 h-auto fill-white group-hover:fill-primary" width="1.392175"
                                  height="1.0546875">
@@ -20,7 +20,7 @@
                                 <use xlink:href="{{ asset('icons/icons.svg#icon-close') }}"/>
                             </svg>
                         </template>
-                    </div>
+                    </span>
                     <span class="ml-6 sr-only">Expand</span>
                 </button>
             </li>
