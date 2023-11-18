@@ -25,6 +25,11 @@ class Presentation extends Model
         'urls' => 'array',
     ];
 
+    public function event(): BelongsTo
+    {
+        return $this->BelongsTo(Event::class);
+    }
+
     public function project(): BelongsTo
     {
         return $this->BelongsTo(Project::class);

@@ -19,7 +19,30 @@ class SingleContact extends Component
     #[Computed]
     public function events()
     {
-        return $this->contact->participations->map->event;
+        return $this->contact()->events->load('projects')->load('presentations');
+    }
+
+    public function getProjectAverage($event_id, $project_id, $total = 100)
+    {
+        return round($this
+            ->events
+            ->where('id', $event_id)
+            ->first()
+            ->presentations()
+            ->where('project_id', $project_id)
+            ->first()
+            ->scores
+            ->pluck('score')
+            ->avg()/100*$total);
+    }
+
+    public function getAverage($event_id, $total = 100)
+    {
+        foreach ($this->events->where('id', $event_id)->first()->projects as $project) {
+            $scores[] = $this->getProjectAverage($event_id, $project->id)*$project->pivot->weight;
+        }
+
+        return round(array_sum($scores)/count($scores)/100*$total);
     }
 
     public function render()
