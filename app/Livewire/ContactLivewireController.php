@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Contact;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Url;
@@ -11,7 +12,7 @@ use Livewire\Component;
 
 class ContactLivewireController extends Component
 {
-    public $name, $email, $currentName, $currentEmail;
+    public $name, $email, $currentName, $currentEmail, $deleteModuleShown = false;
 
     #[Url(as: 's')]
     public $search = '';
@@ -87,6 +88,10 @@ class ContactLivewireController extends Component
 
     public function update()
     {
+        if (!Gate::allows('handle-contact', $this->currentContact())) {
+            abort(403);
+        }
+
         $this->name = $this->currentName;
         $this->email = $this->currentEmail;
 
@@ -100,8 +105,17 @@ class ContactLivewireController extends Component
         return Redirect::to(route('contacts.index'));
     }
 
+    public function toggleDeleteModule()
+    {
+        $this->deleteModuleShown = !$this->deleteModuleShown;
+    }
+
     public function destroy($id)
     {
+        if (!Gate::allows('handle-contact', $this->contacts()->where('id', $id)->first())) {
+            abort(403);
+        }
+
         Auth::user()->contacts()->where('id', $id)->delete();
 
         return Redirect::to(route('contacts.index'));
