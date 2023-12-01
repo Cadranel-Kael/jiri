@@ -1,4 +1,19 @@
 <div>
+{{--    @if($deleteModalShown)--}}
+{{--        <x-modal-form--}}
+{{--            submit="destroy"--}}
+{{--            name="delete"--}}
+{{--        >--}}
+{{--            <x-slot:body>--}}
+{{--                <div>Are you sure to delete {{ $this->contacts()->where('id', $id)->name }}</div>--}}
+{{--            </x-slot:body>--}}
+{{--            <x-slot:footer>--}}
+{{--                <div class="flex justify-center">--}}
+{{--                    <x-button-primary type="submit">{{ __('form.delete') }}</x-button-primary>--}}
+{{--                    <x-button-primary type="button" wire:click="toggleDeleteModal">{{ __('form.cancel') }}</x-button-primary>--}}
+{{--                </div>--}}
+{{--        </x-modal-form>--}}
+{{--    @endif--}}
     <x-modal-form
         submit="save"
         name="create"
@@ -70,7 +85,7 @@
         :options="$this->sortables"
         search="search"
     />
-    <div class="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-6 gap-4 mr-4">
+    <div class="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-6 gap-4 mx-4">
         @foreach($this->contacts as $contact)
             <x-profile :contact="$contact" livewire:revenue lazy="on-load"/>
         @endforeach
