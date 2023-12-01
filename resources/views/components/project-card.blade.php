@@ -13,7 +13,7 @@
             ]
         ]"
     />
-    <span class="text-center text-ellipsis font-bold">{{ $title }}</span>
-    <span class="text-center h-12 overflow-hidden text-ellipsis">{{ $description }}</span>
+    <span class="text-center text-ellipsis font-bold">{{ $project->title }}</span>
+    <span class="text-center h-12 overflow-hidden text-ellipsis">{{ $project->description }}</span>
     <x-link-outline href="" value="Voire le projet"/>
 </div>
