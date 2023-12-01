@@ -17,6 +17,11 @@ class SingleEvent extends Component
         return auth()->user()->events()->where('id', $this->id)->first();
     }
 
+    #[Computed]
+    public function projects()
+    {
+        return $this->event->projects;
+    }
 
     #[Computed]
     public function evaluators()
