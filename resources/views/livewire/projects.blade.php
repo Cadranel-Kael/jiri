@@ -24,7 +24,7 @@
     />
     <div class="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-6 gap-4 mx-4">
         @foreach($this->projects as $project)
-            <x-project-card title="{{ $project->title }}" description="{{ $project->description }}"/>
+            <x-project-card :project="$project"/>
         @endforeach
     </div>
 {{--    @if($this->contacts->isEmpty())--}}
