@@ -25,4 +25,8 @@ return [
     'description' => 'Description',
     'link' => 'Lien :link',
     'created_at' => 'Date de création',
+    'weight' => 'Poids',
+    'points' => 'Points',
+    'average' => 'Moyenne',
+    'situation' => 'Situation',
 ];
