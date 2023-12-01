@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $events = Event::factory()->count(5)->create(
+        $events = Event::factory()->count(10)->create(
             [
                 'user_id' => $user->id,
             ]
@@ -54,7 +54,7 @@ class DatabaseSeeder extends Seeder
             }
         }
 
-        foreach ($events as $event) {
+        foreach ($events->where('status', 'ended') as $event) {
             $students = $contacts->random(10);
             $evaluators = $contacts->whereNotIn('id', $students->pluck('id'))->random(10);
 

@@ -12,9 +12,17 @@ class EventFactory extends Factory
 
     public function definition(): array
     {
+        $date = Carbon::createFromDate(rand(2020, 2025), rand(1, 12), rand(1, 30), 0);
+        if ($date->isPast()) {
+            $status = 'ended';
+        } else {
+            $status = null;
+        }
+
         return [
             'name' => $this->faker->word(),
-            'date' => Carbon::createFromDate(rand(2020, 2025), rand(1, 12), rand(1, 30), 0),
+            'date' => $date,
+            'status' => $status,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];

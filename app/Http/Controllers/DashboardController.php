@@ -8,7 +8,7 @@ class DashboardController extends Controller
 {
     public function __invoke()
     {
-        $events = auth()->user()->load('events')->events->where('date', '>', Carbon::today());
+        $events = auth()->user()->load('events')->events->whereNull('status');
 
 
         return view('dashboard', compact('events'));
