@@ -31,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-2">
+        <div class="lg:grid lg:grid-cols-2">
             <h2 class="col-span-2 font-bold lg:mb-8">Ajouter les Contacts</h2>
             <div class="ml-4 w-5/6">
                 <h3 class="font-bold mb-2">Jury</h3>
