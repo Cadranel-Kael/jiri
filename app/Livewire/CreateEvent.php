@@ -10,7 +10,10 @@ use Livewire\Component;
 
 class CreateEvent extends Component
 {
+    #[Validate('required|min:3')]
     public $name;
+
+    #[Validate('required')]
     public $date;
 
     public $projectSearch = '';
