@@ -18,10 +18,21 @@
                 <x-project-card :project="$project"/>
             @endforeach
         </div>
+    </div>
+    @if($this->showEvaluatorModal)
+        <x-modal>
+            <x-slot name="title">
+
+            </x-slot>
+            <x-slot name="body">
+
+            </x-slot>
+        </x-modal>
+    @endif
     <div class="mb-6">
         <div class="ml-4 flex gap-2">
             <h2 class="text-h2 mb-4">{{ __('events.jury') }} ({{ count($this->evaluators()) }})</h2>
-            <button>{{ __('events.jury_add') }}</button>
+            <button type="button" wire:click="openEvaluatorModal">{{ __('events.jury_add') }}</button>
         </div>
         <div class="flex overflow-x-scroll p-4 gap-4">
             @foreach($this->evaluators as $evaluator)
@@ -29,10 +40,18 @@
             @endforeach
         </div>
     </div>
+    <x-modal wire:model="showEvaluatorModal">
+        <x-slot name="title">
+            TEST
+        </x-slot>
+        <x-slot name="body">
+
+        </x-slot>
+    </x-modal>
     <div class="mx-4 mb-6">
         <div class="ml-4 flex gap-2">
             <h2 class="text-h2 mb-4">{{ __('events.student') }} ({{ count($this->students()) }})</h2>
-            <button>{{ __('events.student_add') }}</button>
+            <button type="button" wire:click="openEvaluatorModal">{{ __('events.student_add') }}</button>
         </div>
         <div class="flex flex-wrap">
             @foreach($this->students as $student)
