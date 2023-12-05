@@ -4,10 +4,11 @@ namespace App\Livewire\Forms;
 
 use App\Models\Contact;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
-class CreateContactForm extends Form
+class ContactForm extends Form
 {
     public ?Contact $contact;
 
@@ -28,6 +29,10 @@ class CreateContactForm extends Form
 
     public function store()
     {
+        if (!Gate::allows('handle-contact', $this)) {
+            abort(403);
+        }
+
         $this->validate();
 
         $this->contact = Auth::user()
@@ -39,8 +44,21 @@ class CreateContactForm extends Form
 
     public function update()
     {
+        if (!Gate::allows('handle-contact', $this->contact)) {
+            abort(403);
+        }
+
         $this->validate();
 
         $this->contact->update($this->all());
+    }
+
+    public function destroy()
+    {
+        if (!Gate::allows('handle-contact', $this->contact)) {
+            abort(403);
+        }
+
+        $this->contact->delete();
     }
 }

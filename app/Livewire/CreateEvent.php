@@ -2,8 +2,8 @@
 
 namespace App\Livewire;
 
-use App\Livewire\Forms\CreateContactForm;
-use App\Livewire\Forms\CreateProjectForm;
+use App\Livewire\Forms\ContactForm;
+use App\Livewire\Forms\ProjectForm;
 use App\Models\Event;
 use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
@@ -38,9 +38,9 @@ class CreateEvent extends Component
     public array $addedStudentsIds = [];
 
 
-    public CreateProjectForm $createProjectForm;
-    public CreateContactForm $createEvaluatorForm;
-    public CreateContactForm $createStudentForm;
+    public ProjectForm $createProjectForm;
+    public ContactForm $createEvaluatorForm;
+    public ContactForm $createStudentForm;
 
     // format: [student_id => [project_id => [task_id => [task_id, task_id]]]]
     public array $tasks = [];
@@ -247,30 +247,30 @@ class CreateEvent extends Component
 
     public function saveProject()
     {
-        $project = Auth::user()
-            ->projects()
-            ->save(
-                new Project([
-                    $this->createProjectForm->all()
-                ]));
-
-        $this->addedProjectsIds[] = $project->id;
-        $this->dispatch('form-submitted');
+        $project = $this->createProjectForm->store();
+        if ($project != null) {
+            $this->addedProjectsIds[] = $project->id;
+            $this->dispatch('form-submitted');
+        }
     }
 
     public function saveEvaluator()
     {
         $evaluator = $this->createEvaluatorForm->store();
-        $this->addedEvaluatorsIds[] = $evaluator->id;
-        $this->dispatch('form-submitted');
+        if ($evaluator != null) {
+            $this->addedEvaluatorsIds[] = $evaluator->id;
+            $this->dispatch('form-submitted');
+        }
     }
 
 
     public function saveStudent()
     {
         $student = $this->createStudentForm->store();
-        $this->addedStudentsIds[] = $student->id;
-        $this->dispatch('form-submitted');
+        if ($student != null) {
+            $this->addedStudentsIds[] = $student->id;
+            $this->dispatch('form-submitted');
+        }
     }
 
     public function render()
