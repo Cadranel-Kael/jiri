@@ -10,6 +10,8 @@ class SingleEvent extends Component
 {
 
     public int $id;
+    public bool $showEvaluatorModal = false;
+    public bool $showStudentModal = false;
 
     #[Computed]
     public function event()
@@ -53,6 +55,26 @@ class SingleEvent extends Component
         }
 
         return $matches;
+    }
+
+    public function openEvaluatorModal()
+    {
+        $this->showEvaluatorModal = true;
+    }
+
+    public function closeEvaluatorModal()
+    {
+        $this->showEvaluatorModal = false;
+    }
+
+    public function addEvaluator($id)
+    {
+        $this->event->evaluators()->attach($id);
+    }
+
+    public function removeEvaluator($id)
+    {
+        $this->event->evaluators()->detach($id);
     }
 
     public function render()
