@@ -8,6 +8,7 @@ return [
     'obligatory' => 'obligatoire',
     'edit'=>'Modifier',
     'delete'=>'Supprimer',
+    'remove'=>'Retirer',
 
     // Fields
     'name' => 'Nom',
