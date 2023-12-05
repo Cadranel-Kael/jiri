@@ -20,9 +20,12 @@
         </div>
         <button type="button"
                 wire:click="{{ $remove }}">
-            <svg role="img" class="w-9 h-auto stroke-white stroke fill-none" width="33"
-                 height="33">
-                <use xlink:href="{{ asset('icons/icons.svg#plus') }}"/>
+            <svg
+                role="img"
+                class="w-4 h-auto fill-white stroke-none"
+                width="33"
+                height="33">
+                <use xlink:href="{{ asset('icons/icons.svg#icon-close') }}"/>
             </svg>
             <span class="sr-only">Add</span>
         </button>

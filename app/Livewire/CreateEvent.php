@@ -2,22 +2,28 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\CreateContactForm;
+use App\Livewire\Forms\CreateProjectForm;
 use App\Models\Event;
-use App\Models\EventsProject;
+use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class CreateEvent extends Component
 {
+    #[Validate('required|min:3')]
     public $name;
+
+    #[Validate('required')]
     public $date;
 
     public $projectSearch = '';
     public string $projectSort = 'title';
     public string $projectOrder = 'ASC';
     public array $projectSortables = ['title', 'created_at'];
-    public array $addedProjectsIds = [1, 3];
+    public array $addedProjectsIds = [];
 
     public $evaluatorSearch = '';
     public string $evaluatorSort = 'name';
@@ -29,9 +35,14 @@ class CreateEvent extends Component
     public string $studentOrder = 'ASC';
     public string $studentSort = 'name';
     public array $studentSortables = ['name', 'email', 'created_at'];
-    public array $addedStudentsIds = [3];
+    public array $addedStudentsIds = [];
 
-    // [student_id => [project_id => [task_id => [task_id, task_id]]]]
+
+    public CreateProjectForm $createProjectForm;
+    public CreateContactForm $createEvaluatorForm;
+    public CreateContactForm $createStudentForm;
+
+    // format: [student_id => [project_id => [task_id => [task_id, task_id]]]]
     public array $tasks = [];
 
     public function changeOrder(string $collection)
@@ -50,6 +61,7 @@ class CreateEvent extends Component
 
     }
 
+    // add a collection to its added collection
     public function add(string $collection, int $id): void
     {
         switch ($collection) {
@@ -71,6 +83,7 @@ class CreateEvent extends Component
         }
     }
 
+    // removes a collection from its added collection
     public function remove(string $collection, int $id): void
     {
         switch ($collection) {
@@ -111,9 +124,9 @@ class CreateEvent extends Component
             ->user()
             ->projects()
             ->whereIn('id', $this->addedProjectsIds)
+            ->where('title', 'like', '%' . $this->projectSearch . '%')
             ->get();
     }
-
 
     #[Computed]
     public function evaluators()
@@ -135,6 +148,7 @@ class CreateEvent extends Component
             ->user()
             ->contacts()
             ->whereIn('id', $this->addedEvaluatorsIds)
+            ->where('name', 'like', '%' . $this->evaluatorSearch . '%')
             ->get();
     }
 
@@ -158,6 +172,7 @@ class CreateEvent extends Component
             ->user()
             ->contacts()
             ->whereIn('id', $this->addedStudentsIds)
+            ->where('name', 'like', '%' . $this->studentSearch . '%')
             ->get();
     }
 
@@ -183,14 +198,6 @@ class CreateEvent extends Component
             return true;
         }
         return false;
-    }
-
-    public function rules()
-    {
-        return [
-            'name' => 'required|min:3',
-            'date' => 'required',
-        ];
     }
 
     public function save()
@@ -234,6 +241,36 @@ class CreateEvent extends Component
                 ]);
             }
         }
+
+        $this->redirect(route('events'));
+    }
+
+    public function saveProject()
+    {
+        $project = Auth::user()
+            ->projects()
+            ->save(
+                new Project([
+                    $this->createProjectForm->all()
+                ]));
+
+        $this->addedProjectsIds[] = $project->id;
+        $this->dispatch('form-submitted');
+    }
+
+    public function saveEvaluator()
+    {
+        $evaluator = $this->createEvaluatorForm->store();
+        $this->addedEvaluatorsIds[] = $evaluator->id;
+        $this->dispatch('form-submitted');
+    }
+
+
+    public function saveStudent()
+    {
+        $student = $this->createStudentForm->store();
+        $this->addedStudentsIds[] = $student->id;
+        $this->dispatch('form-submitted');
     }
 
     public function render()
