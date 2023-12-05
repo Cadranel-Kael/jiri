@@ -34,7 +34,11 @@ class CreateEvent extends Component
     public array $studentSortables = ['name', 'email', 'created_at'];
     public array $addedStudentsIds = [3];
 
-    // [student_id => [project_id => [task_id => [task_id, task_id]]]]
+    public CreateProjectForm $createProjectForm;
+    public CreateContactForm $createEvaluatorForm;
+    public CreateContactForm $createStudentForm;
+
+    // format: [student_id => [project_id => [task_id => [task_id, task_id]]]]
     public array $tasks = [];
 
     public function changeOrder(string $collection)
@@ -237,6 +241,36 @@ class CreateEvent extends Component
                 ]);
             }
         }
+
+        $this->redirect(route('events'));
+    }
+
+    public function saveProject()
+    {
+        $project = Auth::user()
+            ->projects()
+            ->save(
+                new Project([
+                    $this->createProjectForm->all()
+                ]));
+
+        $this->addedProjectsIds[] = $project->id;
+        $this->dispatch('form-submitted');
+    }
+
+    public function saveEvaluator()
+    {
+        $evaluator = $this->createEvaluatorForm->store();
+        $this->addedEvaluatorsIds[] = $evaluator->id;
+        $this->dispatch('form-submitted');
+    }
+
+
+    public function saveStudent()
+    {
+        $student = $this->createStudentForm->store();
+        $this->addedStudentsIds[] = $student->id;
+        $this->dispatch('form-submitted');
     }
 
     public function render()
