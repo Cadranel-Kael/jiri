@@ -59,6 +59,10 @@
                         :sortables="$projectSortables"
                         search="projectSearch"
                     >
+                        @if($this->projects->isEmpty())
+                            <span>{{ __('general.no_results') }}</span>
+                            <x-button-primary type="button" x-data x-on:click="$dispatch('open-modal', { name : 'projectForm' })">{{ __('projects.add_new') }}</x-button-primary>
+                        @endif
                         <x-slot:addedList>
                             @foreach($this->addedProjects() as $project)
                                 <x-added-projects :project="$project" remove="remove('projects', {{ $project->id }})"/>
@@ -84,9 +88,14 @@
                     :sortables="$evaluatorSortables"
                     search="evaluatorSearch"
                 >
+                    @if($this->evaluators->isEmpty())
+                        <span>{{ __('general.no_results') }}</span>
+                        <x-button-primary type="button" x-data x-on:click="$dispatch('open-modal', { name : 'evaluatorForm' })">{{ __('contacts.add_new') }}</x-button-primary>
+                    @endif
                     <x-slot:addedList>
                         @foreach($this->addedEvaluators as $evaluator)
-                            <x-added-evaluator :evaluator="$evaluator" remove="remove('evaluators', {{ $evaluator->id }})"/>
+                            <x-added-evaluator :evaluator="$evaluator"
+                                               remove="remove('evaluators', {{ $evaluator->id }})"/>
                         @endforeach
                     </x-slot:addedList>
                     <x-slot:list>
@@ -105,6 +114,10 @@
                     :sortables="$studentSortables"
                     search="studentSearch"
                 >
+                    @if($this->students->isEmpty())
+                        <span>{{ __('general.no_results') }}</span>
+                        <x-button-primary type="button" x-data x-on:click="$dispatch('open-modal', { name : 'studentForm' })">{{ __('contacts.add_new') }}</x-button-primary>
+                    @endif
                     <x-slot:addedList>
                         @foreach($this->addedStudents as $student)
                             <x-added-student :addedProjects="$this->addedProjects()" :student="$student"
