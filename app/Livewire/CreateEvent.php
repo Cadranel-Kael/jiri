@@ -2,10 +2,13 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\CreateContactForm;
+use App\Livewire\Forms\CreateProjectForm;
 use App\Models\Event;
-use App\Models\EventsProject;
+use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class CreateEvent extends Component
@@ -20,7 +23,7 @@ class CreateEvent extends Component
     public string $projectSort = 'title';
     public string $projectOrder = 'ASC';
     public array $projectSortables = ['title', 'created_at'];
-    public array $addedProjectsIds = [1, 3];
+    public array $addedProjectsIds = [];
 
     public $evaluatorSearch = '';
     public string $evaluatorSort = 'name';
@@ -32,7 +35,8 @@ class CreateEvent extends Component
     public string $studentOrder = 'ASC';
     public string $studentSort = 'name';
     public array $studentSortables = ['name', 'email', 'created_at'];
-    public array $addedStudentsIds = [3];
+    public array $addedStudentsIds = [];
+
 
     public CreateProjectForm $createProjectForm;
     public CreateContactForm $createEvaluatorForm;
@@ -57,6 +61,7 @@ class CreateEvent extends Component
 
     }
 
+    // add a collection to its added collection
     public function add(string $collection, int $id): void
     {
         switch ($collection) {
@@ -78,6 +83,7 @@ class CreateEvent extends Component
         }
     }
 
+    // removes a collection from its added collection
     public function remove(string $collection, int $id): void
     {
         switch ($collection) {
@@ -118,9 +124,9 @@ class CreateEvent extends Component
             ->user()
             ->projects()
             ->whereIn('id', $this->addedProjectsIds)
+            ->where('title', 'like', '%' . $this->projectSearch . '%')
             ->get();
     }
-
 
     #[Computed]
     public function evaluators()
@@ -142,6 +148,7 @@ class CreateEvent extends Component
             ->user()
             ->contacts()
             ->whereIn('id', $this->addedEvaluatorsIds)
+            ->where('name', 'like', '%' . $this->evaluatorSearch . '%')
             ->get();
     }
 
@@ -165,6 +172,7 @@ class CreateEvent extends Component
             ->user()
             ->contacts()
             ->whereIn('id', $this->addedStudentsIds)
+            ->where('name', 'like', '%' . $this->studentSearch . '%')
             ->get();
     }
 
@@ -190,14 +198,6 @@ class CreateEvent extends Component
             return true;
         }
         return false;
-    }
-
-    public function rules()
-    {
-        return [
-            'name' => 'required|min:3',
-            'date' => 'required',
-        ];
     }
 
     public function save()
