@@ -1,19 +1,4 @@
 <div>
-{{--    @if($deleteModalShown)--}}
-{{--        <x-modal-form--}}
-{{--            submit="destroy"--}}
-{{--            name="delete"--}}
-{{--        >--}}
-{{--            <x-slot:body>--}}
-{{--                <div>Are you sure to delete {{ $this->contacts()->where('id', $id)->name }}</div>--}}
-{{--            </x-slot:body>--}}
-{{--            <x-slot:footer>--}}
-{{--                <div class="flex justify-center">--}}
-{{--                    <x-button-primary type="submit">{{ __('form.delete') }}</x-button-primary>--}}
-{{--                    <x-button-primary type="button" wire:click="toggleDeleteModal">{{ __('form.cancel') }}</x-button-primary>--}}
-{{--                </div>--}}
-{{--        </x-modal-form>--}}
-{{--    @endif--}}
     <x-modal-form
         submit="save"
         name="create"
@@ -27,12 +12,14 @@
                 class="mb-10"
                 :label="__('form.full_name')"
                 name="name"
+                model="createContactForm.name"
                 placeholder="Wilson Jenny"
             ></x-input>
             <x-input
                 class="mb-10"
                 :label="__('form.email')"
                 name="email"
+                model="createContactForm.email"
                 placeholder="jenny.wilson@mail.com"
             ></x-input>
         </x-slot:body>
@@ -42,39 +29,34 @@
             </div>
         </x-slot:footer>
     </x-modal-form>
-    @if($this->currentContact)
-        <x-modal-form
-            submit="update"
-            name="edit"
-        >
-            <x-slot:title>
-                <h2 class="text-h3 mb-12 font-bold">{{ __('contacts.add_new') }}</h2>
-            </x-slot:title>
-            <x-slot:body>
-                <x-input-image class="mb-10 align-center"/>
-                <x-input
-                    class="mb-10"
-                    :label="__('form.full_name')"
-                    name="name"
-                    model="currentContact"
-                    :value="$this->currentContact->name"
-                    :placeholder="$this->currentContact->name"
-                />
-                <x-input
-                    class="mb-10"
-                    :label="__('form.email')"
-                    name="email"
-                    model="currentContact"
-                    :value="$this->currentContact->email"
-                    :placeholder="$this->currentContact->email"/>
-            </x-slot:body>
-            <x-slot:footer>
-                <div class="flex justify-center">
-                    <x-button-primary type="submit">{{ __('contacts.add_new') }}</x-button-primary>
-                </div>
-            </x-slot:footer>
-        </x-modal-form>
-    @endif
+    <x-modal-form
+        submit="update"
+        name="edit"
+    >
+        <x-slot:title>
+            <h2 class="text-h3 mb-12 font-bold">{{ __('contacts.add_new') }}</h2>
+        </x-slot:title>
+        <x-slot:body>
+            <x-input-image class="mb-10 align-center"/>
+            <x-input
+                class="mb-10"
+                :label="__('form.full_name')"
+                name="name"
+                model="updateContactForm.name"
+            />
+            <x-input
+                class="mb-10"
+                :label="__('form.email')"
+                name="email"
+                model="updateContactForm.email"
+            />
+        </x-slot:body>
+        <x-slot:footer>
+            <div class="flex justify-center">
+                <x-button-primary type="submit">{{ __('contacts.add_new') }}</x-button-primary>
+            </div>
+        </x-slot:footer>
+    </x-modal-form>
     <x-top-bar
         createHref="#create"
         :createLabel="__('contacts.add_new')"

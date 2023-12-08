@@ -29,10 +29,6 @@ class ContactForm extends Form
 
     public function store()
     {
-        if (!Gate::allows('handle-contact', $this)) {
-            abort(403);
-        }
-
         $this->validate();
 
         $this->contact = Auth::user()
@@ -44,10 +40,6 @@ class ContactForm extends Form
 
     public function update()
     {
-        if (!Gate::allows('handle-contact', $this->contact)) {
-            abort(403);
-        }
-
         $this->validate();
 
         $this->contact->update($this->all());

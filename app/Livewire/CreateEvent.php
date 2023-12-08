@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Livewire\Forms\ContactForm;
+use App\Livewire\Forms\EventForm;
 use App\Livewire\Forms\ProjectForm;
 use App\Models\Event;
 use App\Models\Project;
@@ -13,12 +14,6 @@ use Livewire\Component;
 
 class CreateEvent extends Component
 {
-    #[Validate('required|min:3')]
-    public $name;
-
-    #[Validate('required')]
-    public $date;
-
     public $projectSearch = '';
     public string $projectSort = 'title';
     public string $projectOrder = 'ASC';
@@ -38,6 +33,7 @@ class CreateEvent extends Component
     public array $addedStudentsIds = [];
 
 
+    public EventForm $eventForm;
     public ProjectForm $createProjectForm;
     public ContactForm $createEvaluatorForm;
     public ContactForm $createStudentForm;
@@ -202,47 +198,21 @@ class CreateEvent extends Component
 
     public function save()
     {
-        $this->validate();
+        $this->eventForm->store();
 
-        $event = auth()->user()->events()->save(new Event([
-            'name' => $this->name,
-            'date' => $this->date,
-        ]));
-
-
-        foreach ($this->addedProjectsIds as $project_id) {
-            $event->projects()->attach($project_id);
+        foreach ($this->addedProjectsIds as $addedProjectsId) {
+            $this->eventForm->addProject($addedProjectsId, 1);
         }
 
-        foreach ($this->addedEvaluatorsIds as $evaluator_id) {
-            $event->participants()->create([
-                'contact_id' => $evaluator_id,
-                'event_id' => $event->id,
-                'role' => 'evaluator',
-                'token' => bin2hex(random_bytes(32)),
-            ]);
+        foreach ($this->addedStudentsIds as $addedStudentsId) {
+            $this->eventForm->addStudent($addedStudentsId);
         }
 
-        foreach ($this->addedStudentsIds as $student_id) {
-            $event->participants()->create([
-                'contact_id' => $student_id,
-                'event_id' => $event->id,
-                'role' => 'student',
-                'token' => bin2hex(random_bytes(32)),
-            ]);
+        foreach ($this->addedEvaluatorsIds as $addedEvaluatorsId) {
+            $this->eventForm->addEvaluator($addedEvaluatorsId);
         }
 
-        foreach ($this->tasks as $student_id => $projects) {
-            foreach ($projects as $project_id => $tasks) {
-                $event->presentations()->create([
-                    'contact_id' => $student_id,
-                    'project_id' => $project_id,
-                    'tasks' => $tasks,
-                ]);
-            }
-        }
-
-        $this->redirect(route('events'));
+        $this->redirect(route('events.index'));
     }
 
     public function saveProject()
