@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Livewire\Forms\ContactForm;
 use App\Models\Contact;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -12,7 +13,7 @@ use Livewire\Component;
 
 class ContactLivewireController extends Component
 {
-    public $name, $email, $currentName, $currentEmail, $deleteModuleShown = false;
+    public $deleteModuleShown = false;
 
     #[Url(as: 's')]
     public $search = '';
@@ -22,10 +23,19 @@ class ContactLivewireController extends Component
     public array $sortables = ['name', 'email', 'created_at'];
 
     public $perPage = 12;
-    public $contactFormShown = false;
+
+    public contactForm $createContactForm;
+    public contactForm $updateContactForm;
 
     #[Url]
     public $id = '';
+
+    public function mount()
+    {
+        if ($this->id) {
+            $this->updateContactForm->setContact(Contact::find($this->id));
+        }
+    }
 
     #[Computed]
     public function contacts()
@@ -35,18 +45,10 @@ class ContactLivewireController extends Component
             ->paginate($this->perPage);
     }
 
-    #[Computed]
-    public function currentContact()
-    {
-        if ($this->id) {
-            return auth()->user()->load('contacts')->contacts()->where('id', $this->id)->first();
-        }
-    }
 
     public function changeOrder()
     {
-        if ($this->order === 'ASC')
-        {
+        if ($this->order === 'ASC') {
             $this->order = 'DESC';
         } else {
             $this->order = 'ASC';
@@ -58,49 +60,16 @@ class ContactLivewireController extends Component
         $this->perPage += 12;
     }
 
-    public function rules()
-    {
-        return [
-            'name' => 'required|min:5',
-            'email' => 'required|email',
-        ];
-    }
-
-    public function validationAttributes()
-    {
-        return [
-            'name' => __('form.full_name'),
-            'email' => __('form.email'),
-        ];
-    }
-
     public function save()
     {
-        $this->validate();
-
-        Auth::user()->contacts()->save(new Contact([
-            'name' => $this->name,
-            'email' => $this->email,
-        ]));
+        $this->createContactForm->store();
 
         return Redirect::to(route('contacts.index'));
     }
 
     public function update()
     {
-        if (!Gate::allows('handle-contact', $this->currentContact())) {
-            abort(403);
-        }
-
-        $this->name = $this->currentName;
-        $this->email = $this->currentEmail;
-
-        $this->validate();
-
-        Auth::user()->contacts()->where('id', $this->id)->update([
-            'name' => $this->name,
-            'email' => $this->email,
-        ]);
+        $this->updateContactForm->update();
 
         return Redirect::to(route('contacts.index'));
     }
@@ -112,11 +81,8 @@ class ContactLivewireController extends Component
 
     public function destroy($id)
     {
-        if (!Gate::allows('handle-contact', $this->contacts()->where('id', $id)->first())) {
-            abort(403);
-        }
-
-        Auth::user()->contacts()->where('id', $id)->delete();
+        $this->updateContactForm->setContact(Contact::find($id));
+        $this->updateContactForm->destroy();
 
         return Redirect::to(route('contacts.index'));
     }
