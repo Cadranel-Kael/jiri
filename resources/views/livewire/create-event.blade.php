@@ -41,12 +41,12 @@
             </form>
         </x-slot:body>
     </x-modal>
-    <form wire:submit="save" class="bg-white drop-shadow flex flex-col lg:p-8 rounded w-fit m-auto">
+    <form wire:submit.prevent="save" class="bg-white drop-shadow flex flex-col lg:p-8 rounded w-fit m-auto">
         <div class="grid grid-cols-2 mb-10">
             <div class="w-fit flex flex-col gap-8">
                 <h2 class="sr-only">Generale</h2>
-                <x-input label="Nom de l'épreuve" name="name"/>
-                <x-date-input label="Date de l'épreuve" name="date"/>
+                <x-input label="Nom de l'épreuve" name="name" model="eventForm.name"/>
+                <x-date-input label="Date de l'épreuve" name="date" model="eventForm.date"/>
             </div>
             <div class="my-20 lg:my-0">
                 <h2 class="font-bold lg:mb-8">Ajouter les projets</h2>
@@ -59,7 +59,7 @@
                         :sortables="$projectSortables"
                         search="projectSearch"
                     >
-                        @if($this->projects->isEmpty())
+                        @if($this->projects()->isEmpty())
                             <span>{{ __('general.no_results') }}</span>
                             <x-button-primary type="button" x-data x-on:click="$dispatch('open-modal', { name : 'projectForm' })">{{ __('projects.add_new') }}</x-button-primary>
                         @endif
@@ -88,7 +88,7 @@
                     :sortables="$evaluatorSortables"
                     search="evaluatorSearch"
                 >
-                    @if($this->evaluators->isEmpty())
+                    @if($this->evaluators()->isEmpty())
                         <span>{{ __('general.no_results') }}</span>
                         <x-button-primary type="button" x-data x-on:click="$dispatch('open-modal', { name : 'evaluatorForm' })">{{ __('contacts.add_new') }}</x-button-primary>
                     @endif
@@ -114,7 +114,7 @@
                     :sortables="$studentSortables"
                     search="studentSearch"
                 >
-                    @if($this->students->isEmpty())
+                    @if($this->students()->isEmpty())
                         <span>{{ __('general.no_results') }}</span>
                         <x-button-primary type="button" x-data x-on:click="$dispatch('open-modal', { name : 'studentForm' })">{{ __('contacts.add_new') }}</x-button-primary>
                     @endif
