@@ -21,10 +21,6 @@ class ProjectForm extends Form
 
     public function store()
     {
-        if (!Gate::allows('handle-project', $this->all())) {
-            abort(403);
-        }
-
         $this->validate();
 
         $this->project = Auth::user()

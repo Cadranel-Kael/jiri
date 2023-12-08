@@ -41,6 +41,11 @@ class SingleEvent extends Component
         }])->get();
     }
 
+    public function removeProject($id)
+    {
+
+    }
+
     public function presentations($contactId)
     {
         return $this->event->presentations()->where('contact_id', $contactId)->get();
