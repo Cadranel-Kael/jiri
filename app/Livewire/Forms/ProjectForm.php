@@ -27,6 +27,8 @@ class ProjectForm extends Form
             ->contacts()
             ->save(new Project($this->all()));
 
+        session()->flash('success', __('projects.created'));
+
         return $this->project;
     }
 
@@ -39,6 +41,8 @@ class ProjectForm extends Form
         $this->validate();
 
         $this->project->update($this->all());
+
+        session()->flash('success', __('projects.updated'));
     }
 
     public function destroy()
@@ -48,5 +52,7 @@ class ProjectForm extends Form
         }
 
         $this->project->delete();
+
+        session()->flash('success', __('projects.deleted'));
     }
 }
