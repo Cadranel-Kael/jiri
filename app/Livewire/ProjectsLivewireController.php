@@ -57,6 +57,13 @@ class ProjectsLivewireController extends Component
         $this->per_page += 12;
     }
 
+    public function save()
+    {
+        $this->createContactForm->store();
+
+        return Redirect::to(route('contacts.index'));
+    }
+
 //    public function rules()
 //    {
 //        return [
