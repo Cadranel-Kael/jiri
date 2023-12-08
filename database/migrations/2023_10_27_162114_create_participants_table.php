@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('participants', function (Blueprint $table) {
             $table->id();
-            $table->string('token');
+            $table->string('token')->nullable();
             $table->string('role');
             $table->softDeletes();
             $table->timestamps();
