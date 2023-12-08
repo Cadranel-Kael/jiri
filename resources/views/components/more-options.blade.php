@@ -64,6 +64,9 @@
                 @else
                     <button
                         wire:click="{{ $item['action'] ?? '' }}"
+                        @if(isset($item['confirm']))
+                        wire:confirm="{{ $item['confirm'] }}"
+                        @endif
                         class="{{ $itemClass }}"
                         type="button"
                     >
