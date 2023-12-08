@@ -24,6 +24,10 @@ class Project extends Model
         'tasks',
     ];
 
+    protected $casts = [
+        'tasks' => 'array',
+    ];
+
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
