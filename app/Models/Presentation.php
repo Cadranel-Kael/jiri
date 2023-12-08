@@ -14,14 +14,11 @@ class Presentation extends Model
     use SoftDeletes, HasFactory;
 
     protected $fillable = [
-        'score',
-        'comments',
         'urls',
     ];
 
     protected $casts = [
-        'score' => 'array',
-        'comments' => 'array',
+        'tasks' => 'array',
         'urls' => 'array',
     ];
 
@@ -38,11 +35,6 @@ class Presentation extends Model
     public function student(): HasOne
     {
         return $this->hasOne(Contact::class);
-    }
-
-    public function getTasksAttribute()
-    {
-        return json_decode($this->attributes['tasks'], true);
     }
 
     public function scores(): HasMany
