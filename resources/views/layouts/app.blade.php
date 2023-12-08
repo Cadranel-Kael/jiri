@@ -29,6 +29,13 @@
 <body class="font-sans antialiased">
 <div class="min-h-screen flex bg-gradient">
     <h1 class="sr-only">{{ $heading }}</h1>
+    @if(Session::has('success'))
+        <div class="fixed bottom-0 right-0 m-8 z-50">
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition.opacity.duration.500ms class="bg-green-500 text-white font-bold rounded-lg border shadow-lg px-10 py-2">
+                {{ Session::get('success') }}
+            </div>
+        </div>
+    @endif
     @include('layouts.navigation')
     <div class="flex-1 mt-16 overflow-hidden">
         @if (isset($heading) && !isset($backUrl))
