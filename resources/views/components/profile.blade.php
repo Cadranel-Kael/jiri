@@ -6,6 +6,7 @@
         ],
         [
             'action' => 'destroy(' . $contact->id . ')',
+            'confirm' => __('form.confirm_delete'),
             'label'=>__('form.delete'),
             'color'=>'warning',
         ],
