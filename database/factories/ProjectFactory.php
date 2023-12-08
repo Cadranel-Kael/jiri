@@ -15,7 +15,7 @@ class ProjectFactory extends Factory
         return [
             'title' => $this->faker->word(),
             'description' => $this->faker->text(),
-            'tasks' => json_encode(['Design', 'Implementation', 'Wordpress']),
+            'tasks' => ['Design', 'Implementation', 'Wordpress'],
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
