@@ -24,8 +24,8 @@ class PresentationFactory extends Factory
         }
 
         return [
-            'urls' => json_encode($urls),
-            'tasks' => json_encode($tasks),
+            'urls' => $urls,
+            'tasks' => $tasks,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ];
