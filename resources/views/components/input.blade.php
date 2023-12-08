@@ -1,5 +1,6 @@
+@props(['name', 'label', 'labelSrOnly' => false, 'required' => false, 'placeholder' => null, 'model' => null, 'value' => null])
 <div {{ $attributes(['class'=>'flex flex-col']) }}>
-    <label for="{{ $name }}" class="font-bold">
+    <label for="{{ $name }}" class="font-bold @if($labelSrOnly) sr-only @endif">
         {{ $label }}
         @isset($required)
             <span class='text-warning'>*</span>
