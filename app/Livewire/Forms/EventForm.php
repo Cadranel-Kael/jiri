@@ -8,6 +8,7 @@ use App\Models\Presentation;
 use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Redirect;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
@@ -43,6 +44,12 @@ class EventForm extends Form
     public function addProject($project_id, $weight)
     {
         $this->event->projects()->attach($project_id, ['weight' => $weight]);
+
+        foreach ($this->event->students as $student) {
+            $student->projects()->attach($project_id);
+        }
+
+        session()->now('success', __('events.project_added'));
     }
 
     public function removeProject($project_id)
@@ -68,6 +75,11 @@ class EventForm extends Form
     public function removeStudent($student_id)
     {
         $this->event->students()->detach($student_id);
+    }
+
+    public function addPresentation($student_id, $project_id)
+    {
+        $this->event->presentations()->attach($student_id, ['project_id' => $project_id]);
     }
 
 

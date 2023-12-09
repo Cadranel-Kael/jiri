@@ -35,6 +35,8 @@ class ContactForm extends Form
             ->contacts()
             ->save(new Contact($this->all()));
 
+        session()->flash('success', __('contacts.created'));
+
         return $this->contact;
     }
 
@@ -43,6 +45,8 @@ class ContactForm extends Form
         $this->validate();
 
         $this->contact->update($this->all());
+
+        session()->flash('success', __('contacts.updated'));
     }
 
     public function destroy()
@@ -52,5 +56,7 @@ class ContactForm extends Form
         }
 
         $this->contact->delete();
+
+        session()->flash('success', __('contacts.deleted'));
     }
 }
