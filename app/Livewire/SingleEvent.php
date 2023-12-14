@@ -185,6 +185,11 @@ class SingleEvent extends Component
         return $matches;
     }
 
+    public function start()
+    {
+
+    }
+
 
     public function render()
     {
