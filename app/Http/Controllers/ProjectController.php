@@ -21,6 +21,9 @@ class ProjectController extends Controller
 
     public function show($id)
     {
+        $heading = auth()->user()->projects()->where('id', $id)->first()->title;
+
+        return view('projects.show', compact('heading', 'id'));
     }
 
     public function edit($id)
