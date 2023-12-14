@@ -18,6 +18,28 @@ class ProjectForm extends Form
     #[Validate('required|min:5')]
     public $description;
 
+    public $link;
+
+    public $tasks = [];
+
+    public function setProject(Project $project)
+    {
+        $this->project = $project;
+
+        $this->title = $project->title;
+
+        $this->description = $project->description;
+
+        $this->link = $project->link;
+
+        $this->tasks = $project->tasks;
+    }
+
+    public function addTask()
+    {
+        $this->tasks[] = '';
+    }
+
 
     public function store()
     {
@@ -34,9 +56,7 @@ class ProjectForm extends Form
 
     public function update()
     {
-        if (!Gate::allows('handle-project', $this->project)) {
-            abort(403);
-        }
+        $this->tasks = array_filter($this->tasks);
 
         $this->validate();
 
@@ -47,10 +67,6 @@ class ProjectForm extends Form
 
     public function destroy()
     {
-        if (!Gate::allows('handle-project', $this->project)) {
-            abort(403);
-        }
-
         $this->project->delete();
 
         session()->flash('success', __('projects.deleted'));
