@@ -27,7 +27,6 @@ class EventForm extends Form
 
     public $status;
 
-
     public function setEvent(Event $event)
     {
         $this->event = $event;
@@ -49,8 +48,10 @@ class EventForm extends Form
 
         $this->event->projects()->attach($project_id, ['weight' => $weight]);
 
-        foreach ($this->event->students as $student) {
-            $student->projects()->attach($project_id);
+        if (isset($this->event->students)) {
+            foreach ($this->event->students as $student) {
+                $student->projects()->attach($project_id, ['event_id' => $this->event->id]);
+            }
         }
 
         session()->now('success', __('events.project_added'));
@@ -61,7 +62,7 @@ class EventForm extends Form
         $this->event->projects()->detach($project_id);
     }
 
-   public function addEvaluator($evaluator_id)
+    public function addEvaluator($evaluator_id)
     {
         $this->event->evaluators()->attach($evaluator_id, ['role' => 'evaluator']);
     }
