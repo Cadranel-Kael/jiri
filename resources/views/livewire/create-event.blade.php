@@ -8,7 +8,8 @@
         <x-slot:body>
             <form wire:submit.prevent="saveProject">
                 <x-input class="mb-10" label="{{ __('projects.name') }}" name="title" model="createProjectForm.title"/>
-                <x-input class="mb-10" label="{{ __('projects.description') }}" name="description" model="createProjectForm.description"/>
+                <x-input class="mb-10" label="{{ __('projects.description') }}" name="description"
+                         model="createProjectForm.description"/>
                 <x-button-primary class="mt-2 mx-auto" type="submit">{{ __('projects.add_new') }}</x-button-primary>
             </form>
         </x-slot:body>
@@ -76,7 +77,8 @@
                     >
                         @if($this->projects()->isEmpty())
                             <span>{{ __('general.no_results') }}</span>
-                            <x-button-primary type="button" x-data x-on:click="$dispatch('open-modal', { name : 'projectForm' })">{{ __('projects.add_new') }}</x-button-primary>
+                            <x-button-primary type="button" x-data
+                                              x-on:click="$dispatch('open-modal', { name : 'projectForm' })">{{ __('projects.add_new') }}</x-button-primary>
                         @endif
                         <x-slot:addedList>
                             @foreach($this->addedProjects() as $project)
@@ -105,7 +107,8 @@
                 >
                     @if($this->evaluators()->isEmpty())
                         <span>{{ __('general.no_results') }}</span>
-                        <x-button-primary type="button" x-data x-on:click="$dispatch('open-modal', { name : 'evaluatorForm' })">{{ __('contacts.add_new') }}</x-button-primary>
+                        <x-button-primary type="button" x-data
+                                          x-on:click="$dispatch('open-modal', { name : 'evaluatorForm' })">{{ __('contacts.add_new') }}</x-button-primary>
                     @endif
                     <x-slot:addedList>
                         @foreach($this->addedEvaluators as $evaluator)
@@ -131,7 +134,8 @@
                 >
                     @if($this->students()->isEmpty())
                         <span>{{ __('general.no_results') }}</span>
-                        <x-button-primary type="button" x-data x-on:click="$dispatch('open-modal', { name : 'studentForm' })">{{ __('contacts.add_new') }}</x-button-primary>
+                        <x-button-primary type="button" x-data
+                                          x-on:click="$dispatch('open-modal', { name : 'studentForm' })">{{ __('contacts.add_new') }}</x-button-primary>
                     @endif
                     <x-slot:addedList>
                         @foreach($this->addedStudents as $student)
