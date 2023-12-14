@@ -12,7 +12,7 @@ class ProjectForm extends Form
 {
     public ?Project $project;
 
-    #[Validate('required|min:3')]
+    #[Validate('required|min:1')]
     public $title;
 
     #[Validate('required|min:5')]
