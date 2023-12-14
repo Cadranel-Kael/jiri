@@ -43,6 +43,10 @@ class EventForm extends Form
 
     public function addProject($project_id, $weight)
     {
+        if ($weight < 0 || $weight === null) {
+            $weight = 1;
+        }
+
         $this->event->projects()->attach($project_id, ['weight' => $weight]);
 
         foreach ($this->event->students as $student) {
