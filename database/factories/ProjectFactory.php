@@ -12,9 +12,19 @@ class ProjectFactory extends Factory
 
     public function definition(): array
     {
+        $project_names = [
+            'Cv',
+            'Portfolio',
+            'Clinicoeur',
+            'Masaro',
+            'Haute-Ecole de Liege',
+            'AstromooN',
+        ];
+
         return [
-            'title' => $this->faker->word(),
+            'title' => $this->faker->randomElement($project_names),
             'description' => $this->faker->text(),
+            'link' => $this->faker->url(),
             'tasks' => ['Design', 'Implementation', 'Wordpress'],
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
