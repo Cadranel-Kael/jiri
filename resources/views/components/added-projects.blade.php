@@ -10,8 +10,8 @@
         {{ $attributes->class(['flex items-start mx-4 gap-2 drop-shadow items-center bg-black text-white justify-between py-2 px-4 rounded']) }}>
     <div class="flex items-center gap-2.5">
         <span class="font-bold">{{ $project->title }}</span>
-        <label class="sr-only" for="weight">Poids</label>
-        <input class="rounded text-black" min="1" value="1" max="100" type="number"
+        <label for="weight">{{ __('projects.weight') }}</label>
+        <input wire:model.live="weight.{{ $project->id }}" class="rounded text-black w-20" placeholder="1" type="number"
                name="weight" id="weight">
     </div>
 

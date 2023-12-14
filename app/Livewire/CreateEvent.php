@@ -41,6 +41,8 @@ class CreateEvent extends Component
     // format: [student_id => [project_id => [task_id => [task_id, task_id]]]]
     public array $tasks = [];
 
+    public $weight = [];
+
     public function changeOrder(string $collection)
     {
         switch ($collection) {
@@ -63,6 +65,7 @@ class CreateEvent extends Component
         switch ($collection) {
             case 'projects':
                 if (!in_array($id, $this->addedProjectsIds) && auth()->user()->projects()->where('id', $id)->exists()) {
+                    $this->weight[$id] = 1;
                     $this->addedProjectsIds[] = $id;
                 }
                 break;
@@ -86,6 +89,7 @@ class CreateEvent extends Component
             case 'projects':
                 if (in_array($id, $this->addedProjectsIds)) {
                     $this->addedProjectsIds = array_diff($this->addedProjectsIds, [$id]);
+                    unset($this->weight[$id]);
                 }
                 break;
             case 'evaluators':
@@ -201,7 +205,10 @@ class CreateEvent extends Component
         $this->eventForm->store();
 
         foreach ($this->addedProjectsIds as $addedProjectsId) {
-            $this->eventForm->addProject($addedProjectsId, 1);
+            if (!isset($this->weight[$addedProjectsId])) {
+                $this->weight[$addedProjectsId] = 1;
+            }
+            $this->eventForm->addProject($addedProjectsId, $this->weight[$addedProjectsId]);
         }
 
         foreach ($this->addedStudentsIds as $addedStudentsId) {

@@ -52,6 +52,21 @@
                 <h2 class="font-bold lg:mb-8">Ajouter les projets</h2>
                 <div class="ml-4 w-5/6">
                     <h3 class="font-bold mb-2">Projets</h3>
+                    @if(array_sum($this->weight))
+                    <h4>{{ __('projects.weight_distribution') }}</h4>
+                    <div class="flex w-full mb-2">
+                            @foreach($this->addedProjects() as $project)
+                                @if($this->weight[$project->id])
+                                    <div
+                                        style="width: {{ ($this->weight[$project->id]/array_sum($this->weight))*100 }}%">
+                                        <div>{{ round($this->weight[$project->id]/array_sum($this->weight)*100) }}%
+                                        </div>
+                                        <div class="bg-black mr-2 text-white p-2 rounded">{{  $project->title }}</div>
+                                    </div>
+                                @endif
+                            @endforeach
+                    </div>
+                    @endif
                     <x-multi-choice
                         change-order="changeOrder('projects')"
                         :sort="$projectSort"
