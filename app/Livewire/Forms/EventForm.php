@@ -95,7 +95,6 @@ class EventForm extends Form
         $this->event = Auth::user()
             ->events()
             ->save(new Event($this->only('name', 'date')));
-
     }
 
     public function update()
