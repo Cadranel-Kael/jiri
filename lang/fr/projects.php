@@ -8,4 +8,5 @@ return [
 
     'description' => 'Description du projet',
     'tasks' => 'Tâches du projet',
+    'weight_distribution' => 'Distribution de poids',
 ];

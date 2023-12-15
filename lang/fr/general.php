@@ -6,4 +6,5 @@ return [
     'expand' => 'Agrandir',
     'collapse' => 'Réduire',
     'no_results' => 'Aucun résultat',
+    'legal_rights' => 'Tous droits réservés.',
 ];
