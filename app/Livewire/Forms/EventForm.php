@@ -2,19 +2,19 @@
 
 namespace App\Livewire\Forms;
 
+use App\Models\Contact;
 use App\Models\Event;
-use App\Models\Participant;
-use App\Models\Presentation;
 use App\Models\Project;
+use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Redirect;
-use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class EventForm extends Form
 {
+    use AuthorizesRequests;
+
     public ?Event $event;
 
     #[Validate('required|min:3')]
@@ -42,6 +42,8 @@ class EventForm extends Form
 
     public function addProject($project_id, $weight)
     {
+        $this->authorize('handleProject', [$this->event, Project::find($project_id)]);
+
         if ($weight < 0 || $weight === null) {
             $weight = 1;
         }
@@ -59,26 +61,36 @@ class EventForm extends Form
 
     public function removeProject($project_id)
     {
+        $this->authorize('update', $this->event);
+
         $this->event->projects()->detach($project_id);
     }
 
     public function addEvaluator($evaluator_id)
     {
+        $this->authorize('handleContact', [$this->event, Contact::find($evaluator_id)]);
+
         $this->event->evaluators()->attach($evaluator_id, ['role' => 'evaluator']);
     }
 
     public function removeEvaluator($evaluator_id)
     {
+        $this->authorize('update', $this->event);
+
         $this->event->evaluators()->detach($evaluator_id);
     }
 
     public function addStudent($student_id)
     {
+        $this->authorize('handleContact', [$this->event, Contact::find($student_id)]);
+
         $this->event->students()->attach($student_id, ['role' => 'student']);
     }
 
     public function removeStudent($student_id)
     {
+        $this->authorize('update', $this->event);
+
         $this->event->students()->detach($student_id);
     }
 
@@ -99,6 +111,12 @@ class EventForm extends Form
 
     public function update()
     {
+        $this->authorize('update', $this->event);
+
+        if ($this->event->status !== null) {
+            session()->flash('error', __('error.event_over'));
+            return;
+        }
         $this->validate();
 
         $this->event->update($this->all());
@@ -106,6 +124,8 @@ class EventForm extends Form
 
     public function destroy()
     {
+        $this->authorize('delete', $this->event);
+
         $this->event->delete();
     }
 }
