@@ -7,7 +7,7 @@
             <span class="sr-only">{{ __('form.obligatory') }}</span>
         @endif
     </label>
-    <input value="{{ $value ?? '' }}" wire:model.live="{{ $model ?? $name }}" class="border-b-2 border-0"
+    <input autocomplete="off" value="{{ $value ?? '' }}" wire:model.blur="{{ $model ?? $name }}" class="border-b-2 border-0"
            placeholder="{{ $placeholder ?? $label }}" type="text" name="{{ $name }}"
            id="{{ $name }}">
     <div class="min-h-line">
