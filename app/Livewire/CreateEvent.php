@@ -111,7 +111,6 @@ class CreateEvent extends Component
         return auth()
             ->user()
             ->projects()
-            ->whereNotIn('id', $this->addedProjectsIds)
             ->where('title', 'like', '%' . $this->projectSearch . '%')
             ->orderBy($this->projectSort, $this->projectOrder)
             ->paginate(10);
@@ -134,7 +133,6 @@ class CreateEvent extends Component
         return auth()
             ->user()
             ->contacts()
-            ->whereNotIn('id', $this->addedEvaluatorsIds)
             ->whereNotIn('id', $this->addedStudentsIds)
             ->where('name', 'like', '%' . $this->evaluatorSearch . '%')
             ->orderBy($this->evaluatorSort, $this->evaluatorOrder)
@@ -159,7 +157,6 @@ class CreateEvent extends Component
             ->user()
             ->contacts()
             ->whereNotIn('id', $this->addedEvaluatorsIds)
-            ->whereNotIn('id', $this->addedStudentsIds)
             ->where('name', 'like', '%' . $this->studentSearch . '%')
             ->orderBy($this->studentSort, $this->studentOrder)
             ->paginate(10);
