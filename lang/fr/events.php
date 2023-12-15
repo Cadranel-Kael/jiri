@@ -4,9 +4,12 @@ return [
 
     'title' => 'Épreuves',
     'add_new' => 'Crée une épreuve',
-    'import' => 'importer d\'un tableur',
+    'import' => 'Importer d\'un tableur',
     'see_profile' => 'Voir le profil',
+    'create' => 'Créer une épreuve',
+    'edit' => 'Modifier l\'épreuve',
 
+    'project_add' => 'ajouter un projet',
 
     'jury' => 'Jury',
     'jury_add' => 'Ajouter un membre du jury',
@@ -24,4 +27,6 @@ return [
     'student_delete' => 'Supprimer l\'étudiant',
     'student_delete_success' => 'L\'étudiant a été supprimé avec succès',
     'student_delete_error' => 'Une erreur est survenue lors de la suppression de l\'étudiant',
+
+    'start' => 'Débuter l\'épreuve',
 ];

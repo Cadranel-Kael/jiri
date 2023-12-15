@@ -8,7 +8,8 @@
         <x-slot:body>
             <form wire:submit.prevent="saveProject">
                 <x-input class="mb-10" label="{{ __('projects.name') }}" name="title" model="createProjectForm.title"/>
-                <x-input class="mb-10" label="{{ __('projects.description') }}" name="description" model="createProjectForm.description"/>
+                <x-input class="mb-10" label="{{ __('projects.description') }}" name="description"
+                         model="createProjectForm.description"/>
                 <x-button-primary class="mt-2 mx-auto" type="submit">{{ __('projects.add_new') }}</x-button-primary>
             </form>
         </x-slot:body>
@@ -52,6 +53,21 @@
                 <h2 class="font-bold lg:mb-8">Ajouter les projets</h2>
                 <div class="ml-4 w-5/6">
                     <h3 class="font-bold mb-2">Projets</h3>
+                    @if(array_sum($this->weight))
+                        <h4>{{ __('projects.weight_distribution') }}</h4>
+                        <div class="flex w-full mb-2">
+                            @foreach($this->addedProjects() as $project)
+                                @if($this->weight[$project->id])
+                                    <div
+                                        style="width: {{ ($this->weight[$project->id]/array_sum($this->weight))*100 }}%">
+                                        <div>{{ round($this->weight[$project->id]/array_sum($this->weight)*100) }}%
+                                        </div>
+                                        <div class="bg-black mr-2 text-white p-2 rounded">{{  $project->title }}</div>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
                     <x-multi-choice
                         change-order="changeOrder('projects')"
                         :sort="$projectSort"
@@ -61,16 +77,19 @@
                     >
                         @if($this->projects()->isEmpty())
                             <span>{{ __('general.no_results') }}</span>
-                            <x-button-primary type="button" x-data x-on:click="$dispatch('open-modal', { name : 'projectForm' })">{{ __('projects.add_new') }}</x-button-primary>
+                            <x-button-primary type="button" x-data
+                                              x-on:click="$dispatch('open-modal', { name : 'projectForm' })">{{ __('projects.add_new') }}</x-button-primary>
                         @endif
                         <x-slot:addedList>
-                            @foreach($this->addedProjects() as $project)
-                                <x-added-projects :project="$project" remove="remove('projects', {{ $project->id }})"/>
-                            @endforeach
                         </x-slot:addedList>
                         <x-slot:list>
                             @foreach($this->projects as $project)
-                                <x-item-projects :project="$project" add="add('projects', {{ $project->id }})"/>
+                                @if(in_array($project->id, $this->addedProjectsIds))
+                                    <x-added-projects :project="$project"
+                                                      remove="remove('projects', {{ $project->id }})"/>
+                                @else
+                                    <x-item-projects :project="$project" add="add('projects', {{ $project->id }})"/>
+                                @endif
                             @endforeach
                         </x-slot:list>
                     </x-multi-choice>
@@ -90,17 +109,18 @@
                 >
                     @if($this->evaluators()->isEmpty())
                         <span>{{ __('general.no_results') }}</span>
-                        <x-button-primary type="button" x-data x-on:click="$dispatch('open-modal', { name : 'evaluatorForm' })">{{ __('contacts.add_new') }}</x-button-primary>
+                        <x-button-primary type="button" x-data
+                                          x-on:click="$dispatch('open-modal', { name : 'evaluatorForm' })">{{ __('contacts.add_new') }}</x-button-primary>
                     @endif
                     <x-slot:addedList>
-                        @foreach($this->addedEvaluators as $evaluator)
-                            <x-added-evaluator :evaluator="$evaluator"
-                                               remove="remove('evaluators', {{ $evaluator->id }})"/>
-                        @endforeach
                     </x-slot:addedList>
                     <x-slot:list>
                         @foreach($this->evaluators as $evaluator)
-                            <x-item-contacts :contact="$evaluator" add="add('evaluators', {{ $evaluator->id }})"/>
+                            @if(in_array($evaluator->id, $this->addedEvaluatorsIds))
+                                <x-added-evaluator :evaluator="$evaluator" remove="remove('evaluators', {{ $evaluator->id }})"/>
+                            @else
+                                <x-item-contacts :contact="$evaluator" add="add('evaluators', {{ $evaluator->id }})"/>
+                            @endif
                         @endforeach
                     </x-slot:list>
                 </x-multi-choice>
@@ -116,17 +136,19 @@
                 >
                     @if($this->students()->isEmpty())
                         <span>{{ __('general.no_results') }}</span>
-                        <x-button-primary type="button" x-data x-on:click="$dispatch('open-modal', { name : 'studentForm' })">{{ __('contacts.add_new') }}</x-button-primary>
+                        <x-button-primary type="button" x-data
+                                          x-on:click="$dispatch('open-modal', { name : 'studentForm' })">{{ __('contacts.add_new') }}</x-button-primary>
                     @endif
                     <x-slot:addedList>
-                        @foreach($this->addedStudents as $student)
-                            <x-added-student :addedProjects="$this->addedProjects()" :student="$student"
-                                             remove="remove('students', {{ $student->id }})"/>
-                        @endforeach
                     </x-slot:addedList>
                     <x-slot:list>
                         @foreach($this->students as $student)
-                            <x-item-contacts :contact="$student" add="add('students', {{ $student->id }})"/>
+                            @if(in_array($student->id, $this->addedStudentsIds))
+                                <x-added-student :addedProjects="$this->addedProjects()" :student="$student"
+                                                 remove="remove('students', {{ $student->id }})"/>
+                            @else
+                                <x-item-contacts :contact="$student" add="add('students', {{ $student->id }})"/>
+                            @endif
                         @endforeach
                     </x-slot:list>
                 </x-multi-choice>

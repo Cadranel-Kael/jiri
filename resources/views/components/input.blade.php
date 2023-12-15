@@ -2,14 +2,17 @@
 <div {{ $attributes(['class'=>'flex flex-col']) }}>
     <label for="{{ $name }}" class="font-bold @if($labelSrOnly) sr-only @endif">
         {{ $label }}
-        @isset($required)
+        @if($required)
             <span class='text-warning'>*</span>
             <span class="sr-only">{{ __('form.obligatory') }}</span>
-        @endisset
+        @endif
     </label>
-    <input value="{{ $value ?? '' }}" wire:model.live="{{ $model ?? $name }}" class="border-b-2 border-0" placeholder="{{ $placeholder ?? $label }}" type="text" name="{{ $name }}"
+    <input autocomplete="off" value="{{ $value ?? '' }}" wire:model.blur="{{ $model ?? $name }}" class="border-b-2 border-0"
+           placeholder="{{ $placeholder ?? $label }}" type="text" name="{{ $name }}"
            id="{{ $name }}">
-    @error($model ?? $name)
-    {{ $message }}
-    @enderror
+    <div class="min-h-line">
+        @error($model ?? $name)
+        {{ $message }}
+        @enderror
+    </div>
 </div>

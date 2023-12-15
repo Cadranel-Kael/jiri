@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->string('description')->nullable();
+            $table->string('link')->nullable();
             $table->json('tasks')->nullable();
             $table->softDeletes();
             $table->timestamps();

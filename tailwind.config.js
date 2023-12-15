@@ -37,6 +37,11 @@ export default {
                 'col-1': '5.125rem',
                 'col-2': '11.4375rem',
                 'col-2-sm': '9.1rem',
+                'col-3': '17.75rem',
+                'col-4': '24.0625rem',
+            },
+            minHeight: {
+                'line': '1.5rem',
             },
             fontSize: {
                 'logo': '40',

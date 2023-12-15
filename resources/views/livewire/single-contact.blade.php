@@ -59,7 +59,7 @@
                                 <button type="button" @click="show =! show">{{ __('general.expand') }}</button>
                             </td>
                             <td class="p-2.5">
-                                <x-date-pill :date="$event->date"/>
+                                <x-date-pill :status="$event->status"/>
                             </td>
                             <td class="p-2.5">{{ $event->name }}</td>
                             <td class="p-2.5">

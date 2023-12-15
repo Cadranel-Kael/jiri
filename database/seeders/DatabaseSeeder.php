@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        $projects = Project::factory()->count(10)->create(
+        $projects = Project::factory()->count(6)->create(
             [
                 'user_id' => $user->id,
             ]
