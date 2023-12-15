@@ -48,8 +48,6 @@ class SingleEvent extends Component
             ->user()
             ->projects()
             ->where('title', 'like', '%' . $this->projectSearch . '%')
-            ->whereNotIn('id', $this->event->projects->pluck('id'))
-            ->whereNotIn('id', $this->addedProjectsIds)
             ->orderBy($this->projectSort, $this->projectOrder)
             ->paginate(12);
     }

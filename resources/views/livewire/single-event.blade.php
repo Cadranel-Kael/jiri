@@ -1,58 +1,66 @@
-<div>
-    <x-modal name="addProjects">
-        <x-slot:body>
-            <form wire:submit.prevent="addProjects">
-                <x-multi-choice
-                    change-order="changeProjectOrder()"
-                    :sort="$projectSort"
-                    :order="$projectOrder"
-                    :sortables="$projectSortables"
-                    search="projectSearch"
-                >
-                    @if($this->projects()->isEmpty())
-                        <span>{{ __('general.no_results') }}</span>
-                        <x-button-primary type="button" x-data
-                                          x-on:click="$dispatch('open-modal', { name : 'projectForm' })">{{ __('projects.add_new') }}</x-button-primary>
-                    @endif
-                    <x-slot:addedList>
-                        @foreach($this->addedProjects() as $project)
-                            <x-added-projects :project="$project" remove="removeProjectId({{ $project->id }})"/>
-                        @endforeach
-                    </x-slot:addedList>
-                    <x-slot:list>
-                        @foreach($this->projects as $project)
-                            <x-item-projects :project="$project" add="addProjectId({{ $project->id }})"/>
-                        @endforeach
-                    </x-slot:list>
-                </x-multi-choice>
-                <x-button-primary class="my-4" type="submit">add</x-button-primary>
-            </form>
-        </x-slot:body>
-    </x-modal>
+<div class="bg-white w-fit rounded p-10 mr-10">
+    @if($this->event->status === null)
+        <x-modal name="addProjects">
+            <x-slot:body>
+                <form wire:submit.prevent="addProjects">
+                    <x-multi-choice
+                        change-order="changeProjectOrder()"
+                        :sort="$projectSort"
+                        :order="$projectOrder"
+                        :sortables="$projectSortables"
+                        search="projectSearch"
+                    >
+                        @if($this->projects()->isEmpty())
+                            <span>{{ __('general.no_results') }}</span>
+                            <x-button-primary type="button" x-data
+                                              x-on:click="$dispatch('open-modal', { name : 'projectForm' })">{{ __('projects.add_new') }}</x-button-primary>
+                        @endif
+                        <x-slot:addedList></x-slot:addedList>
+                        <x-slot:list>
+                            @foreach($this->projects as $project)
+                                @if(in_array($project->id, $this->addedProjectsIds))
+                                    <x-added-projects :project="$project" remove="removeProjectId({{ $project->id }})"/>
+                                @else
+                                    <x-item-projects :project="$project" add="addProjectId({{ $project->id }})"/>
+                                @endif
+                            @endforeach
+                        </x-slot:list>
+                    </x-multi-choice>
+                    <x-button-primary class="my-4" type="submit">add</x-button-primary>
+                </form>
+            </x-slot:body>
+        </x-modal>
+    @endif
     <div class="flex mb-6">
         <div class="flex flex-col items-start ml-4 gap-2">
             <x-date-pill :status="$this->event->status"/>
             <span class="text-h1">{{ $this->event->name }}</span>
             <x-date :date="$this->event->date"/>
-            <x-button-primary type="button">{{ __('general.edit') }}</x-button-primary>
-            <x-button-primary type="button">{{ __('general.start') }}</x-button-primary>
+            @if($this->event->status === null)
+                <x-button-primary type="button">{{ __('general.edit') }}</x-button-primary>
+                <x-button-primary type="button">{{ __('general.start') }}</x-button-primary>
+            @endif
         </div>
     </div>
     <div class="mb-6">
         <div class="ml-4 flex items-center gap-2">
             <h2 class="text-h2 mb-4">{{ __('projects.title') }} ({{ count($this->eventProjects()) }})</h2>
-            <x-button-primary
-                x-on:click="$dispatch('open-modal', { name : 'addProjects' })">{{ __('events.project_add') }}</x-button-primary>
+            @if($this->event->status === null)
+                <x-button-primary
+                    x-on:click="$dispatch('open-modal', { name : 'addProjects' })">{{ __('events.project_add') }}</x-button-primary>
+            @endif
         </div>
-        <div class="ml-4">
+        <div class="ml-4 mb-8">
             <h3 class="">{{ __('projects.weight_distribution') }}</h3>
-            <div class="mb-8 w-full flex max-w-2xl">
+            <div class="mb-4 w-full flex max-w-2xl rounded">
                 @foreach($this->eventProjects() as $project)
                     @if($project->pivot->weight > 0)
-                        <div
+                        <div class="overflow-x-hidden"
                             style="width: {{ ($project->pivot->weight/$this->event->projects()->sum('weight'))*100 }}%">
-                            <div>{{ round($project->pivot->weight/$this->event->projects()->sum('weight')*100) }}%</div>
-                            <div class="bg-black mr-2 text-white p-2 rounded">{{  $project->title }}</div>
+                            <div class="font-bold">
+                                {{ round($project->pivot->weight/$this->event->projects()->sum('weight')*100) }}%
+                            </div>
+                            <div class="bg-black rounded mr-2 text-white p-2">{{  $project->title }}</div>
                         </div>
                     @endif
                 @endforeach
@@ -67,7 +75,9 @@
     <div class="mb-6">
         <div class="ml-4 flex gap-2">
             <h2 class="text-h2 mb-4">{{ __('events.jury') }} ({{ count($this->evaluators()) }})</h2>
-            <button type="button" wire:click="openEvaluatorModal">{{ __('events.jury_add') }}</button>
+            @if($this->event->status === null)
+                <button type="button" wire:click="openEvaluatorModal">{{ __('events.jury_add') }}</button>
+            @endif
         </div>
         <div class="flex overflow-x-scroll p-4 gap-4">
             @foreach($this->evaluators as $evaluator)
