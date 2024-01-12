@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Forms;
 
+use App\Events\EventStartedEvent;
 use App\Models\Contact;
 use App\Models\Event;
 use App\Models\Project;
@@ -17,10 +18,10 @@ class EventForm extends Form
 
     public ?Event $event;
 
-    #[Validate('required|min:3')]
+    #[Validate('required|min:3', as: 'form.name')]
     public $name;
 
-    #[Validate('required|date')]
+    #[Validate('required|date', as: 'form.date')]
     public $date;
 
     public $duration;
@@ -38,6 +39,16 @@ class EventForm extends Form
         $this->duration = $event->duration;
 
         $this->status = $event->status;
+    }
+
+    public function start()
+    {
+        $this->status = 'started';
+        $this->event->update($this->all());
+        foreach ($this->event->participants as $participant) {
+            $participant->update(['token' => md5(rand(1, 10) . microtime())]);
+        }
+        EventStartedEvent::dispatch($this->event);
     }
 
     public function addProject($project_id, $weight)
@@ -64,6 +75,14 @@ class EventForm extends Form
         $this->authorize('update', $this->event);
 
         $this->event->projects()->detach($project_id);
+        $this->event->students()->detach($project_id);
+    }
+
+    public function updateProject($project_id, $weight)
+    {
+        $this->authorize('update', $this->event);
+
+        $this->event->projects()->updateExistingPivot($project_id, ['weight' => $weight]);
     }
 
     public function addEvaluator($evaluator_id)
@@ -98,7 +117,6 @@ class EventForm extends Form
     {
         $this->event->presentations()->attach($student_id, ['project_id' => $project_id]);
     }
-
 
     public function store()
     {

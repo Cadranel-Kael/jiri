@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Event extends Model
@@ -25,6 +26,7 @@ class Event extends Model
     protected $fillable = [
         'name',
         'date',
+        'status',
     ];
 
     public function owner(): BelongsTo
@@ -77,5 +79,10 @@ class Event extends Model
             ->belongsToMany(Contact::class, 'participants', 'event_id', 'contact_id')
             ->withPivot('role')
             ->wherePivot('role', 'student');
+    }
+
+    public function scores(): HasManyThrough
+    {
+        return $this->hasManyThrough(Score::class, Presentation::class, 'event_id', 'presentation_id', 'id', 'id');
     }
 }
