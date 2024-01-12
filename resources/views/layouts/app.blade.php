@@ -58,7 +58,7 @@
             <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
                  x-transition.opacity.duration.500ms
                  class="bg-green-500 text-white font-bold rounded-lg border shadow-lg px-10 py-2">
-                {{ Session::get('success') }}
+                {{ session('success') }}
             </div>
         </div>
     @endif
