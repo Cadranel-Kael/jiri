@@ -16,5 +16,5 @@
          loading="lazy">
     <div class="text-ellipsis overflow-hidden w-full text-center mb-2">{{ $contact->name }}</div>
     <div class="text-black-50 text-ellipsis overflow-hidden w-full text-center mb-6">{{ $contact->email }}</div>
-    <x-link-outline value="{{ __('contacts.see_profile') }}" href="{{ route('contacts.show', $contact->id) }}"/>
+    <x-link-outline href="{{ route('contacts.show', $contact->id) }}">{{ __('contacts.see_profile') }}</x-link-outline>
 </div>
