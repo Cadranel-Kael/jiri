@@ -72,17 +72,12 @@
         </div>
     @endif
     @include('layouts.navigation')
-    <div class="flex-1 mt-16 overflow-hidden flex flex-col justify-between min-h-full">
-        <main class="w-full">
-        @if (isset($heading) && !isset($backUrl))
-            <span aria-hidden="true"
-                  class="block text-h1 text-center lg:text-left text-primary font-bold mb-10">{{ $heading }}</span>
-        @endif
-        @isset($backUrl)
-            <a href="{{ $backUrl }}"
-               class="block text-h2 text-center lg:text-left text-primary font-bold mb-10">Back</a>
-        @endif
-
+    <div class="flex-1 mt-16 overflow-hidden flex flex-col justify-between min-h-full pl-10">
+        <main class="w-full flex-1">
+            @if(@isset($heading) && $showHeading)
+                <span aria-hidden="true"
+                      class="block text-h1 text-center lg:text-left text-primary font-bold mb-10">{{ $heading }}</span>
+            @endif
             {{ $slot }}
         </main>
         <footer class="text-center p-10">
