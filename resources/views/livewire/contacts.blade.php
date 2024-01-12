@@ -1,4 +1,4 @@
-<div>
+<div class="h-full">
     <x-modal-form
         submit="save"
         name="create"
