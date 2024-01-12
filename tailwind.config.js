@@ -39,6 +39,10 @@ export default {
                 'col-2-sm': '9.1rem',
                 'col-3': '17.75rem',
                 'col-4': '24.0625rem',
+                'col-5': '30.375rem',
+                'col-6': '36.6875rem',
+                'col-7': '43rem',
+                'col-8': '49.3125rem',
             },
             minHeight: {
                 'line': '1.5rem',
@@ -53,6 +57,9 @@ export default {
             fontFamily: {
                 sans: 'Nunito, sans-serif',
             },
+            zIndex: {
+                '100': '100',
+            }
         },
     },
 

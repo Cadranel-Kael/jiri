@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+@props(['heading' => null, 'showHeading' => true])
+    <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -29,12 +30,35 @@
 <body class="font-sans antialiased">
 <div class="min-h-screen flex bg-gradient">
     <h1 class="sr-only">{{ $heading }}</h1>
-    @if(Session::has('success'))
+    <livewire:flash/>
+    <div>
+        <div
+            x-data="{ show: false, message: '' }"
+            x-on:success.window="show = true; message = $event.detail.message; setTimeout(() => show = false, 5000);"
+            class="fixed bottom-0 right-0 m-8 z-50">
+            <div x-show="show"
+                 x-transition.opacity.duration.500ms
+                 class="bg-success text-white font-bold rounded-lg border shadow-lg px-10 py-2">
+                <span x-text="message"></span>
+            </div>
+        </div>
+        <div
+            x-data="{ show: false, message: '' }"
+            x-on:warning.window="show = true; message = $event.detail.message; setTimeout(() => show = false, 5000);"
+            class="fixed bottom-0 right-0 m-8 z-50">
+            <div x-show="show"
+                 x-transition.opacity.duration.500ms
+                 class="bg-warning text-white font-bold rounded-lg border shadow-lg px-10 py-2">
+                <span x-text="message"></span>
+            </div>
+        </div>
+    </div>
+    @if(session()->has('success'))
         <div class="fixed bottom-0 right-0 m-8 z-50">
             <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
                  x-transition.opacity.duration.500ms
                  class="bg-green-500 text-white font-bold rounded-lg border shadow-lg px-10 py-2">
-                {{ Session::get('success') }}
+                {{ session('success') }}
             </div>
         </div>
     @endif
@@ -48,17 +72,12 @@
         </div>
     @endif
     @include('layouts.navigation')
-    <div class="flex-1 mt-16 overflow-hidden flex flex-col justify-between min-h-full">
-        <main class="w-full">
-        @if (isset($heading) && !isset($backUrl))
-            <span aria-hidden="true"
-                  class="block text-h1 text-center lg:text-left text-primary font-bold mb-10">{{ $heading }}</span>
-        @endif
-        @isset($backUrl)
-            <a href="{{ $backUrl }}"
-               class="block text-h2 text-center lg:text-left text-primary font-bold mb-10">Back</a>
-        @endif
-
+    <div class="flex-1 mt-16 overflow-hidden flex flex-col justify-between min-h-full pl-10">
+        <main class="w-full flex-1">
+            @if(@isset($heading) && $showHeading)
+                <span aria-hidden="true"
+                      class="block text-h1 text-center lg:text-left text-primary font-bold mb-10">{{ $heading }}</span>
+            @endif
             {{ $slot }}
         </main>
         <footer class="text-center p-10">

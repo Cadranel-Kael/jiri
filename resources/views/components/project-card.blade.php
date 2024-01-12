@@ -18,5 +18,5 @@
     />
     <span class="text-center text-ellipsis font-bold">{{ $project->title }}</span>
     <span class="text-center h-12 overflow-hidden text-ellipsis">{{ $project->description }}</span>
-    <x-link-outline href="{{route('projects.show', $project->id)}}" value="Voire le projet"/>
+    <x-link-outline href="{{route('projects.show', $project->id)}}">{{__('projects.see_project')}}</x-link-outline>
 </div>

@@ -1,4 +1,5 @@
 <div>
+
     <x-modal name="projectForm">
         <x-slot:title>
             <h2 class="font-bold text-h3 text-center m-auto">
@@ -43,6 +44,7 @@
         </x-slot:body>
     </x-modal>
     <form wire:submit.prevent="save" class="bg-white drop-shadow flex flex-col lg:p-8 rounded w-fit m-auto">
+        <span class="text-h1 font-bold text-primary text-center mb-16">{{ __('events.add_new') }}</span>
         <div class="grid grid-cols-2 mb-10">
             <div class="w-fit flex flex-col gap-8">
                 <h2 class="sr-only">Generale</h2>
@@ -80,8 +82,6 @@
                             <x-button-primary type="button" x-data
                                               x-on:click="$dispatch('open-modal', { name : 'projectForm' })">{{ __('projects.add_new') }}</x-button-primary>
                         @endif
-                        <x-slot:addedList>
-                        </x-slot:addedList>
                         <x-slot:list>
                             @foreach($this->projects as $project)
                                 @if(in_array($project->id, $this->addedProjectsIds))
@@ -112,8 +112,6 @@
                         <x-button-primary type="button" x-data
                                           x-on:click="$dispatch('open-modal', { name : 'evaluatorForm' })">{{ __('contacts.add_new') }}</x-button-primary>
                     @endif
-                    <x-slot:addedList>
-                    </x-slot:addedList>
                     <x-slot:list>
                         @foreach($this->evaluators as $evaluator)
                             @if(in_array($evaluator->id, $this->addedEvaluatorsIds))

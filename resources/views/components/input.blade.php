@@ -1,4 +1,13 @@
-@props(['name', 'label', 'labelSrOnly' => false, 'required' => false, 'placeholder' => null, 'model' => null, 'value' => null])
+@props([
+    'name',
+    'label',
+    'labelSrOnly' => false,
+    'required' => false,
+    'placeholder' => null,
+    'model' => null,
+    'value' => null,
+    'type' => 'text',
+    ])
 <div {{ $attributes(['class'=>'flex flex-col']) }}>
     <label for="{{ $name }}" class="font-bold @if($labelSrOnly) sr-only @endif">
         {{ $label }}
@@ -7,8 +16,9 @@
             <span class="sr-only">{{ __('form.obligatory') }}</span>
         @endif
     </label>
-    <input autocomplete="off" value="{{ $value ?? '' }}" wire:model.blur="{{ $model ?? $name }}" class="border-b-2 border-0"
-           placeholder="{{ $placeholder ?? $label }}" type="text" name="{{ $name }}"
+    <input autocomplete="off" value="{{ $value ?? '' }}" wire:model.blur="{{ $model ?? $name }}"
+           class="bg-transparent border-b-2 border-0"
+           placeholder="{{ $placeholder ?? $label }}" type="{{ $type }}" name="{{ $name }}"
            id="{{ $name }}">
     <div class="min-h-line">
         @error($model ?? $name)

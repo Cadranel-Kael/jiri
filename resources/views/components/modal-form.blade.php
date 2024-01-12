@@ -6,7 +6,7 @@
      wire:keydown.escape="show = false"
 >
     <a class="fixed block h-screen cursor-default w-screen bg-black opacity-75 top-0 left-0 z-50" aria-hidden="true" href="#"></a>
-    <form wire:submit="{{ $submit }}" class="items-stretch fixed min-w-col-4 z-50 w-fit h-fit absolute bg-white rounded flex flex-col p-4 inset-0 m-auto">
+    <form wire:submit="{{ $submit }}" class="items-stretch fixed min-w-col-8 z-50 w-fit h-fit absolute bg-white rounded flex flex-col py-12 px-20 inset-0 m-auto">
         <div class="flex relative">
             {{ $title }}
             <a href="#" class="absolute right-0">

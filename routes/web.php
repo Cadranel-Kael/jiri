@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EvaluationController;
+use App\Http\Controllers\EvaluatorLoginController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
@@ -34,4 +36,8 @@ Route::resource('contacts', ContactController::class)->middleware(['auth', 'veri
 Route::resource('events', EventController::class)->middleware(['auth', 'verified']);
 Route::resource('projects', ProjectController::class)->middleware(['auth', 'verified']);
 
-require __DIR__.'/auth.php';
+Route::middleware(['event.started','token.verify'])->group(function () {
+    Route::get('/evaluation/{evaluator}', [EvaluatorLoginController::class])->name('evaluation.index');
+});
+
+require __DIR__ . '/auth.php';

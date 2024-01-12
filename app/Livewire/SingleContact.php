@@ -39,25 +39,31 @@ class SingleContact extends Component
 
     public function getProjectAverage($event_id, $project_id, $total = 100)
     {
-        return round($this
-                ->events
-                ->where('id', $event_id)
-                ->first()
-                ->presentations()
-                ->where('project_id', $project_id)
-                ->first()
-                ->scores
-                ->pluck('score')
-                ->avg() / 100 * $total);
+        $presentation = $this
+            ->events
+            ->where('id', $event_id)
+            ->first()
+            ->presentations()
+            ->where('project_id', $project_id)
+            ->first();
+
+        if ($presentation && $presentation->scores()->exists()) {
+            return round($presentation->scores->pluck('score')->avg() / 100 * $total);
+        } else {
+            return null;
+        }
     }
 
     public function getAverage($event_id, $total = 100)
     {
+        $scores = [];
         foreach ($this->events->where('id', $event_id)->first()->projects as $project) {
+            if ($this->getProjectAverage($event_id, $project->id) !== null)
             $scores[] = $this->getProjectAverage($event_id, $project->id) * $project->pivot->weight;
         }
 
-        return round(array_sum($scores) / count($scores) / 100 * $total);
+        if (count($scores) === 0) return null;
+        else return round(array_sum($scores) / count($scores) / 100 * $total);
     }
 
     public function rules()

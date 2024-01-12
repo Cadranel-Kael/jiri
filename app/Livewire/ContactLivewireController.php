@@ -38,6 +38,16 @@ class ContactLivewireController extends Component
     }
 
     #[Computed]
+    public function hasContacts(): bool
+    {
+        if (auth()->user()->contacts()->count())
+        {
+            return false;
+        }
+        return true;
+    }
+
+    #[Computed]
     public function contacts()
     {
         return auth()->user()->contacts()->where('name', 'like', '%' . $this->search . '%')
@@ -46,7 +56,7 @@ class ContactLivewireController extends Component
     }
 
 
-    public function changeOrder()
+    public function changeOrder(): void
     {
         if ($this->order === 'ASC') {
             $this->order = 'DESC';
@@ -55,31 +65,31 @@ class ContactLivewireController extends Component
         }
     }
 
-    public function loadMore()
+    public function loadMore(): void
     {
         $this->perPage += 12;
     }
 
-    public function save()
+    public function save(): \Illuminate\Http\RedirectResponse
     {
         $this->createContactForm->store();
 
         return Redirect::to(route('contacts.index'));
     }
 
-    public function update()
+    public function update(): \Illuminate\Http\RedirectResponse
     {
         $this->updateContactForm->update();
 
         return Redirect::to(route('contacts.index'));
     }
 
-    public function toggleDeleteModule()
+    public function toggleDeleteModule(): void
     {
         $this->deleteModuleShown = !$this->deleteModuleShown;
     }
 
-    public function destroy($id)
+    public function destroy($id): \Illuminate\Http\RedirectResponse
     {
         $this->updateContactForm->setContact(Contact::find($id));
         $this->updateContactForm->destroy();
@@ -87,7 +97,7 @@ class ContactLivewireController extends Component
         return Redirect::to(route('contacts.index'));
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\View
     {
         return view('livewire.contacts');
     }

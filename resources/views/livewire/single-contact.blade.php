@@ -65,7 +65,9 @@
                             <td class="p-2.5">
                                 <x-date :date="$event->date"/>
                             </td>
-                            <td class="p-2.5">{{ $this->getAverage($event->id, 20) }} / 20</td>
+                            <td class="p-2.5">@if($event->projects)
+                                    {{ $this->getAverage($event->id, 20) }} / 20
+                                @endif</td>
                         </tr>
                         <tr x-show="show">
                             <td></td>
@@ -79,13 +81,20 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($event->projects as $project)
-                                        <tr>
-                                            <td>{{ $project->title }}</td>
-                                            <td>{{  $this->getProjectAverage($event->id, $project->id, 20) }} / 20</td>
-                                            <td>{{ $project->pivot->weight }}</td>
-                                        </tr>
-                                    @endforeach
+                                    @if($event->projects)
+                                        @foreach($event->projects as $project)
+                                            <tr>
+                                                <td>{{ $project->title }}</td>
+                                                <td>@if($project->pivot->weight !== null)
+                                                        {{  $this->getProjectAverage($event->id, $project->id, 20) }} /
+                                                        20
+                                                    @endif</td>
+                                                <td>@if($project->pivot->weight !== null)
+                                                        {{ $project->pivot->weight }}
+                                                    @endif</td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                     </tbody>
                                 </table>
                             </td>

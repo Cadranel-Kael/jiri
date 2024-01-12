@@ -17,5 +17,5 @@
     <x-date-pill :status="$event->status"/>
     <span class="text-center h-12 text-lg text-ellipsis">{{ $event->name }}</span>
     <x-date class="text-black-50" :date="$event->date"/>
-    <x-link-outline :href="route('events.show', $event->id)" value="Voire l'épreuve"/>
+    <x-link-outline :href="route('events.show', $event->id)">{{ __('events.see_event') }}</x-link-outline>
 </div>
