@@ -13,11 +13,13 @@
     @vite('resources/css/app.css')
 </head>
 <body class="min-h-screen bg-gradient">
-    <h1 class="text-3xl font-bold underline">Mes utilisateurs</h1>
-
-{{--    <x-button-white/>--}}
-{{--    <x-button-primary value="Button"/>--}}
-{{--    <x-link-primary link="#" value="Button"/>--}}
-{{--    <x-link-outline link="#" value="Button"/>--}}
+<main class="bg-white grid grid-cols-2 w-fit m-auto p-10 rounded">
+<div>
+    <h1 class="text-3xl font-bold">Jiri</h1>
+    <h2>La solution pour gérer vos jury</h2>
+    <p>Jiri est une application à gerer l’encodage</p>
+</div>
+<livewire:register/>
+</main>
 </body>
 </html>
