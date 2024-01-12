@@ -3,32 +3,62 @@
 namespace App\Livewire;
 
 use App\Livewire\Forms\EventForm;
+use App\Traits\Searchable;
 use Illuminate\Database\Eloquent\Builder;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
+use Ramsey\Collection\Collection;
+
 
 class SingleEvent extends Component
 {
+    use Searchable;
+
     public EventForm $form;
+
+    public $editMode = false;
 
     public int $id;
 
-    public $projectSearch = '';
-    public string $projectSort = 'title';
-    public string $projectOrder = 'ASC';
-    public array $projectSortables = ['title', 'created_at'];
-    public array $addedProjectsIds = [];
+    public $projectIds = [];
 
     public $editingUrls = [];
+
+    public $projects;
+    public $weight = [];
+
 
     public function mount()
     {
         $this->form->setEvent(auth()->user()->events()->where('id', $this->id)->first());
+        $this->updateProjects();
+    }
+
+    public function updateProjects()
+    {
+        $this->projects = [];
+        foreach (auth()->user()->events()->where('id', $this->id)->first()->projects as $project) {
+            $this->projects[] = $project;
+            $this->weight[$project->id] = $project->pivot->weight;
+        }
+    }
+
+    public function toggleEditMode()
+    {
+        $this->editMode = true;
+    }
+
+    public function cancel()
+    {
+        $this->editMode = false;
+        $this->form->reset();
+        $this->form->setEvent(auth()->user()->events()->where('id', $this->id)->first());
+        $this->updateProjects();
     }
 
     public function changeProjectOrder(): void
     {
-       $this->projectOrder = $this->projectOrder === 'ASC' ? 'DESC' : 'ASC';
+        $this->projectOrder = $this->projectOrder === 'ASC' ? 'DESC' : 'ASC';
     }
 
     #[Computed]
@@ -37,32 +67,13 @@ class SingleEvent extends Component
         return auth()->user()->events()->where('id', $this->id)->first();
     }
 
-    // --------------
-    // -- Projects --
-    // --------------
-
-    #[Computed]
-    public function projects()
+    public function startEvent()
     {
-        return auth()
-            ->user()
-            ->projects()
-            ->where('title', 'like', '%' . $this->projectSearch . '%')
-            ->orderBy($this->projectSort, $this->projectOrder)
-            ->paginate(12);
-    }
+        $this->form->start();
 
-    #[Computed]
-    public function addedProjects()
-    {
-        return auth()
-            ->user()
-            ->projects()
-            ->where('title', 'like', '%' . $this->projectSearch . '%')
-            ->whereIn('id', $this->addedProjectsIds)
-            ->whereNotIn('id', $this->event->projects->pluck('id'))
-            ->orderBy($this->projectSort, $this->projectOrder)
-            ->paginate(12);
+        session()->flash('success', __('events.event_started'));
+
+        $this->redirect(route('events.show', $this->id));
     }
 
     #[Computed]
@@ -71,27 +82,13 @@ class SingleEvent extends Component
         return $this->event()->projects;
     }
 
-    public function addProjectId($id)
-    {
-        if (!in_array($id, $this->addedProjectsIds) && auth()->user()->projects()->where('id', $id)->exists()) {
-            $this->addedProjectsIds[] = $id;
-        }
-    }
-
-    public function removeProjectId($id)
-    {
-        if (in_array($id, $this->addedProjectsIds)) {
-            $this->addedProjectsIds = array_diff($this->addedProjectsIds, [$id]);
-        }
-    }
-
     public function addProjects()
     {
-        foreach($this->addedProjectsIds as $id) {
+        foreach ($this->addedProjectsIds as $id) {
             $this->form->addProject($id, 1);
         }
 
-        $this->addedProjectsIds = [];
+        $this->updateProjects();
 
         session()->flash('success', __('events.projects_added'));
 
@@ -102,9 +99,9 @@ class SingleEvent extends Component
     {
         $this->form->removeProject($id);
 
-        session()->flash('success', __('events.project_removed'));
+        $this->updateProjects();
 
-        $this->redirect(route('events.show', $this->id));
+        $this->dispatch('flash', message: 'events.project_removed', type: 'success');
     }
 
     // ----------------
@@ -166,7 +163,6 @@ class SingleEvent extends Component
     }
 
 
-
     public function presentations($contactId)
     {
         return $this->event->presentations()->where('contact_id', $contactId)->get();
@@ -175,8 +171,7 @@ class SingleEvent extends Component
 
     public function matchingTasks($projectTasks, $tasks)
     {
-        foreach ($tasks as $task)
-        {
+        foreach ($tasks as $task) {
             $matches[] = array_search($task, $projectTasks);
         }
 
@@ -188,8 +183,21 @@ class SingleEvent extends Component
 
     }
 
+    public function update()
+    {
+        $this->form->update();
 
-    public function render()
+        foreach ($this->projects as $project) {
+            $this->form->updateProject($project->id, $this->weight[$project->id]);
+        }
+
+        $this->editMode = false;
+
+        $this->dispatch('flash', message: 'events.event_updated', type: 'success');
+    }
+
+    public
+    function render()
     {
         return view('livewire.single-event');
     }
