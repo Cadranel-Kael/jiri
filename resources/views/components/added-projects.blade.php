@@ -19,7 +19,7 @@
         @endif
     </div>
 
-    <button type="button" wire:key="{{ $project->id }}"
+    <button type="button" wire:key.prevent="{{ $project->id }}"
             wire:click="{{ $remove }}">
         <svg
             role="img"
