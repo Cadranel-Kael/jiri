@@ -16,6 +16,7 @@
         <label for="weight">{{ __('projects.weight') }}</label>
         <input wire:model.live="weight.{{ $project->id }}" class="rounded text-black w-20" placeholder="1" type="number"
                name="weight" id="weight">
+        @endif
     </div>
 
     <button type="button" wire:key="{{ $project->id }}"
