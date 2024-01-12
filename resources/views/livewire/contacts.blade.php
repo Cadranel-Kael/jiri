@@ -73,9 +73,14 @@
         @endforeach
     </div>
     @if($this->contacts->isEmpty())
-        <div>
-            <span>{{ __('form.no_results') }}</span>
-            <x-link-primary href="#create">{{ __('contacts.add_new') }}</x-link-primary>
+        <div class="text-center mt-24">
+            @if($this->hasContacts())
+                <div class="max-w-6 mx-auto">{{ __('contacts.no_contacts') }}</div>
+            @else
+                <div>{{ __('form.no_results_for') }} <span class="font-bold">{{ $this->search }}</span>
+                </div>
+            @endif
+            <x-link-primary class="mt-2 w-fit mx-auto" href="#create">{{ __('contacts.add_new') }}</x-link-primary>
         </div>
     @else
         <div class="flex justify-center p-10">
