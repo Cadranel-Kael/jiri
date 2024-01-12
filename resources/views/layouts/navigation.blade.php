@@ -1,5 +1,5 @@
 <nav x-data="{ expanded:false }"
-     class="sticky top-0 z-40 mr-10 p-4 h-screen rounded-r-lg drop-shadow bg-primary flex flex-col text-white block">
+     class="sticky top-0 z-40 p-4 h-screen rounded-r-lg drop-shadow bg-primary flex flex-col text-white block">
     <h2 class="sr-only">{{ __('general.nav_title') }}</h2>
     <div class="h-full flex flex-col justify-between">
         <a href="{{ route('dashboard') }}" class="text-logo">Jiri</a>
@@ -48,8 +48,11 @@
                         href="{{ route('profile.edit') }}"/>
         </div>
         <div>
-            <x-nav-link :active="false" icon="icon-log-out" width="21.94" height="22.69" name="Deconnexion"
+            <x-nav-link onclick="event.preventDefault(); document.getElementById('frm-logout').submit();" :active="false" icon="icon-log-out" width="21.94" height="22.69" name="Deconnexion"
                         href="{{ route('logout') }}"/>
         </div>
     </div>
+    <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+        {{ csrf_field() }}
+    </form>
 </nav>
