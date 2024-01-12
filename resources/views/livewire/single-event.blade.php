@@ -1,50 +1,54 @@
-<div class="bg-white w-fit rounded p-10 mr-10">
-    @if($this->event->status === null)
-        <x-modal name="addProjects">
-            <x-slot:body>
-                <form wire:submit.prevent="addProjects">
-                    <x-multi-choice
-                        change-order="changeProjectOrder()"
-                        :sort="$projectSort"
-                        :order="$projectOrder"
-                        :sortables="$projectSortables"
-                        search="projectSearch"
-                    >
-                        @if($this->projects()->isEmpty())
-                            <span>{{ __('general.no_results') }}</span>
-                            <x-button-primary type="button" x-data
-                                              x-on:click="$dispatch('open-modal', { name : 'projectForm' })">{{ __('projects.add_new') }}</x-button-primary>
-                        @endif
-                        <x-slot:addedList></x-slot:addedList>
-                        <x-slot:list>
-                            @foreach($this->projects as $project)
-                                @if(in_array($project->id, $this->addedProjectsIds))
-                                    <x-added-projects :project="$project" remove="removeProjectId({{ $project->id }})"/>
-                                @else
-                                    <x-item-projects :project="$project" add="addProjectId({{ $project->id }})"/>
-                                @endif
-                            @endforeach
-                        </x-slot:list>
-                    </x-multi-choice>
-                    <x-button-primary class="my-4" type="submit">add</x-button-primary>
-                </form>
-            </x-slot:body>
-        </x-modal>
+<div class="bg-white w-fit rounded p-10 max-w-6xl mx-auto">
+    @if($this->event()->status === 'started')
+        <button type="button" wire:click.prevent="cancel()">Cancel</button>
     @endif
-    <div class="flex mb-6">
-        <div class="flex flex-col items-start ml-4 gap-2">
-            <x-date-pill :status="$this->event->status"/>
-            <span class="text-h1">{{ $this->event->name }}</span>
-            <x-date :date="$this->event->date"/>
-            @if($this->event->status === null)
-                <x-button-primary type="button">{{ __('general.edit') }}</x-button-primary>
-                <x-button-primary type="button">{{ __('general.start') }}</x-button-primary>
+    @if($this->event()->status == null)
+        <livewire:projects-list :event="$this->event()"/>
+        <livewire:evaluators-list :event="$this->event()"/>
+    @endif
+    @if($this->editMode)
+        <form wire:submit="update">
             @endif
+            <div class="w-fit ml-auto">
+                @if($this->event->status === null)
+                    @if($this->editMode)
+                        <x-button-primary type="submit">{{ __('general.save') }}</x-button-primary>
+                        <x-button-warning
+                            wire:click.prevent="cancel">{{ __('general.cancel') }}</x-button-warning>
+                    @else
+                        <div class="flex gap-4">
+                            <x-button-primary
+                                wire:click.prevent="toggleEditMode()">{{ __('general.edit') }}</x-button-primary>
+                            <x-button-primary wire:click="startEvent()"
+                                              type="button">{{ __('general.start') }}</x-button-primary>
+                        </div>
+                    @endif
+                @endif
+            </div>
+            <div class="flex mb-6">
+                <div class="flex flex-col items-start ml-4 gap-2">
+                    <x-date-pill :status="$this->event->status"/>
+                    @if($this->editMode)
+                        <x-input name="name" model="form.name" label="Name"/>
+                        <x-input name="date" model="form.date" label="Date"/>
+                    @else
+                        <span class="text-h1">{{ $this->event->name }}</span>
+                        <x-date :date="$this->event->date"/>
+                    @endif
+                </div>
+            </div>
+            @if($this->editMode)
+        </form>
+    @endif
+    @if($this->event()->status !== null)
+        <div>
+            <h2>Recap</h2>
+            <livewire:points-recap :event="$this->event"/>
         </div>
-    </div>
+    @endif
     <div class="mb-6">
-        <div class="ml-4 flex items-center gap-2">
-            <h2 class="text-h2 mb-4">{{ __('projects.title') }} ({{ count($this->eventProjects()) }})</h2>
+        <div class="ml-4 flex items-start gap-2 flex-col mb-4">
+            <h2 class="text-h2">{{ __('projects.title') }} ({{ count($this->eventProjects()) }})</h2>
             @if($this->event->status === null)
                 <x-button-primary
                     x-on:click="$dispatch('open-modal', { name : 'addProjects' })">{{ __('events.project_add') }}</x-button-primary>
@@ -52,13 +56,13 @@
         </div>
         <div class="ml-4 mb-8">
             <h3 class="">{{ __('projects.weight_distribution') }}</h3>
-            <div class="mb-4 w-full flex max-w-2xl rounded">
-                @foreach($this->eventProjects() as $project)
-                    @if($project->pivot->weight > 0)
+            <div class="mb-4 w-full flex max-w-2xl rounded" wire:model.live="projects">
+                @foreach($this->projects as $project)
+                    @if($weight[$project->id] > 0)
                         <div class="overflow-x-hidden"
-                            style="width: {{ ($project->pivot->weight/$this->event->projects()->sum('weight'))*100 }}%">
+                             style="width: {{ $this->weight[$project->id]/array_sum($this->weight)*100 }}%">
                             <div class="font-bold">
-                                {{ round($project->pivot->weight/$this->event->projects()->sum('weight')*100) }}%
+                                {{ round($this->weight[$project->id]/array_sum($this->weight)*100) }}%
                             </div>
                             <div class="bg-black rounded mr-2 text-white p-2">{{  $project->title }}</div>
                         </div>
@@ -67,8 +71,12 @@
             </div>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-6 gap-4 mx-4">
-            @foreach($this->eventProjects() as $project)
-                <x-project :project="$project"></x-project>
+            @foreach($this->projects as $project)
+                @if($editMode)
+                    <x-project-edit weight="weight.{{ $project->id }}" :project="$project"/>
+                @else
+                    <x-project :project="$project"/>
+                @endif
             @endforeach
         </div>
     </div>
@@ -76,10 +84,10 @@
         <div class="ml-4 flex gap-2">
             <h2 class="text-h2 mb-4">{{ __('events.jury') }} ({{ count($this->evaluators()) }})</h2>
             @if($this->event->status === null)
-                <button type="button" wire:click="openEvaluatorModal">{{ __('events.jury_add') }}</button>
+                <button type="button" wire:click="$dispatch('open-modal', { name : 'addEvaluators' })">{{ __('events.jury_add') }}</button>
             @endif
         </div>
-        <div class="flex overflow-x-scroll p-4 gap-4">
+        <div class="flex overflow-x-scroll p-4 gap-4" wire:model.live="evaluators">
             @foreach($this->evaluators as $evaluator)
                 <x-evaluator :evaluator="$evaluator"/>
             @endforeach
