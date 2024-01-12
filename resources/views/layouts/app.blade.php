@@ -30,7 +30,30 @@
 <body class="font-sans antialiased">
 <div class="min-h-screen flex bg-gradient">
     <h1 class="sr-only">{{ $heading }}</h1>
-    @if(Session::has('success'))
+    <livewire:flash/>
+    <div>
+        <div
+            x-data="{ show: false, message: '' }"
+            x-on:success.window="show = true; message = $event.detail.message; setTimeout(() => show = false, 5000);"
+            class="fixed bottom-0 right-0 m-8 z-50">
+            <div x-show="show"
+                 x-transition.opacity.duration.500ms
+                 class="bg-success text-white font-bold rounded-lg border shadow-lg px-10 py-2">
+                <span x-text="message"></span>
+            </div>
+        </div>
+        <div
+            x-data="{ show: false, message: '' }"
+            x-on:warning.window="show = true; message = $event.detail.message; setTimeout(() => show = false, 5000);"
+            class="fixed bottom-0 right-0 m-8 z-50">
+            <div x-show="show"
+                 x-transition.opacity.duration.500ms
+                 class="bg-warning text-white font-bold rounded-lg border shadow-lg px-10 py-2">
+                <span x-text="message"></span>
+            </div>
+        </div>
+    </div>
+    @if(session()->has('success'))
         <div class="fixed bottom-0 right-0 m-8 z-50">
             <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)"
                  x-transition.opacity.duration.500ms
