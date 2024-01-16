@@ -1,4 +1,5 @@
-<div class="p-10 rounded mx-2 max-w-6xl mx-auto">
+<div class="p-10 rounded">
+    <x-back/>
     @if($this->editMode)
         <form wire:submit="update">
             @endif

@@ -32,7 +32,7 @@
         createHref="#create"
         :createLabel="__('projects.add_new')"
         importHref="#import"
-        :importLabel="__('project.import')"
+        :importLabel="__('projects.import')"
         sort="sort"
         :order="$this->order"
         :options="$this->sortables"
@@ -43,14 +43,20 @@
             <x-project-card :project="$project"/>
         @endforeach
     </div>
-    {{--    @if($this->contacts->isEmpty())--}}
-    {{--        <div>--}}
-    {{--            <span>{{ __('form.no_results') }}</span>--}}
-    {{--            <x-link-primary href="#create">{{ __('contacts.add_new') }}</x-link-primary>--}}
-    {{--        </div>--}}
-    {{--    @else--}}
-    {{--        <button wire:click="load_more">Load more</button>--}}
-    {{--    @endif--}}
-
+    @if($this->projects()->isEmpty())
+        <div class="text-center mt-24">
+            @if(!$this->hasProjects())
+                <div class="max-w-6 mx-auto">{{ __('projects.no_projects') }}</div>
+            @else
+                <div>{{ __('form.no_results_for') }} <span class="font-bold">{{ $this->search }}</span>
+                </div>
+            @endif
+            <x-link-primary class="mt-2 w-fit mx-auto" href="#create">{{ __('projects.add_new') }}</x-link-primary>
+        </div>
+    @else
+        <div class="flex justify-center p-10">
+            <x-primary-button type="button" wire:click="loadMore">Load more</x-primary-button>
+        </div>
+    @endif
 </div>
 

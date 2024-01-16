@@ -37,6 +37,16 @@ class ContactLivewireController extends Component
         }
     }
 
+    public function placeholder()
+    {
+        return <<<'HTML'
+        <div>
+            <!-- Loading spinner... -->
+            <svg>...</svg>
+        </div>
+        HTML;
+    }
+
     #[Computed]
     public function hasContacts(): bool
     {

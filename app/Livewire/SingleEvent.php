@@ -76,6 +76,15 @@ class SingleEvent extends Component
         $this->redirect(route('events.show', $this->id));
     }
 
+    public function cancelEvent()
+    {
+        $this->form->cancel();
+
+        session()->flash('success', __('events.event_cancelled'));
+
+        $this->redirect(route('events.show', $this->id));
+    }
+
     #[Computed]
     public function eventProjects()
     {

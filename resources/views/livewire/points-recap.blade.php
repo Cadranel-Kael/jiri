@@ -1,17 +1,17 @@
-<div class="overflow-x-hidden">
-    <table class="overflow-x-scroll">
-        <thead>
+<div class="overflow-x-scroll w-full" >
+    <table class="bg-white rounded drop-shadow m-4">
+        <thead class="bg-black-5 text-primary">
         <tr>
-            <th>Students</th>
+            <th>{{ __('events.students') }}</th>
             @foreach($this->evaluators as $evaluator)
-                <th colspan="{{ $this->projects()->count() }}">{{ $evaluator->name }}</th>
+                <th colspan="{{ $this->projects()->count() }}" class="border-white border-x-2">{{ $evaluator->name }}</th>
             @endforeach
         </tr>
         <tr>
             <td></td>
             @foreach($this->evaluators as $evaluator)
                 @foreach($this->projects() as $project)
-                    <th>{{ $project->title }}</th>
+                    <th class="rotate-180 border-white border-x-2 border-b-2 p-2" style="writing-mode: vertical-rl" }}>{{ $project->title }}</th>
                 @endforeach
             @endforeach
         </tr>
@@ -19,10 +19,10 @@
         <tbody>
         @foreach($this->students() as $student)
             <tr>
-                <th>{{ $student->name }}</th>
+                <th class="border-black-5 border-y-2 last:border-none">{{ $student->name }}</th>
                 @foreach($this->presentations($student->id) as $presentation)
                     @foreach($this->evaluators() as $evaluator)
-                        <td>@if($this->score($presentation->id, $evaluator->id) !== null)
+                        <td class="text-center align-middle border-black-5 border-2 last:border-y-2">@if($this->score($presentation->id, $evaluator->id) !== null)
                                 {{ $this->score($presentation->id, $evaluator->id) }}
                             @endif</td>
                     @endforeach

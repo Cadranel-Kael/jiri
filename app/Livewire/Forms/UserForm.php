@@ -13,13 +13,13 @@ class UserForm extends Form
 {
     public ?User $user;
 
-    #[Validate('required|min:3')]
+    #[Validate('required|min:3', attribute: ['name' => 'nom et prénom'])]
     public $name = '';
 
-    #[Validate('required|email')]
+    #[Validate('required|email', attribute: ['email' => 'email'])]
     public $email = '';
 
-    #[Validate('required|min:3')]
+    #[Validate('required|min:8', attribute: ['password' => 'mot de passe'])]
     public $password = '';
 
     public function store()

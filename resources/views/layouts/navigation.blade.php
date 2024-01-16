@@ -39,13 +39,13 @@
                             href="{{ route('projects.index') }}"/>
             </li>
             <li>
-                <x-nav-link :active="request()->routeIs('events.index')" class="fill-none stroke-2 stroke-white" icon="icon-events" width="21.5" height="21"
+                <x-nav-link :active="request()->routeIs('events.index')" icon="icon-events" width="22.73" height="22.73"
                             name="Epreuves" href="{{ route('events.index') }}"/>
             </li>
         </ul>
         <div>
             <x-nav-link :active="request()->routeIs('profile.edit')" icon="icon-profile" width="22.7" height="18.9" name="Profile"
-                        href="{{ route('profile.edit') }}"/>
+                        href="#"/>
         </div>
         <div>
             <x-nav-link onclick="event.preventDefault(); document.getElementById('frm-logout').submit();" :active="false" icon="icon-log-out" width="21.94" height="22.69" name="Deconnexion"

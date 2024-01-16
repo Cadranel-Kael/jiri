@@ -69,7 +69,7 @@
     />
     <div class="grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-6 gap-4 mx-4">
         @foreach($this->contacts as $contact)
-            <x-profile :contact="$contact" livewire:revenue lazy="on-load"/>
+            <x-contact-profile :contact="$contact"/>
         @endforeach
     </div>
     @if($this->contacts->isEmpty())

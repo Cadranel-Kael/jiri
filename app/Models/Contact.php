@@ -46,4 +46,9 @@ class Contact extends Model
     {
         return $this->hasMany(Presentation::class);
     }
+
+    public function summaries(): HasMany
+    {
+        return $this->hasMany(Summary::class);
+    }
 }

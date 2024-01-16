@@ -85,4 +85,9 @@ class Event extends Model
     {
         return $this->hasManyThrough(Score::class, Presentation::class, 'event_id', 'presentation_id', 'id', 'id');
     }
+
+    public function summaries(): HasMany
+    {
+        return $this->hasMany(Summary::class);
+    }
 }

@@ -7,4 +7,11 @@ return [
     'collapse' => 'Réduire',
     'no_results' => 'Aucun résultat',
     'legal_rights' => 'Tous droits réservés.',
+    'edit' => 'Modifier',
+    'delete' => 'Supprimer',
+    'save' => 'Enregistrer',
+    'start' => 'Débuter',
+    'cancel' => 'Annuler',
+    'back' => 'Retour',
+    'links' => 'Liens',
 ];

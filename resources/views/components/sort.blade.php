@@ -1,14 +1,7 @@
 @props([
-    /** @var string */
     'sort',
-
-    /** @var string */
     'order',
-
-    /** @var string */
     'changeOrder' => 'changeOrder',
-
-    /** @var array */
     'options'
 ])
 <div {{ $attributes(['class'=>'flex items-center gap-1']) }}>

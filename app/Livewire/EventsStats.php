@@ -7,11 +7,23 @@ use Livewire\Component;
 
 class EventsStats extends Component
 {
-    public $class = '';
+    public $class;
 
     #[Computed]
     public function events()
     {
-        return auth()->user()->load('events')->events->count();
+        return auth()->user()->events()->where('status', 'ended');
+    }
+
+    #[Computed]
+    public function passes()
+    {
+        $passCount = 0;
+
+        foreach (auth()->user()->events()->get() as $event) {
+            $passCount += $event->summaries()->where('score', '>=', 50)->count();
+        }
+
+        return $passCount;
     }
 }

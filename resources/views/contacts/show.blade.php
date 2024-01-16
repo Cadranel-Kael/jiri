@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout showHeading="{{ false }}">
     <x-slot name="heading">
         {{ $heading }}
     </x-slot>

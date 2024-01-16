@@ -54,7 +54,7 @@ class SingleContact extends Component
         }
     }
 
-    public function getAverage($event_id, $total = 100)
+    public function getAverage($event_id, $total = 100): ?float
     {
         $scores = [];
         foreach ($this->events->where('id', $event_id)->first()->projects as $project) {
@@ -64,6 +64,11 @@ class SingleContact extends Component
 
         if (count($scores) === 0) return null;
         else return round(array_sum($scores) / count($scores) / 100 * $total);
+    }
+
+    public function summary($event_id, $total = 100): float|int
+    {
+        return $this->contact()->summaries()->where('event_id', $event_id)->first()->score ?? $this->getAverage($event_id) / 100 * $total;
     }
 
     public function rules()

@@ -7,7 +7,7 @@ use App\Traits\Searchable;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
-class EvaluatorsList extends Component
+class StudentList extends Component
 {
     use Searchable;
 
@@ -15,7 +15,9 @@ class EvaluatorsList extends Component
 
     public EventForm $form;
 
-    public $addedEvaluatorsIds = [];
+    public $addedStudentsIds = [];
+
+    public $addedProjects = [];
 
     public function mount(): void
     {
@@ -35,33 +37,33 @@ class EvaluatorsList extends Component
             ->paginate(12);
     }
 
-    public function addEvaluator($contactId)
+    public function addStudent($contactId)
     {
-        $this->addedEvaluatorsIds[] = $contactId;
+        $this->addedStudentsIds[] = $contactId;
 
     }
 
-    public function removeEvaluator($contactId)
+    public function removeStudent($contactId)
     {
         $this->addedEvaluatorsIds = array_diff($this->addedEvaluatorsIds, [$contactId]);
     }
 
     public function add()
     {
-        if ($this->addedEvaluatorsIds) {
-            foreach ($this->addedEvaluatorsIds as $evaluatorsId) {
-                $this->form->addEvaluator($evaluatorsId);
+        if ($this->addedStudentsIds) {
+            foreach ($this->addedStudentsIds as $studentId) {
+                $this->form->addStudent($studentId);
             }
 
-            $this->dispatch('close-modal', name: 'addEvaluators');
-            $this->dispatch('flash', message: 'evaluators.added', type: 'success');
+            $this->dispatch('close-modal', name: 'addStudents');
+            $this->dispatch('flash', message: 'student.added', type: 'success');
         } else {
-            $this->dispatch('flash', message: 'no-evaluator-selected', type: 'warning');
+            $this->dispatch('flash', message: 'no-student-selected', type: 'warning');
         }
     }
 
     public function render()
     {
-        return view('livewire.evaluators-list');
+        return view('livewire.student-list');
     }
 }

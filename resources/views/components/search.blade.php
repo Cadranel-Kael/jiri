@@ -1,3 +1,6 @@
+@props([
+    'search',
+])
 <div {{ $attributes->merge(['class'=>'relative relative']) }}>
     <label class="sr-only" for="search">{{ __('form.search') }}</label>
     <div class="absolute z-10 inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -6,7 +9,7 @@
         </svg>
     </div>
     <input name="{{ $search }}"
-           class="border-none p-2.5 pl-10 block drop-shadow rounded block w-full placeholder:text-black-50" type="text"
+           class="border-none p-2.5 pl-10 block drop-shadow rounded w-full placeholder:text-black-50" type="text"
            id="search" wire:model.live="{{ $search }}" placeholder="{{ __('form.search') }}">
     <button type="button" class="sr-only">Search</button>
 </div>

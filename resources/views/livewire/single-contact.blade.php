@@ -30,7 +30,8 @@
             </div>
         </x-slot:footer>
     </x-modal-form>
-    <div class="flex">
+    <x-back/>
+    <div class="flex mt-6">
         <img src="{{ $this->contact->image_url }}" alt="" class="w-20 h-20 object-cover rounded-full">
         <div class="flex flex-col items-start ml-4 gap-2">
             <span class="text-h1">{{ $this->contact->name }}</span>
@@ -50,6 +51,7 @@
                         <td class="p-2.5">{{ __('form.name') }}</td>
                         <td class="p-2.5">{{ __('form.date') }}</td>
                         <td class="p-2.5">{{ __('form.average') }}</td>
+                        <td class="p-2.5">{{ __('form.points') }}</td>
                     </tr>
                     </thead>
                     @foreach($this->events as $event)
@@ -61,13 +63,22 @@
                             <td class="p-2.5">
                                 <x-date-pill :status="$event->status"/>
                             </td>
-                            <td class="p-2.5">{{ $event->name }}</td>
+                            <td class="p-2.5">
+                                <a href="{{route('events.show', $event->id)}}" class="font-bold">{{ $event->name }}</a>
+                            </td>
                             <td class="p-2.5">
                                 <x-date :date="$event->date"/>
                             </td>
-                            <td class="p-2.5">@if($event->projects)
+                            <td class="p-2.5">
+                                @if($event->projects)
                                     {{ $this->getAverage($event->id, 20) }} / 20
-                                @endif</td>
+                                @endif
+                            </td>
+                            <td class="p-2.5">
+                                @if($event->projects)
+                                    {{ $this->summary($event->id, 20) }} / 20
+                                @endif
+                            </td>
                         </tr>
                         <tr x-show="show">
                             <td></td>

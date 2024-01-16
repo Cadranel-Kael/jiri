@@ -69,6 +69,17 @@ return new class extends Migration {
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
+
+        Schema::table('summaries', function (Blueprint $table) {
+            $table->foreignId('event_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->foreignId('contact_id')
+                ->constrained()
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+        });
     }
 
     /**
@@ -107,6 +118,11 @@ return new class extends Migration {
         Schema::table('scores', function (Blueprint $table) {
             $table->dropForeign(['contact_id']);
             $table->dropForeign(['presentation_id']);
+        });
+
+        Schema::table('summaries', function (Blueprint $table) {
+            $table->dropForeign(['event_id']);
+            $table->dropForeign(['contact_id']);
         });
     }
 };

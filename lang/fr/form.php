@@ -5,6 +5,7 @@ return [
     'sort' => 'Trier par',
     'search' => 'Rechercher',
     'no_results' => 'Pas de résultat',
+    'no_results_for' => 'Pas de résultat pour :search',
     'obligatory' => 'obligatoire',
     'edit'=>'Modifier',
     'delete'=>'Supprimer',

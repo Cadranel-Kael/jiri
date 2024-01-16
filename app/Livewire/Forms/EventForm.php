@@ -21,7 +21,7 @@ class EventForm extends Form
     #[Validate('required|min:3', as: 'form.name')]
     public $name;
 
-    #[Validate('required|date', as: 'form.date')]
+    #[Validate('required|date|after_or_equal:today', as: 'form.date')]
     public $date;
 
     public $duration;
@@ -51,12 +51,32 @@ class EventForm extends Form
         EventStartedEvent::dispatch($this->event);
     }
 
+    public function pause()
+    {
+        $this->status = 'paused';
+        $this->event->update($this->all());
+        foreach ($this->event->participants as $participant) {
+            $participant->update(['token' => md5(rand(1, 10) . microtime())]);
+        }
+    }
+
+    public function cancel()
+    {
+        $this->status = null;
+        $this->event->update($this->all());
+    }
+
     public function addProject($project_id, $weight)
     {
         $this->authorize('handleProject', [$this->event, Project::find($project_id)]);
 
         if ($weight < 0 || $weight === null) {
             $weight = 1;
+        }
+
+        if ($this->event->projects->contains($project_id)) {
+            session()->flash('error', __('error.project_already_added'));
+            return;
         }
 
         $this->event->projects()->attach($project_id, ['weight' => $weight]);

@@ -72,8 +72,8 @@
         </div>
     @endif
     @include('layouts.navigation')
-    <div class="flex-1 mt-16 overflow-hidden flex flex-col justify-between min-h-full pl-10">
-        <main class="w-full flex-1">
+    <div class="flex-1 @if($showHeading) mt-16 @endif overflow-hidden flex flex-col justify-between min-h-full pl-10">
+        <main class="w-full flex-1 overflow-hidden">
             @if(@isset($heading) && $showHeading)
                 <span aria-hidden="true"
                       class="block text-h1 text-center lg:text-left text-primary font-bold mb-10">{{ $heading }}</span>
@@ -85,6 +85,5 @@
         </footer>
     </div>
 </div>
-
 </body>
 </html>

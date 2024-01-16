@@ -14,10 +14,10 @@ class ProjectsLivewireController extends Component
 {
 
     #[Url(as: 's')]
-    public $search = '';
+    public string $search = '';
 
     #[Url]
-    public $id = '1';
+    public string $id = '1';
 
     public string $sort = 'title';
     public string $order = 'ASC';
@@ -26,7 +26,7 @@ class ProjectsLivewireController extends Component
     public ProjectForm $createProjectForm;
     public ProjectForm $editProjectForm;
 
-    public $perPage = 12;
+    public int $perPage = 12;
 
     #[Computed]
     public function projects()
@@ -34,6 +34,12 @@ class ProjectsLivewireController extends Component
         return auth()->user()->projects()->where('title', 'like', '%' . $this->search . '%')
             ->orderBy($this->sort, $this->order)
             ->paginate($this->perPage);
+    }
+
+    #[Computed]
+    public function hasProjects()
+    {
+        return auth()->user()->projects()->exists();
     }
 
     public function addTask()

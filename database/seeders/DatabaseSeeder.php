@@ -10,6 +10,7 @@ use App\Models\Presentation;
 use App\Models\Project;
 use App\Models\EventsProject;
 use App\Models\Score;
+use App\Models\Summary;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 
@@ -63,6 +64,10 @@ class DatabaseSeeder extends Seeder
                     'event_id' => $event->id,
                     'contact_id' => $student->id,
                     'role' => 'student',
+                ]);
+                Summary::factory()->create([
+                    'event_id' => $event->id,
+                    'contact_id' => $student->id,
                 ]);
             }
 

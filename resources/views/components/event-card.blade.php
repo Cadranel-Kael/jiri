@@ -1,6 +1,6 @@
 <div
     class="bg-white drop-shadow flex flex-col min-w-col-2-sm items-center align-center py-3 px-2 rounded gap-2 place-content-between">
-    <div class="basis-1">
+    <div class="basis-1 self-end">
         @if($event->status === null)
             <x-more-options
                 :items="[
